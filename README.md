@@ -6,7 +6,7 @@ Team Members:
 1. Ahmed Alaa El-Sayed
 2. Ahmed Ata
 3. Doaa Magdi
-4. Rofaida Hassan
+4. Rufaida Muhammad
 Professor Supervisor: Dr. Magda Fayek
 Teacher Assistants Supervisor:
 1. Eng. Eman Hossam
