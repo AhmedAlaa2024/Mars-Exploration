@@ -1,8 +1,6 @@
-#ifndef MARSSTATION_H_
-#define MARSSTATION_H_
+#pragma once
 
 class MarsStation
 {
 };
 
-#endif // !MARSSTATION_H_

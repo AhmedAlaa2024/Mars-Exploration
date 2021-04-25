@@ -1,9 +1,5 @@
-#ifndef UI_H_
-#define UI_H_
-
-
+#pragma once
 class UI
 {
 };
 
-#endif // !UI_H_

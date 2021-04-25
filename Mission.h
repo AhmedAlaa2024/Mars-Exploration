@@ -1,9 +1,7 @@
-#ifndef MISSION_H_
-#define MISSION_H_
+#pragma once
 
 
 class Mission
 {
 };
 
-#endif // !MISSION_H_
