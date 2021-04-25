@@ -1,5 +1,4 @@
-#ifndef PROMOTION_H_
-#define PROMOTION_H_
+#pragma once
 #include "Event.h"
 
 
@@ -8,4 +7,3 @@ class Promotion :
 {
 };
 
-#endif // !PROMOTION_H_
