@@ -1,6 +1,11 @@
 #include "UI.h"
 
-SIM_MODE UI::select_mode()
+UI::UI(MarsStation* p_s) : p_station(p_s)
+{
+
+}
+
+SIM_MODE UI::get_input_mode()
 {
 
 	std::cout << "Please select The mode you want to enter" << endl <<

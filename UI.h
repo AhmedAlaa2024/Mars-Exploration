@@ -2,17 +2,18 @@
 #include <iostream>
 using namespace std;
 #include "Defs.h"
-
+#include "MarsStation.h"
+class MarsStation;
 class UI
 {
 
-
+	MarsStation* p_station;
 
 
 
 public:
-
-	SIM_MODE select_mode();
+	UI(MarsStation* p_s);
+	SIM_MODE get_input_mode();
 
 
 
