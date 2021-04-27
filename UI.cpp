@@ -1,5 +1,6 @@
 #include "UI.h"
-
+#include <iostream>
+#include <fstream>
 UI::UI(MarsStation* p_s) : p_station(p_s)
 {
 
@@ -29,4 +30,29 @@ SIM_MODE UI::get_input_mode()
 
 	return SIM_MODE::SILENT;
 
+}
+
+bool UI::read_input_file()
+{
+	//TODO:: after the DS is Written
+	ifstream my_file("input.txt");
+	
+	if (!my_file) {
+		return false;
+	}
+	else {
+		string word;
+
+		while (my_file >> word) {
+			//TODO:: READ AND PUT
+			
+
+			cout << word << endl;
+		}
+
+	}
+	my_file.close();
+
+	
+	return true;
 }

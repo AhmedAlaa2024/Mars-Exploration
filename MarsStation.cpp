@@ -3,6 +3,10 @@
 MarsStation::MarsStation() 
 {
 	my_ui = new UI(this);
+	my_ui->read_input_file();
+
+	
+	
 }
 
 SIM_MODE MarsStation::get_input_mode() const

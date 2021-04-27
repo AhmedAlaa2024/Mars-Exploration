@@ -10,9 +10,12 @@ class MarsStation
 
 public:
 	MarsStation();
-	
+
+	//for getting data
 	SIM_MODE get_input_mode() const;
-	
 	void execute_mode(SIM_MODE);
+
+
+	
 };
 
