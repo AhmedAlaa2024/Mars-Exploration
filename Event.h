@@ -1,11 +1,7 @@
-#ifndef EVENT_H_
-#define EVENT_H_
-
+#pragma once
 
 class Event
 {
 	Event();
 	virtual void Execute() = 0;
 };
-
-#endif // !EVENT_H_

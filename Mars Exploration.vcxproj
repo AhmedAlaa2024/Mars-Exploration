@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="BagADT.h" />
     <ClInclude Include="Cancellation.h" />
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Formulation.h" />
     <ClInclude Include="LinkedBAG.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Cancellation.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Formulation.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MarsStation.cpp" />
     <ClCompile Include="Mission.cpp" />
     <ClCompile Include="Promotion.cpp" />

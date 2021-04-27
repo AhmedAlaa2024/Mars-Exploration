@@ -1,5 +1,4 @@
-#ifndef CANCELLATION_H_
-#define CANCELLATION_H_
+#pragma once
 #include "Event.h"
 
 
@@ -8,4 +7,3 @@ class Cancellation :
 {
 };
 
-#endif // !CANCELLATION_H_

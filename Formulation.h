@@ -1,5 +1,4 @@
-#ifndef FORMULATION_H_
-#define FORMULATION_H_
+#pragma once
 #include "Event.h"
 
 
@@ -8,4 +7,3 @@ class Formulation :
 {
 };
 
-#endif // !FORMULATION_H_

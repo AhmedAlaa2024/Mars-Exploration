@@ -1,9 +1,6 @@
-#ifndef ROVER_H_
-#define ROVER_H_
-
+#pragma once
 
 class Rover
 {
 };
 
-#endif // !ROVER_H_
