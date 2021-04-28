@@ -14,7 +14,7 @@ class UI
 public:
 	UI(MarsStation* p_s);
 	SIM_MODE get_input_mode();
-	bool read_input_file();
+	
 
 
 
