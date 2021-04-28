@@ -9,5 +9,7 @@ public:
 	virtual void Execute() = 0;
 
 	int get_ED() const;
+	int get_ID() const;
+
 	virtual ~Event() {}
 };
