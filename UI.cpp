@@ -1,5 +1,6 @@
 #include "UI.h"
-
+#include <iostream>
+#include <fstream>
 UI::UI(MarsStation* p_s) : p_station(p_s)
 {
 
