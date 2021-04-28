@@ -139,13 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BagADT.h" />
     <ClInclude Include="Cancellation.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Formulation.h" />
+    <ClInclude Include="LinkedBAG.h" />
+    <ClInclude Include="LinkedQueue.h" />
     <ClInclude Include="MarsStation.h" />
     <ClInclude Include="Mission.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Promotion.h" />
+    <ClInclude Include="QueueADT.h" />
     <ClInclude Include="Rover.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
