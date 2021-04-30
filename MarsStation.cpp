@@ -139,6 +139,10 @@ bool MarsStation::writeOutputFile() const
 	return false;
 }
 
+void MarsStation::CollectStatistics_Console()
+{
+}
+
 int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
 {
 	int Auto = 0;

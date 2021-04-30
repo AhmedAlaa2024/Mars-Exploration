@@ -23,7 +23,7 @@ public:
 
 	
 	bool writeOutputFile() const;
-	
+	void CollectStatistics_Console();  // TODO like for file
 
 	
 };

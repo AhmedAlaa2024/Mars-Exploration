@@ -34,12 +34,17 @@ SIM_MODE UI::get_input_mode()
 
 }
 
+// TO BE CHANGED....
 void UI::InteractivePrinting() const
 {
+	p_station->CollectStatistics_Console();
+	// TODO:: cout statistics and wait for cin
 }
-
+// TO BE CHANGED....
 void UI::StepByStepPrinting() const
 {
+	p_station->CollectStatistics_Console();
+	// TODO:: cout statistics and wait for some time then cout
 }
 
 void UI::SilentPrinting() const
