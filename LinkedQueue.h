@@ -24,7 +24,7 @@ public:
     bool isEmpty() const; // Complexity = O(1)
     bool enqueue(const T&); // Complexity = O(1)
     bool dequeue(T&); // Complexity = O(1)
-    bool peek(T&) const; // Complexity = O(1)
+    bool peek(T&); // Complexity = O(1)
 
     // Destructor
     ~LinkedQueue(); // Complexity = O(n)
@@ -39,7 +39,7 @@ LinkedQueue<T>::LinkedQueue() {
 template <typename T>
 LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> &LQ) {
     Node<T>* LQptr = LQ.front;
-    if (!ptr)
+    if (!LQptr)
     {
         front = back = nullptr;
         return;
@@ -98,7 +98,7 @@ bool LinkedQueue<T>::dequeue(T& fEntry)
 
 
 template <typename T>
-bool LinkedQueue<T>::peek(T& fEntry) const
+bool LinkedQueue<T>::peek(T& fEntry)
 {
     if (isEmpty())
         return false;
