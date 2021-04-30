@@ -24,16 +24,16 @@ void MarsStation::execute_mode(SIM_MODE mode)
 
 	if (mode == SIM_MODE::INTERACTIVE)
 	{
-		cout << "Interactive" << endl; //to be changed
+		my_ui->InteractivePrinting();
 	}
 	else if (mode == SIM_MODE::STEP_BY_STEP)
 	{
-		cout << "step by step" << endl; //to be changed
+		my_ui->StepByStepPrinting();
 
 	}
 	else
 	{
-		cout << "Silent" << endl; //to be changed
+		my_ui->SilentPrinting();
 
 	}
 }
@@ -125,7 +125,7 @@ bool MarsStation::read_input_file()
 bool MarsStation::writeOutputFile() const
 {
 	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
-	Auto_promoted = CollectStatistics(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
+	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
 	outFile << "CD\tID\tFD\tWD\tED\n";
@@ -139,7 +139,7 @@ bool MarsStation::writeOutputFile() const
 	return false;
 }
 
-int MarsStation::CollectStatistics(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
+int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
 {
 	int Auto = 0;
 	int WD = 0;

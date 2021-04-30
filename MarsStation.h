@@ -10,7 +10,7 @@ class MarsStation
 {
 	UI* my_ui;
 	LinkedQueue<Event*> Events_list_;
-	int CollectStatistics(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&) const;
+	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&) const;
 	
 public:
 	MarsStation();

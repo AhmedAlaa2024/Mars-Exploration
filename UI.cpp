@@ -1,6 +1,8 @@
 #include "UI.h"
 #include <iostream>
 #include <fstream>
+using namespace std;
+
 UI::UI(MarsStation* p_s) : p_station(p_s)
 {
 
@@ -30,4 +32,19 @@ SIM_MODE UI::get_input_mode()
 
 	return SIM_MODE::SILENT;
 
+}
+
+void UI::InteractivePrinting() const
+{
+}
+
+void UI::StepByStepPrinting() const
+{
+}
+
+void UI::SilentPrinting() const
+{
+	cout << "Silent Mode\n";
+	cout << "Simulation Starts...\n";
+	cout << "Simulation ends, Output file created\n";
 }
