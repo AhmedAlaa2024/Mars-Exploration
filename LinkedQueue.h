@@ -37,7 +37,7 @@ LinkedQueue<T>::LinkedQueue() {
 }
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> &LQ) {
+LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> &LQ) {    //why do not you use the enqueue() member function ??????  Doaa
     Node<T>* LQptr = LQ.front;
     if (!LQptr)
     {
