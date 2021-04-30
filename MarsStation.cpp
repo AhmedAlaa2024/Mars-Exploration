@@ -121,3 +121,58 @@ bool MarsStation::read_input_file()
 
 	return true;
 }
+
+bool MarsStation::writeOutputFile() const
+{
+	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
+	Auto_promoted = CollectStatistics(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
+	ofstream outFile("output.txt");
+	if (!(outFile.is_open()))return false;
+	outFile << "CD\tID\tFD\tWD\tED\n";
+	while (true) // To be changed after making CM Queue
+	{
+		//TODO:: writing info about missions
+	}
+	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
+	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
+	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n' << "Auto-promoted: " << Auto_promoted << "%\n";
+	return false;
+}
+
+int MarsStation::CollectStatistics(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
+{
+	int Auto = 0;
+	int WD = 0;
+	int ED = 0;
+	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
+	char TYP; //mission type, TO BE CHANGED
+	while (true) // To be changed after making CM Queue
+	{
+		Missions++;
+		//WD += WD for the current mission
+		//ED += ED for the current mission
+		switch (TYP)
+		{
+		case 'M':
+			MM++;
+			break;
+		case 'P':
+			PM++;
+			break;
+		case 'E':
+			EM++;
+			break;
+		}
+	}
+	while (true) // To be changed after making Rovers
+	{
+		//counting rovers and their type
+	}
+
+	//TODO:: Calcuclate Auto
+
+	AvgW = WD / Missions;
+	AvgEx = ED / Missions;
+	Auto = (Auto / MM) * 100;
+	return Auto;
+}
