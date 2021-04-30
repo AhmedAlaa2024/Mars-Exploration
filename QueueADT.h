@@ -1,7 +1,6 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
+#pragma once
 
-#ifndef QUEUEADT_H_
-#define QUEUEADT_H_
 
 template <typename T>
 class QueueADT
@@ -14,4 +13,3 @@ public:
 	virtual ~QueueADT() {};
 };
 
-#endif // !QUEUEADT_H_

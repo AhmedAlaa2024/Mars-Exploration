@@ -46,73 +46,73 @@ bool MarsStation::read_input_file()
 	if (!my_file) {
 		return false;
 	}
-	else {
-		int input;
 
-		int M, P, E; //no of each Rover Type
-		my_file >> M >> P >> E;
+	int input;
 
-		int SM, SP, SE; //speed of each type
-		my_file >> SM >> SP >> SE;
+	int M, P, E; //no of each Rover Type
+	my_file >> M >> P >> E;
 
-		int N, CM, CP, CE; // no. of missions before checkup and the checkup durations
+	int SM, SP, SE; //speed of each type
+	my_file >> SM >> SP >> SE;
 
-		my_file >> N >> CM >> CP >> CE;
+	int N, CM, CP, CE; // no. of missions before checkup and the checkup durations
 
-		int AutoP;
+	my_file >> N >> CM >> CP >> CE;
 
-		my_file >> AutoP;
+	int AutoP;
 
-		int Events_no;
-		my_file >> Events_no;
-		for (int i = 0; i < Events_no; ++i)
+	my_file >> AutoP;
+
+	int Events_no;
+	my_file >> Events_no;
+	for (int i = 0; i < Events_no; ++i)
+	{
+		char c;
+
+		my_file >> c;
+		if (c == 'F') //formulation event
 		{
-			char c;
+			char TYP;
+			int ED;
+			int ID;
+			double TLOC;
+			int MDUR;
+			int SIG;
 
-			my_file >> c;
-			if (c == 'F') //formulation event
-			{
-				char TYP;
-				int ED;
-				int ID;
-				double TLOC;
-				int MDUR;
-				int SIG;
+			my_file >> TYP >> ED >> ID >> TLOC >> MDUR >> SIG;
 
-				my_file >> TYP >> ED >> ID >> TLOC >> MDUR >> SIG;
-
-				Event* eve = new Formulation(TYP, ED, ID, TLOC, MDUR, SIG);
-				Events_list_.enqueue(eve);
-			}
-			else if (c == 'X') //cancellation Event
-			{
-				int ED;
-				int ID;
-				my_file >> ED >> ID;
-				Event* eve = new Cancellation(ED, ID);
-				Events_list_.enqueue(eve);
+			Event* eve = new Formulation(TYP, ED, ID, TLOC, MDUR, SIG);
+			Events_list_.enqueue(eve);
+		}
+		else if (c == 'X') //cancellation Event
+		{
+			int ED;
+			int ID;
+			my_file >> ED >> ID;
+			Event* eve = new Cancellation(ED, ID);
+			Events_list_.enqueue(eve);
 
 
-			}
-			else if (c == 'P')
-			{
-				int ED;
-				int ID;
-				my_file >> ED >> ID;
-				Event* eve = new Promotion(ED, ID);
-				Events_list_.enqueue(eve);
-
-			}
-
-
-
-
-
+		}
+		else if (c == 'P')
+		{
+			int ED;
+			int ID;
+			my_file >> ED >> ID;
+			Event* eve = new Promotion(ED, ID);
+			Events_list_.enqueue(eve);
 
 		}
 
 
+
+
+
+
 	}
+
+
+
 
 
 
