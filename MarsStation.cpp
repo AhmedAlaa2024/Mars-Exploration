@@ -145,7 +145,7 @@ int MarsStation::CollectStatistics(int& Missions, int& MM, int& PM, int& EM, int
 	int WD = 0;
 	int ED = 0;
 	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
-	char TYP; //mission type, TO BE CHANGED
+	char TYP = 'j'; //mission type, TO BE CHANGED
 	while (true) // To be changed after making CM Queue
 	{
 		Missions++;
