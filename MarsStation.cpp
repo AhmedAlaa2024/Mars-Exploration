@@ -62,7 +62,9 @@ bool MarsStation::read_input_file()
 	int AutoP;
 
 	my_file >> AutoP;
+	//TODO : AUTO P
 
+	
 	int Events_no;
 	my_file >> Events_no;
 	for (int i = 0; i < Events_no; ++i)
