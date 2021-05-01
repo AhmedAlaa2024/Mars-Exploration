@@ -7,11 +7,9 @@
 #include "Cancellation.h"
 MarsStation::MarsStation()
 {
+
 	my_ui = new UI(this);
 	read_input_file();
-
-
-
 }
 
 SIM_MODE MarsStation::get_input_mode() const
@@ -86,6 +84,7 @@ bool MarsStation::read_input_file()
 		}
 		else if (c == 'X') //cancellation Event
 		{
+			
 			int ED;
 			int ID;
 			my_file >> ED >> ID;
@@ -103,22 +102,9 @@ bool MarsStation::read_input_file()
 			Events_list_.enqueue(eve);
 
 		}
-
-
-
-
-
-
 	}
 
-
-
-
-
-
 	my_file.close();
-
-
 	return true;
 }
 
