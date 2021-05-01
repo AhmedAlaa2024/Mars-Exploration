@@ -66,6 +66,12 @@
     <ClInclude Include="Pair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ListADT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MarsStation.cpp">
@@ -95,5 +101,11 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Team Tasks.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="phase 1 Report.docx" />
   </ItemGroup>
 </Project>

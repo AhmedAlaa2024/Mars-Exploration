@@ -145,8 +145,10 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Formulation.h" />
     <ClInclude Include="LinkedBAG.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedPriorityQueue.h" />
     <ClInclude Include="LinkedQueue.h" />
+    <ClInclude Include="ListADT.h" />
     <ClInclude Include="MarsStation.h" />
     <ClInclude Include="Mission.h" />
     <ClInclude Include="Node.h" />
@@ -167,6 +169,12 @@
     <ClCompile Include="Promotion.cpp" />
     <ClCompile Include="Rover.cpp" />
     <ClCompile Include="UI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Team Tasks.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="phase 1 Report.docx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
