@@ -45,7 +45,7 @@ bool MarsStation::read_input_file()
 		return false;
 	}
 
-	int input;
+	
 
 	int M, P, E; //no of each Rover Type
 	my_file >> M >> P >> E;
