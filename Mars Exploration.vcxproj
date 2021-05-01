@@ -145,10 +145,13 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Formulation.h" />
     <ClInclude Include="LinkedBAG.h" />
+    <ClInclude Include="LinkedPriorityQueue.h" />
     <ClInclude Include="LinkedQueue.h" />
     <ClInclude Include="MarsStation.h" />
     <ClInclude Include="Mission.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Pair.h" />
+    <ClInclude Include="PriorityQueueADT.h" />
     <ClInclude Include="Promotion.h" />
     <ClInclude Include="QueueADT.h" />
     <ClInclude Include="Rover.h" />
