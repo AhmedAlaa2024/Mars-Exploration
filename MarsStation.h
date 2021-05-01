@@ -20,9 +20,6 @@ public:
 	void execute_mode(SIM_MODE);
 
 	bool read_input_file();
-
-	
-
 	
 
 	
