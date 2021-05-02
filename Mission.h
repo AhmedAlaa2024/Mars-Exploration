@@ -40,7 +40,7 @@ public:
 	bool IsAssigned() const;
 	int getWD() const;
 	int getCD() const;
-	bool isCompleted() const;
+	bool isCompleted(int currentDay) const;
 
 	// Setters
 	bool setFD(int fd);

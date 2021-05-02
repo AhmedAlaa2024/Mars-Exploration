@@ -41,9 +41,9 @@ int Mission::getCD() const
 	return CD;
 }
 
-bool Mission::isCompleted() const
+bool Mission::isCompleted(int currentDay) const
 {
-	if (CD == 0)
+	if (CD > currentDay)
 		return false;
 	return true;
 }
@@ -90,7 +90,7 @@ bool Mission::IsAssigned() const
 
 bool Mission::Asign()
 {
-	if (Asign)
+	if (asigned)
 		return false;
 
 	MS = MISSION_STATUS::IN_EXECUTION;

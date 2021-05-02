@@ -66,6 +66,7 @@ bool LinkedBAG<T>::add(const T& newEntry) {
     Node<T>* newNodePtr = new Node<T>(newEntry, head);
     head = newNodePtr;
     itemCount++;
+    return true;
 }
 
 template <typename T>
@@ -105,6 +106,7 @@ bool LinkedBAG<T>::clear() {
     }
 
     itemCount = 0;
+    return true;
 }
 
 template <typename T>
