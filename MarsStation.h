@@ -22,9 +22,9 @@ private:
 	// Rovers
 	LinkedBAG<Rover*> in_execution_rovers_;
 	LinkedBAG<Rover*> check_up_rovers_;
-	LinkedPriorityQueue<Rover*, int> available_rovers_emergency_;
-	LinkedPriorityQueue<Rover*, int> available_rovers_mountainous_;
-	LinkedPriorityQueue<Rover*, int> available_rovers_polar_;
+	LinkedPriorityQueue<Rover*, double> available_rovers_emergency_;
+	LinkedPriorityQueue<Rover*, double> available_rovers_mountainous_;
+	LinkedPriorityQueue<Rover*, double> available_rovers_polar_;
 
 	// Missions
 	LinkedPriorityQueue<Mission*, int> waiting_emergency_missions_;
