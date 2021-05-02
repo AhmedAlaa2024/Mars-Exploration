@@ -8,25 +8,25 @@
 
 
 template <typename T, typename F>
-class LinkedPriorityQueue :public PriorityQueueADT<Pair<T, F>>
+class  LinkedPriorityQueue :public PriorityQueueADT<T, F>
 {
 	//data members
 	Node<Pair<T, F>>* front;
 	Node<Pair<T, F>>* back;   //or call it rear i think ---> which is better ):
-	
+
 public:
 	LinkedPriorityQueue();
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
-	virtual bool isEmpty() const ;
-	virtual bool enqueue(const Pair<T,F>&);
-	virtual bool dequeue(Pair<T, F>&);
-	virtual bool peek(Pair<T, F>&);
+	virtual bool isEmpty() const;
+	virtual bool enqueue(const Pair<T, F>&);
+	virtual bool dequeue(T&);
+	virtual bool peek(T&);
 	virtual ~LinkedPriorityQueue();
 };
 
 
 template <typename T, typename F>
-LinkedPriorityQueue<T,F>::LinkedPriorityQueue()
+LinkedPriorityQueue<T, F>::LinkedPriorityQueue()
 {
 	front = nullptr;
 	back = nullptr;
@@ -61,7 +61,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 	//in case the list is empty
 	if (!front)
 	{
-		front = new Node<Pair<T,F>>(item);
+		front = new Node<Pair<T, F>>(item);
 		back = front;
 		back->setNext(nullptr);
 		return true;
@@ -71,7 +71,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 	Node<Pair<T, F>>* insert = new Node<Pair<T, F>>(item);
 	Node<Pair<T, F>>* searchPos = front;
 	//in case it has the highest priority
-	if (insert->getItem().getPriority() > front->getItem().getPriority())    
+	if (insert->getItem().getPriority() > front->getItem().getPriority())
 	{
 		insert->setNext(front);
 		front = insert;
@@ -99,12 +99,12 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 		}
 		searchPos = searchPos->getNext();
 	}
-	
-	
+
+
 }
 
 template <typename T, typename F>
-bool LinkedPriorityQueue<T, F>::dequeue(Pair<T, F>& item)
+bool LinkedPriorityQueue<T, F>::dequeue(T& item)
 {
 	//in case of empty queue
 	if (!front)
@@ -112,14 +112,14 @@ bool LinkedPriorityQueue<T, F>::dequeue(Pair<T, F>& item)
 	//in case there is only one item
 	if (front == back)
 	{
-		item = front->getItem();
+		item = front->getItem().getItem();
 		delete front;
 		front = back = nullptr;
 		return true;
 	}
 	//otherwise --> depueue the first item
 	Node<Pair<T, F>>* delPtr = front;
-	item = front->getItem();
+	item = front->getItem().getItem();
 	front = front->getNext();
 	delete delPtr;
 	return true;
@@ -130,21 +130,21 @@ bool LinkedPriorityQueue<T, F>::dequeue(Pair<T, F>& item)
 //instead of putting each item in its correct position in the queue depending on its priority
 //we can put them exactly like the ordinary queue
 //and when we dequeue ---> we will search for the item with highest priority and dequeue it --> (find max technique)
-//but dr. magda does not like this idea because it will have large complexity but i disagree --- > i think same complexity
+//but dr. magda does not like this idea because it will have large complexity but i disagree --- > i think same complexity YES,dr magda is a b
 
 template <typename T, typename F>
-bool LinkedPriorityQueue<T, F>::peek(Pair<T, F>& item)
+bool LinkedPriorityQueue<T, F>::peek(T& item)
 {
 	if (!front)
 		return false;
-	item = front->getItem();
+	item = front->getItem().getItem();
 	return true;
 }
 
 template <typename T, typename F>
-LinkedPriorityQueue<T, F>::~LinkedPriorityQueue() 
+LinkedPriorityQueue<T, F>::~LinkedPriorityQueue()
 {
-	Pair<T,F> temp;
+	T temp;
 	//delete all items 
 	while (dequeue(temp));
 }
