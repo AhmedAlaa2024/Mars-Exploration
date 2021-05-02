@@ -42,7 +42,7 @@ public:
 	bool setMaxMissions(int max);
 
 	// Specific Member Functions
-	bool Assign(Mission* m);
-	bool CheckUP();
+	bool Assign(Mission* m, int currentDay);
+	bool CheckUP(int currentDay);
 
 };

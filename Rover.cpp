@@ -86,10 +86,10 @@ bool Rover::setMaxMissions(int max)
 	return true;
 }
 
-bool Rover::Assign(Mission* m)
+bool Rover::Assign(Mission* m, int currentDay)
 {
 	if (completedMissions == MaxMissions) {
-		CheckUP();
+		CheckUP(currentDay);
 		return false;
 	}
 	completedMissions++;
@@ -97,9 +97,9 @@ bool Rover::Assign(Mission* m)
 	return true;
 }
 
-bool Rover::CheckUP()
+bool Rover::CheckUP(int currentDay)
 {
-	if (!mission->isCompleted()) // To make sure that the rover has been finished the assigned mission before check-up
+	if (!mission->isCompleted(currentDay)) // To make sure that the rover has been finished the assigned mission before check-up
 		return false;
 
 	completedMissions = 0;

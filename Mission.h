@@ -29,7 +29,7 @@ public:
 	bool IsAssigned() const;
 	int getWD() const;
 	int getCD() const;
-	bool isCompleted() const;
+	bool isCompleted(int currentDay) const;
 
 	int get_rover_id() const;
 	
