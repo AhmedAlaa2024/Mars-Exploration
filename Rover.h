@@ -1,10 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
-
 #include "Mission.h"
-
-
-
+#include "Defs.h"
 
 class Rover
 {
@@ -44,5 +41,4 @@ public:
 	// Specific Member Functions
 	bool Assign(Mission* m, int currentDay);
 	bool CheckUP(int currentDay);
-
 };

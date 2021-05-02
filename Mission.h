@@ -1,6 +1,5 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
-
 #include "Rover.h"
 #include "Defs.h"
 
@@ -45,4 +44,5 @@ public:
 	bool WaitAnotherDay();
 	bool Complete(int speed);
 	bool Promote();
+
 };
