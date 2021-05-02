@@ -1,7 +1,8 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0)
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
+TL(tl), MD(md), asigned(false), WD(0), CD(0), is_promoted(false), priority_(0)
 {
 	// Nothing To do
 }
@@ -53,12 +54,23 @@ int Mission::get_rover_id() const
 	return assigned_rover_id;
 }
 
+bool Mission::get_is_promoted() const
+{
+	return is_promoted;
+}
+
+int Mission::get_priority() const
+{
+	return priority_;
+}
+
 bool Mission::setFD(int fd)
 {
 	if (FD != 0) // Means that it already has its own FD
 		return false;
 
 	FD = fd;
+	return true;
 }
 
 bool Mission::setMT(MISSION_TYPE mt)
@@ -114,12 +126,17 @@ bool Mission::setWD(int wd)
 	return true;
 }
 
-bool Mission::WaitAnotherDay()
+void Mission::set_priority(int p)
 {
-	if (CD != 0) // Means that the mission is already completed, So no need to wait another day!
-		return false;
+	priority_ = p;
+
+}
+
+void Mission::WaitAnotherDay()
+{
+	
 	WD++;
-	return true;
+	
 }
 
 bool Mission::Complete(int speed)
@@ -140,6 +157,7 @@ bool Mission::Promote()
 	if (MT != MISSION_TYPE::MOUNTAINOUS) // The Mountainous missions only are allowed to be promoted!
 		return false;
 
-	MT = MISSION_TYPE::EMERGENCY;
+	is_promoted = true;
+	//MT = MISSION_TYPE::EMERGENCY; //TODO: ASK about this
 	return true;
 }

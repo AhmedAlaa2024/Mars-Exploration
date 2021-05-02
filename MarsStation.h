@@ -36,7 +36,7 @@ private:
 
 	// Events
 	LinkedQueue<Event*> events_list_;
-	
+
 	// User Interface
 	UI* my_ui;
 	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&) const;
@@ -44,7 +44,8 @@ private:
 
 	//masc info
 	int AutoP;
-	
+	int current_day_;
+
 public:
 	MarsStation();
 
@@ -54,10 +55,17 @@ public:
 
 	bool read_input_file();
 
-	
+
 	bool writeOutputFile() const;
 	void CollectStatistics_Console();  // TODO like for file
 
-	
+
+	//Simulation
+	void simulate_day();
+	void assign_missions();
+	void check_completed_missions();
+
+
+
 };
 
