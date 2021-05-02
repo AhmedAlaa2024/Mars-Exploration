@@ -21,7 +21,7 @@ int main()
 
 	//test the priority queue class
 	//LinkedPriorityQueue<int, int> p;
-	//Pair<int, int > p1(1, 2);
+	//Pair<int, int > p1(33, 2);
 	//Pair<int, int > p2(1, 4);
 	//Pair<int, int > p3(1, 5);
 	//Pair<int, int > p4(1, 3);
@@ -40,20 +40,26 @@ int main()
 	//LinkedPriorityQueue<int, int> l = p;
 
 
-	//Pair<int, int>ps;
+	//int ps;
 	//l.peek(ps);
-	//l.dequeue(ps);
-	//bool ispeek = l.dequeue(ps);
+	//int item = 0;
+	//l.dequeue(item);
+	//cout << item << endl;
+	//bool ispeek = l.dequeue(item);
+
+
 	//cout << ispeek << endl;
 	////p.peek(ps);
 
-	//cout << ps.getPriority() << endl;
-	//cout << ps.getItem() << endl;
+	//cout << ps << endl;
+	//
 
 	//p.peek(ps);
-	//cout << ps.getPriority() << endl;
-	//cout << ps.getItem() << endl;
-
+	//cout << ps << endl;
+	//
+	//int is;
+	//l.peek(is);
+	//cout << is << endl;
 
 	return 0;
 }
