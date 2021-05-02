@@ -1,7 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md): FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0)
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0)
 {
 	// Nothing To do
 }
@@ -48,9 +48,14 @@ bool Mission::isCompleted(int currentDay) const
 	return true;
 }
 
+int Mission::get_rover_id() const
+{
+	return assigned_rover_id;
+}
+
 bool Mission::setFD(int fd)
 {
-	if(FD != 0) // Means that it already has its own FD
+	if (FD != 0) // Means that it already has its own FD
 		return false;
 
 	FD = fd;
@@ -88,10 +93,12 @@ bool Mission::IsAssigned() const
 	return asigned;
 }
 
-bool Mission::Asign()
+bool Mission::Assign(int Rover_id)
 {
 	if (asigned)
 		return false;
+
+	assigned_rover_id = Rover_id;
 
 	MS = MISSION_STATUS::IN_EXECUTION;
 	asigned = true;

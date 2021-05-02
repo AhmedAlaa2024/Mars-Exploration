@@ -20,26 +20,30 @@ private:
 	LinkedBAG<Rover*> ROVERS_DB;
 
 	// Rovers
-	LinkedBAG<Rover*> inExecutionRovers;
-	LinkedBAG<Rover*> checkUpRovers;
-	LinkedPriorityQueue<Rover*, int> avaliableRovers_emergency;
-	LinkedPriorityQueue<Rover*, int> avaliableRovers_mountainous;
-	LinkedPriorityQueue<Rover*, int> avaliableRovers_polar;
+	LinkedBAG<Rover*> in_execution_rovers_;
+	LinkedBAG<Rover*> check_up_rovers_;
+	LinkedPriorityQueue<Rover*, int> available_rovers_emergency_;
+	LinkedPriorityQueue<Rover*, int> available_rovers_mountainous_;
+	LinkedPriorityQueue<Rover*, int> available_rovers_polar_;
 
 	// Missions
-	LinkedPriorityQueue<Mission*, int> waitingEmergencyMissions;
-	LinkedList<Mission*> waitingMountainousMissions;
-	LinkedQueue<Mission*> waitingPolarMissions;
-	LinkedList<Mission*> inExecutionMissions;
-	LinkedList<Mission*> completedMissions;
+	LinkedPriorityQueue<Mission*, int> waiting_emergency_missions_;
+	LinkedList<Mission*> waiting_mountainous_missions_;
+	LinkedQueue<Mission*> waiting_polar_missions_;
+	LinkedList<Mission*> in_execution_missions_;
+	LinkedList<Mission*> completed_missions_;
 
 
 	// Events
-	LinkedQueue<Event*> Events_list_;
+	LinkedQueue<Event*> events_list_;
 	
 	// User Interface
 	UI* my_ui;
 	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&) const;
+
+
+	//masc info
+	int AutoP;
 	
 public:
 	MarsStation();
