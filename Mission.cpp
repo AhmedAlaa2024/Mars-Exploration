@@ -48,9 +48,9 @@ bool Mission::isCompleted(int currentDay) const
 	return true;
 }
 
-int Mission::get_rover_id() const
+int Mission::getRoverId() const
 {
-	return assigned_rover_id;
+	return assignedRoverId;
 }
 
 bool Mission::setFD(int fd)
@@ -93,24 +93,22 @@ bool Mission::IsAssigned() const
 	return asigned;
 }
 
-bool Mission::Assign(int Rover_id)
-{
-	if (asigned)
-		return false;
-
-	assigned_rover_id = Rover_id;
-
-	MS = MISSION_STATUS::IN_EXECUTION;
-	asigned = true;
-	return true;
-}
-
 bool Mission::setWD(int wd)
 {
 	if (WD != 0) // Means that it already has its own value
 		return false;
 
 	MD = wd;
+	return true;
+}
+
+bool Mission::setSssignedRoverId(int id)
+{
+	if (asigned)
+		return false;
+
+	assignedRoverId = id;
+	asigned = true;
 	return true;
 }
 

@@ -95,7 +95,7 @@ bool Rover::setID(int id)
 	return true;
 }
 
-bool Rover::Assign(Mission* m, int currentDay)
+bool Rover::AssignTo(Mission* m, int currentDay)
 {
 	if (completedMissions == MaxMissions && m->isCompleted(currentDay)) {
 		CheckUP(currentDay);
@@ -103,6 +103,7 @@ bool Rover::Assign(Mission* m, int currentDay)
 	}
 	completedMissions++;
 	mission = m;
+	mission->setSssignedRoverId(ID);
 	return true;
 }
 

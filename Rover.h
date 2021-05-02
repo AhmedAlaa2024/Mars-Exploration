@@ -40,6 +40,6 @@ public:
 	bool setID(int id);
 
 	// Specific Member Functions
-	bool Assign(Mission* m, int currentDay);
+	bool AssignTo(Mission* m, int currentDay);
 	bool CheckUP(int currentDay);
 };
