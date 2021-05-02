@@ -5,7 +5,7 @@
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
-MarsStation::MarsStation()
+MarsStation::MarsStation() :AutoP(0)
 {
 
 	my_ui = new UI(this);
@@ -45,7 +45,7 @@ bool MarsStation::read_input_file()
 		return false;
 	}
 
-	int input;
+
 
 	int M, P, E; //no of each Rover Type
 	my_file >> M >> P >> E;
@@ -55,11 +55,17 @@ bool MarsStation::read_input_file()
 
 	int N, CM, CP, CE; // no. of missions before checkup and the checkup durations
 
+
+
+	
 	my_file >> N >> CM >> CP >> CE;
 
 	int AutoP;
 
+
 	my_file >> AutoP;
+	this->AutoP = AutoP;
+
 
 	int Events_no;
 	my_file >> Events_no;
@@ -80,16 +86,16 @@ bool MarsStation::read_input_file()
 			my_file >> TYP >> ED >> ID >> TLOC >> MDUR >> SIG;
 
 			Event* eve = new Formulation(TYP, ED, ID, TLOC, MDUR, SIG);
-			Events_list_.enqueue(eve);
+			events_list_.enqueue(eve);
 		}
 		else if (c == 'X') //cancellation Event
 		{
-			
+
 			int ED;
 			int ID;
 			my_file >> ED >> ID;
 			Event* eve = new Cancellation(ED, ID);
-			Events_list_.enqueue(eve);
+			events_list_.enqueue(eve);
 
 
 		}
@@ -99,7 +105,7 @@ bool MarsStation::read_input_file()
 			int ID;
 			my_file >> ED >> ID;
 			Event* eve = new Promotion(ED, ID);
-			Events_list_.enqueue(eve);
+			events_list_.enqueue(eve);
 
 		}
 	}
