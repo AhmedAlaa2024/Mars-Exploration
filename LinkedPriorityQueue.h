@@ -8,7 +8,7 @@
 
 
 template <typename T, typename F>
-class LinkedPriorityQueue :public PriorityQueueADT<T, F>
+class LinkedPriorityQueue :public PriorityQueueADT<Pair<T, F>>
 {
 	//data members
 	Node<Pair<T, F>>* front;
@@ -19,8 +19,8 @@ public:
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
 	virtual bool isEmpty() const ;
 	virtual bool enqueue(const Pair<T,F>&);
-	virtual bool dequeue(T&);
-	virtual bool peek(T&);
+	virtual bool dequeue(Pair<T, F>&);
+	virtual bool peek(Pair<T, F>&);
 	virtual ~LinkedPriorityQueue();
 };
 
@@ -104,7 +104,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 }
 
 template <typename T, typename F>
-bool LinkedPriorityQueue<T, F>::dequeue(T& item)
+bool LinkedPriorityQueue<T, F>::dequeue(Pair<T, F>& item)
 {
 	//in case of empty queue
 	if (!front)
@@ -112,14 +112,14 @@ bool LinkedPriorityQueue<T, F>::dequeue(T& item)
 	//in case there is only one item
 	if (front == back)
 	{
-		item = front->getItem().getItem();
+		item = front->getItem();
 		delete front;
 		front = back = nullptr;
 		return true;
 	}
 	//otherwise --> depueue the first item
 	Node<Pair<T, F>>* delPtr = front;
-	item = front->getItem().getItem();
+	item = front->getItem();
 	front = front->getNext();
 	delete delPtr;
 	return true;
@@ -133,18 +133,18 @@ bool LinkedPriorityQueue<T, F>::dequeue(T& item)
 //but dr. magda does not like this idea because it will have large complexity but i disagree --- > i think same complexity
 
 template <typename T, typename F>
-bool LinkedPriorityQueue<T, F>::peek(T& item)
+bool LinkedPriorityQueue<T, F>::peek(Pair<T, F>& item)
 {
 	if (!front)
 		return false;
-	item = front->getItem().getItem();
+	item = front->getItem();
 	return true;
 }
 
 template <typename T, typename F>
 LinkedPriorityQueue<T, F>::~LinkedPriorityQueue() 
 {
-	T temp;
+	Pair<T,F> temp;
 	//delete all items 
 	while (dequeue(temp));
 }
