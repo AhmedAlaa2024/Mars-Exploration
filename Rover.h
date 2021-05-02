@@ -17,6 +17,7 @@ private:
 	int MaxMissions;
 	int completedMissions;
 	Mission* mission;
+	int ID;
 
 public:
 	// Default Arguments Constructor
@@ -31,7 +32,9 @@ public:
 	int getMaxMissions() const;
 	int getNumCompletedMissions() const;
 	Mission* getAssignedMission() const;
+	int get_id() const;
 
+	
 	// Setters
 	bool setRT(ROVER_TYPE rt);
 	bool setCheckUPDuration(int checkupDur);
