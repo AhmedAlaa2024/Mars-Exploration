@@ -5,6 +5,8 @@
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
+#include "Defs.h"
+
 MarsStation::MarsStation() :AutoP(0)
 {
 
@@ -49,20 +51,45 @@ bool MarsStation::read_input_file()
 
 	int M, P, E; //no of each Rover Type
 	my_file >> M >> P >> E;
-
 	int SM, SP, SE; //speed of each type
 	my_file >> SM >> SP >> SE;
 
+
+
 	int N, CM, CP, CE; // no. of missions before checkup and the checkup durations
+	my_file >> N >> CM >> CP >> CE;
+
+	
+	int ids = 0;
+	
+	// Create Mountainous Rovers
+	for (int i = 0; i < M; ++i)
+	{
+		Rover* r = new Rover(ROVER_TYPE::MOUNTAINOUS, CM, SM, N, ++ids);
+		Pair<Rover*, double> p(r, r->getSpeed());
+		available_rovers_mountainous_.enqueue(p);
+	}
+
+	// Create Polar Rovers
+	for (int i = 0; i < P; ++i)
+	{
+		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
+		Pair<Rover*, double> p(r, r->getSpeed());
+		available_rovers_polar_.enqueue(p);
+	}
+	
+	// Create Emergency Rovers
+	for (int i = 0; i < E; ++i)
+	{
+		Rover* r = new Rover(ROVER_TYPE::EMERGENCY, CE, SE, N, ++ids);
+		Pair<Rover*, double> p(r, r->getSpeed());
+		available_rovers_emergency_.enqueue(p);
+	}
 
 
 
 	
-	my_file >> N >> CM >> CP >> CE;
-
 	int AutoP;
-
-
 	my_file >> AutoP;
 	this->AutoP = AutoP;
 
