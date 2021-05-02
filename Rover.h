@@ -1,10 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
-
 #include "Mission.h"
-
-
-
+#include "Defs.h"
 
 class Rover
 {
@@ -17,10 +14,11 @@ private:
 	int MaxMissions;
 	int completedMissions;
 	Mission* mission;
+	int ID;
 
 public:
 	// Default Arguments Constructor
-	Rover(ROVER_TYPE rt = ROVER_TYPE::UNDETERMINED, int checkupDur = 0, int sp = 0, int max = 0);
+	Rover(ROVER_TYPE rt = ROVER_TYPE::UNDETERMINED, int checkupDur = 0, int sp = 0, int max = 0, int id = -1);
 
 	// Getters
 	ROVER_STATUS getRS() const;
@@ -31,15 +29,17 @@ public:
 	int getMaxMissions() const;
 	int getNumCompletedMissions() const;
 	Mission* getAssignedMission() const;
+	int getID() const;
 
+	
 	// Setters
 	bool setRT(ROVER_TYPE rt);
 	bool setCheckUPDuration(int checkupDur);
 	bool setSpeed(int sp);
 	bool setMaxMissions(int max);
+	bool setID(int id);
 
 	// Specific Member Functions
-	bool Assign(Mission* m);
-	bool CheckUP();
-
+	bool AssignTo(Mission* m, int currentDay);
+	bool CheckUP(int currentDay);
 };

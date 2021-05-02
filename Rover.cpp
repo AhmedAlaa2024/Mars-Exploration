@@ -1,7 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Rover.h"
 
-Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max): RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr)
+Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max, int id): RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr), ID(id)
 {
 }
 
@@ -45,6 +45,11 @@ Mission* Rover::getAssignedMission() const
 	return mission;
 }
 
+int Rover::getID() const
+{
+	return ID;
+}
+
 bool Rover::setRT(ROVER_TYPE rt)
 {
 	if (rt != ROVER_TYPE::UNDETERMINED) // Means that it already has its own value
@@ -81,20 +86,30 @@ bool Rover::setMaxMissions(int max)
 	return true;
 }
 
-bool Rover::Assign(Mission* m)
+bool Rover::setID(int id)
 {
-	if (completedMissions == MaxMissions) {
-		CheckUP();
+	if (ID != -1 && id == -1)
+		return false;
+
+	ID = id;
+	return true;
+}
+
+bool Rover::AssignTo(Mission* m, int currentDay)
+{
+	if (completedMissions == MaxMissions && m->isCompleted(currentDay)) {
+		CheckUP(currentDay);
 		return false;
 	}
 	completedMissions++;
 	mission = m;
+	mission->setSssignedRoverId(ID);
 	return true;
 }
 
-bool Rover::CheckUP()
+bool Rover::CheckUP(int currentDay)
 {
-	if (!mission->isCompleted()) // To make sure that the rover has been finished the assigned mission before check-up
+	if (!mission->isCompleted(currentDay)) // To make sure that the rover has been finished the assigned mission before check-up
 		return false;
 
 	completedMissions = 0;
