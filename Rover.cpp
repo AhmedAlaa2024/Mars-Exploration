@@ -83,7 +83,7 @@ bool Rover::setMaxMissions(int max)
 
 bool Rover::Assign(Mission* m, int currentDay)
 {
-	if (completedMissions == MaxMissions) {
+	if (completedMissions == MaxMissions && m->isCompleted(currentDay)) {
 		CheckUP(currentDay);
 		return false;
 	}
