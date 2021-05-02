@@ -1,7 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md): FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0)
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0)
 {
 	// Nothing To do
 }
@@ -50,7 +50,7 @@ bool Mission::isCompleted() const
 
 bool Mission::setFD(int fd)
 {
-	if(FD != 0) // Means that it already has its own FD
+	if (FD != 0) // Means that it already has its own FD
 		return false;
 
 	FD = fd;
@@ -88,9 +88,9 @@ bool Mission::IsAssigned() const
 	return asigned;
 }
 
-bool Mission::Asign()
+bool Mission::Assign()
 {
-	if (Asign)
+	if (asigned)
 		return false;
 
 	MS = MISSION_STATUS::IN_EXECUTION;

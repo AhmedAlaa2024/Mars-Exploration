@@ -36,7 +36,7 @@ public:
 	bool setMT(MISSION_TYPE mt);
 	bool setTL(int tl);
 	bool setMD(int md);
-	bool Asign();
+	bool Assign();
 	bool setWD(int wd);
 
 	// Specific Member Functions
