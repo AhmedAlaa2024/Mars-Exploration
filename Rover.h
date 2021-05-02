@@ -1,21 +1,10 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
+#pragma once
+
 #include "Mission.h"
 
-#ifndef ROVER_H_
-#define ROVER_H_
 
-enum class ROVER_TYPE {
-	UNDETERMINED = 0,
-	EMERGENCY = 1,
-	MOUNTAINOUS = 2,
-	POLAR = 3
-};
 
-enum class ROVER_STATUS {
-	WAITING = 0,
-	IN_EXECUTION = 1,
-	CHECKUP = 2
-};
 
 class Rover
 {
@@ -54,5 +43,3 @@ public:
 	bool CheckUP();
 
 };
-
-#endif // !ROVER_H_
