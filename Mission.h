@@ -1,19 +1,8 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
-#ifndef MISSION_H_
-#define MISSION_H_
+#pragma once
 
-enum class MISSION_TYPE {
-	UNDETERMINED = 0,
-	EMERGENCY = 1,
-	MOUNTAINOUS = 2,
-	POLAR = 3
-};
 
-enum class MISSION_STATUS {
-	WAITING = 0,
-	IN_EXECUTION = 1,
-	COMPLETED = 2
-};
+#include "Defs.h"
 
 class Mission
 {
@@ -55,4 +44,3 @@ public:
 	bool Complete(int speed);
 	bool Promote();
 };
-#endif // !MISSION_H_
