@@ -1,7 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Rover.h"
 
-Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max): RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr)
+Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max, int id): RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr), ID(id)
 {
 }
 
@@ -45,7 +45,7 @@ Mission* Rover::getAssignedMission() const
 	return mission;
 }
 
-int Rover::get_id() const
+int Rover::getID() const
 {
 	return ID;
 }
@@ -83,6 +83,15 @@ bool Rover::setMaxMissions(int max)
 		return false;
 
 	MaxMissions = max;
+	return true;
+}
+
+bool Rover::setID(int id)
+{
+	if (ID != -1 && id == -1)
+		return false;
+
+	ID = id;
 	return true;
 }
 

@@ -18,7 +18,7 @@ private:
 
 public:
 	// Default Arguments Constructor
-	Rover(ROVER_TYPE rt = ROVER_TYPE::UNDETERMINED, int checkupDur = 0, int sp = 0, int max = 0);
+	Rover(ROVER_TYPE rt = ROVER_TYPE::UNDETERMINED, int checkupDur = 0, int sp = 0, int max = 0, int id = -1);
 
 	// Getters
 	ROVER_STATUS getRS() const;
@@ -29,7 +29,7 @@ public:
 	int getMaxMissions() const;
 	int getNumCompletedMissions() const;
 	Mission* getAssignedMission() const;
-	int get_id() const;
+	int getID() const;
 
 	
 	// Setters
@@ -37,6 +37,7 @@ public:
 	bool setCheckUPDuration(int checkupDur);
 	bool setSpeed(int sp);
 	bool setMaxMissions(int max);
+	bool setID(int id);
 
 	// Specific Member Functions
 	bool Assign(Mission* m, int currentDay);
