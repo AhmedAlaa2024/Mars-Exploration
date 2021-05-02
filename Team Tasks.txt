@@ -1,6 +1,6 @@
 [0] - Availabe Tasks:
 ----------------------
-1. Classess Mission, Rover -> Need to be completed!                            [ ]
+1. Classess Mission, Rover -> Need to be completed!                            [*]
 2. Private Members of MarsStation -> Need To be written!                       [*]
 3. Input Methods -> Need to be completed!                                      [ ]
 4. Output Methods -> Need to be completed!                                     [ ]
@@ -9,21 +9,21 @@
 
 x - Simulation
 -----------------------------------------------------------
-[1] - Ahmed Alaa:
+[1] - Ahmed Alaa:															   [*]
 ------------------
-No of tasks: 1, 2, 6
+No of tasks: 1, 2															   [*]
 
 ----------------------------------------------------------
-[2] - Ahmed Ata:
+[2] - Ahmed Ata:															   [ ]
 -----------------
-No of tasks: 3
+No of tasks: 3																   [ ]
 
 ----------------------------------------------------------
-[3] - Rufaida Mohamed:
+[3] - Rufaida Mohamed:														   [ ]
 -----------------------
-No of tasks: 4
+No of tasks: 4																   [ ]
 
 ----------------------------------------------------------
-[4] - Doaa Magdy:
+[4] - Doaa Magdy:															   [ ]
 ------------------
-No of tasks: 5
+No of tasks: 5, 6															   [ ]
