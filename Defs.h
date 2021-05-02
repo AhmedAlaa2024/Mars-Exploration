@@ -10,6 +10,32 @@ enum class SIM_MODE
 	SILENT
 };
 
+/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 
+enum class ROVER_TYPE {
+	UNDETERMINED,
+	EMERGENCY,
+	MOUNTAINOUS,
+	POLAR
+};
 
+enum class ROVER_STATUS {
+	WAITING,
+	IN_EXECUTION,
+	CHECKUP
+};
 
+enum class MISSION_TYPE {
+	UNDETERMINED,
+	EMERGENCY,
+	MOUNTAINOUS,
+	POLAR
+};
+
+enum class MISSION_STATUS {
+	WAITING,
+	IN_EXECUTION,
+	COMPLETED
+};
+
+//////////////////////////////////////////////////////////////////////////////////////

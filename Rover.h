@@ -1,21 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
-
-#ifndef ROVER_H_
-#define ROVER_H_
-
-enum class ROVER_TYPE {
-	UNDETERMINED = 0,
-	EMERGENCY = 1,
-	MOUNTAINOUS = 2,
-	POLAR = 3
-};
-
-enum class ROVER_STATUS {
-	WAITING = 0,
-	IN_EXECUTION = 1,
-	CHECKUP = 2
-};
+#include "Defs.h"
+#pragma once
 
 class Rover
 {
@@ -54,5 +40,3 @@ public:
 	bool CheckUP(int currentDay);
 
 };
-
-#endif // !ROVER_H_
