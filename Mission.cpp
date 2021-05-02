@@ -48,6 +48,11 @@ bool Mission::isCompleted() const
 	return true;
 }
 
+int Mission::get_rover_id() const
+{
+	return assigned_rover_id;
+}
+
 bool Mission::setFD(int fd)
 {
 	if (FD != 0) // Means that it already has its own FD
@@ -88,10 +93,12 @@ bool Mission::IsAssigned() const
 	return asigned;
 }
 
-bool Mission::Assign()
+bool Mission::Assign(int Rover_id)
 {
 	if (asigned)
 		return false;
+
+	assigned_rover_id = Rover_id;
 
 	MS = MISSION_STATUS::IN_EXECUTION;
 	asigned = true;

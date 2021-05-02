@@ -45,6 +45,11 @@ Mission* Rover::getAssignedMission() const
 	return mission;
 }
 
+int Rover::get_id() const
+{
+	return ID;
+}
+
 bool Rover::setRT(ROVER_TYPE rt)
 {
 	if (rt != ROVER_TYPE::UNDETERMINED) // Means that it already has its own value

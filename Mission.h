@@ -1,7 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
 
-
+#include "Rover.h"
 #include "Defs.h"
 
 class Mission
@@ -15,7 +15,7 @@ private:
 	bool asigned;
 	int WD; // Waiting Durations
 	int CD; // Complete Date
-
+	int assigned_rover_id;
 public:
 	// Default Constructor
 	Mission(int fd = 0, MISSION_TYPE mt = MISSION_TYPE::UNDETERMINED, int tl = 0, int md = 0);
@@ -31,12 +31,14 @@ public:
 	int getCD() const;
 	bool isCompleted() const;
 
+	int get_rover_id() const;
+	
 	// Setters
 	bool setFD(int fd);
 	bool setMT(MISSION_TYPE mt);
 	bool setTL(int tl);
 	bool setMD(int md);
-	bool Assign();
+	bool Assign(int);
 	bool setWD(int wd);
 
 	// Specific Member Functions
