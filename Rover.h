@@ -2,9 +2,9 @@
 #pragma once
 
 #include "Mission.h"
-
-
-
+#include "Rover.h"
+#include "Defs.h"
+class Mission;
 
 class Rover
 {
