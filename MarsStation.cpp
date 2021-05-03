@@ -38,6 +38,39 @@ void MarsStation::execute_mode(SIM_MODE mode)
 	}
 }
 
+
+//I will move those funcs in the .cpp file isa do not worry 
+
+LinkedList<Mission*>& MarsStation::get_waiting_mountainous_missions_()
+{
+	return waiting_mountainous_missions_;
+}
+
+
+LinkedBAG<Mission*>& MarsStation::get_mission_DB()
+{
+	return MISSIONS_DB;
+}
+
+
+LinkedPriorityQueue<Mission*, int>& MarsStation::get_W_E_M()
+{
+	return waiting_emergency_missions_;;
+}
+
+
+LinkedList<Mission*>& MarsStation::get_W_M_M()
+{
+	return waiting_mountainous_missions_;
+}
+
+
+LinkedQueue<Mission*>& MarsStation::get_W_P_M()
+{
+	return waiting_polar_missions_;
+}
+
+
 bool MarsStation::read_input_file()
 {
 	//TODO:: after the DS is Written

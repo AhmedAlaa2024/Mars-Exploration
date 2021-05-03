@@ -2,11 +2,12 @@
 #include "Mission.h"
 
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md, int sig , int id ): FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
 TL(tl), MD(md), asigned(false), WD(0), CD(0)
-
 {
 	is_promoted = false;
+	ID = id;
+	SIG = sig;
 }
 
 
@@ -168,10 +169,10 @@ bool Mission::Promote()
 	is_promoted = true;
 	MT = MISSION_TYPE::EMERGENCY;
 
-	
+
 	return true;
 
-
+}
 
 int Mission::Weight()
 {

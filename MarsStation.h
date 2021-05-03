@@ -68,42 +68,14 @@ public:
 	void simulate_day();
 	void assign_missions();
 	void check_completed_missions();
-
-
-
+	LinkedList<Mission*>& get_waiting_mountainous_missions_();
+	LinkedBAG<Mission*>& get_mission_DB();
+	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
+	LinkedQueue<Mission*>& get_W_P_M();
+	LinkedList<Mission*>& get_W_M_M();
+	
 };
 
 
 
-	//I will move those funcs in the .cpp file isa do not worry 
 
-	LinkedList<Mission*>& get_waiting_mountainous_missions_()
-	{
-		return waiting_mountainous_missions_;
-	}
-
-
-	LinkedBAG<Mission*>& get_mission_DB()
-	{
-		return MISSIONS_DB;
-	}
-
-
-	LinkedPriorityQueue<Mission*, int>& get_W_E_M()
-	{
-		return waiting_emergency_missions_;;
-	}
-
-
-	LinkedList<Mission*>& get_W_M_M()
-	{
-		return waiting_mountainous_missions_;
-	}
-
-
-	LinkedQueue<Mission*>& get_W_P_M()
-	{
-		return waiting_polar_missions_;
-	}
-
-};
