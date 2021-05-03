@@ -112,7 +112,7 @@ bool MarsStation::read_input_file()
 
 			my_file >> TYP >> ED >> ID >> TLOC >> MDUR >> SIG;
 
-			Event* eve = new Formulation(TYP, ED, ID, TLOC, MDUR, SIG);
+			Event* eve = new Formulation(TYP, ED, ID, TLOC, MDUR, SIG, this);
 			events_list_.enqueue(eve);
 		}
 		else if (c == 'X') //cancellation Event
@@ -121,7 +121,7 @@ bool MarsStation::read_input_file()
 			int ED;
 			int ID;
 			my_file >> ED >> ID;
-			Event* eve = new Cancellation(ED, ID);
+			Event* eve = new Cancellation(ED, ID, this);
 			events_list_.enqueue(eve);
 
 
@@ -131,7 +131,7 @@ bool MarsStation::read_input_file()
 			int ED;
 			int ID;
 			my_file >> ED >> ID;
-			Event* eve = new Promotion(ED, ID);
+			Event* eve = new Promotion(ED, ID, this);
 			events_list_.enqueue(eve);
 
 		}

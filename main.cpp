@@ -61,6 +61,17 @@ int main()
 	//l.peek(is);
 	//cout << is << endl;
 
+
+	/*LinkedList<int> l;
+	l.insert(4);
+	l.insert(5);
+	l.insert(6);
+	l.insert(7);
+
+	Node<int>* n = l.getNodeAt(1);
+	cout << n->getItem();*/
+
+
 	return 0;
 }
 

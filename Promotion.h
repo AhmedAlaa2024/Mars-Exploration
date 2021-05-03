@@ -7,7 +7,7 @@ class Promotion :
 {
 
 public:
-	Promotion(int ed, int id);
+	Promotion(int ed, int id, MarsStation* m_s);
 	virtual void Execute();
 
 	

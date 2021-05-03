@@ -8,11 +8,11 @@ class Pair
 	F Priority;
 public:
 	Pair() {};
-	Pair(T i, F p);
+	Pair(const T& i, const F& p);
 	T getItem();
 	F getPriority();
-	void setItem(T i);
-	void setPriority(F p);
+	void setItem(const T& i);
+	void setPriority(const F& p);
 	~Pair() {}
 
 };
@@ -20,7 +20,7 @@ public:
 
 
 template <typename T, typename F>
-Pair<T,F>::Pair(T i, F p)
+Pair<T,F>::Pair(const T& i, const F& p)
 {
 	setItem(i);
 	setPriority(p);
@@ -40,13 +40,13 @@ F Pair<T, F>::getPriority()
 
 
 template <typename T, typename F>
-void Pair<T, F>::setItem(T i)
+void Pair<T, F>::setItem(const T& i)
 {
 	item = i;
 }
 
 template <typename T, typename F>
-void Pair<T, F>::setPriority(F p)
+void Pair<T, F>::setPriority(const F& p)
 {
 	Priority = p;
 }

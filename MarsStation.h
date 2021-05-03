@@ -10,7 +10,7 @@
 #include "LinkedList.h"
 
 class UI; //forward declaration //makes the compilers know that there exists a class called UI
-
+class Event;
 
 class MarsStation
 {
@@ -45,7 +45,9 @@ private:
 
 	//masc info
 	int AutoP;
+
 	int current_day_;
+
 
 public:
 	MarsStation();
@@ -61,6 +63,7 @@ public:
 	void CollectStatistics_Console();  // TODO like for file
 
 
+
 	//Simulation
 	void simulate_day();
 	void assign_missions();
@@ -70,3 +73,37 @@ public:
 
 };
 
+
+
+	//I will move those funcs in the .cpp file isa do not worry 
+
+	LinkedList<Mission*>& get_waiting_mountainous_missions_()
+	{
+		return waiting_mountainous_missions_;
+	}
+
+
+	LinkedBAG<Mission*>& get_mission_DB()
+	{
+		return MISSIONS_DB;
+	}
+
+
+	LinkedPriorityQueue<Mission*, int>& get_W_E_M()
+	{
+		return waiting_emergency_missions_;;
+	}
+
+
+	LinkedList<Mission*>& get_W_M_M()
+	{
+		return waiting_mountainous_missions_;
+	}
+
+
+	LinkedQueue<Mission*>& get_W_P_M()
+	{
+		return waiting_polar_missions_;
+	}
+
+};

@@ -1,11 +1,14 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
+
 Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
 TL(tl), MD(md), asigned(false), WD(0), CD(0)
+
 {
 	is_promoted = false;
 }
+
 
 int Mission::getFD() const
 {
@@ -40,6 +43,11 @@ int Mission::getWD() const
 int Mission::getCD() const
 {
 	return CD;
+}
+
+int Mission::getID() const
+{
+	return ID;
 }
 
 bool Mission::isCompleted(int currentDay) const
@@ -126,6 +134,14 @@ void Mission::set_priority(int prio)
 }
 
 
+
+bool Mission::setMS(MISSION_STATUS ms)
+{
+	MS = ms;
+	return true;
+}
+
+
 bool Mission::WaitAnotherDay()
 {
 	if (CD != 0) // Means that the mission is already completed, So no need to wait another day!
@@ -154,4 +170,12 @@ bool Mission::Promote()
 
 	
 	return true;
+
+
+
+int Mission::Weight()
+{
+	//return the value of the weighted equation
+
+	return (40 * SIG + 15 * TL + 10 * MD + 5 * FD);
 }
