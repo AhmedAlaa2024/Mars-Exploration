@@ -71,8 +71,11 @@ void UI::InteractivePrinting() const
 		while (true)
 		{
 			//check if there is no mission in the queue
-			if (p_station->get_W_E_M().isEmpty()) break;   //it will be executed in each iteration ---> overhead ---> later
-
+			if (p_station->get_W_E_M().isEmpty())  //it will be executed in each iteration ---> overhead ---> later
+			{
+				cout << "]";
+				break;
+			}
 			p_station->get_W_E_M().dequeue(m);
 
 			p_station->get_W_E_M().peek(fm);
@@ -101,8 +104,11 @@ void UI::InteractivePrinting() const
 		while (true)
 		{
 			//check if there is no mission in the queue
-			if (p_station->get_W_P_M().isEmpty()) break;   //it will be executed in each iteration ---> overhead ---> later
-
+			if (p_station->get_W_P_M().isEmpty())   //it will be executed in each iteration ---> overhead ---> later
+			{
+				cout << ")";
+				break;
+			}
 			p_station->get_W_P_M().dequeue(m);
 
 			p_station->get_W_P_M().peek(fm);
