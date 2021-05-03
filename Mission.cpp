@@ -1,10 +1,11 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0)
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md, int sig, int id) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0), SIG(sig),ID(id)
 {
 	// Nothing To do
 }
+
 
 int Mission::getFD() const
 {
@@ -39,6 +40,11 @@ int Mission::getWD() const
 int Mission::getCD() const
 {
 	return CD;
+}
+
+int Mission::getID() const
+{
+	return ID;
 }
 
 bool Mission::isCompleted(int currentDay) const
@@ -112,6 +118,12 @@ bool Mission::setSssignedRoverId(int id)
 	return true;
 }
 
+bool Mission::setMS(MISSION_STATUS ms)
+{
+	MS = ms;
+	return true;
+}
+
 bool Mission::WaitAnotherDay()
 {
 	if (CD != 0) // Means that the mission is already completed, So no need to wait another day!
@@ -140,4 +152,13 @@ bool Mission::Promote()
 
 	MT = MISSION_TYPE::EMERGENCY;
 	return true;
+}
+
+
+
+int Mission::Weight()
+{
+	//return the value of the weighted equation
+
+	return (40 * SIG + 15 * TL + 10 * MD + 5 * FD);
 }

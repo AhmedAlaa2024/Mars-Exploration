@@ -5,6 +5,7 @@
 class Mission
 {
 private:
+	int SIG;  //Mission Significance
 	int FD; // Formulation Day
 	MISSION_TYPE MT; // Mission Type
 	MISSION_STATUS MS; // Mission Status
@@ -14,10 +15,12 @@ private:
 	int WD; // Waiting Durations
 	int CD; // Complete Date
 	int assignedRoverId;
+	int ID;
 public:
 	// Default Constructor
-	Mission(int fd = 0, MISSION_TYPE mt = MISSION_TYPE::UNDETERMINED, int tl = 0, int md = 0);
+	Mission(int fd = 0, MISSION_TYPE mt = MISSION_TYPE::UNDETERMINED, int tl = 0, int md = 0, int sig = 0, int id = 0);
 
+	
 	// Getters
 	int getFD() const;
 	MISSION_TYPE getMT() const;
@@ -29,6 +32,7 @@ public:
 	int getCD() const;
 	bool isCompleted(int currentDay) const;
 	int getRoverId() const;
+	int getID() const;
 	
 	// Setters
 	bool setFD(int fd);
@@ -37,10 +41,12 @@ public:
 	bool setMD(int md);
 	bool setWD(int wd);
 	bool setSssignedRoverId(int id);
+	bool setMS(MISSION_STATUS ms);   //modifiable
 
 	// Specific Member Functions
 	bool WaitAnotherDay();
 	bool Complete(int speed);
 	bool Promote();
+	int Weight();
 
 };

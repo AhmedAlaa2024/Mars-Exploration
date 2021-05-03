@@ -12,7 +12,7 @@ class Formulation :
 	int SIG; // mission’s significance.
 	
 public:
-	Formulation(char typ, int ed, int id, double tloc,int mdur, int sig );
+	Formulation(char typ, int ed, int id, double tloc,int mdur, int sig, MarsStation* m_s);
 	virtual void Execute();
 
 	
