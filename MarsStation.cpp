@@ -314,8 +314,8 @@ void MarsStation::check_auto_promotion()
 		Mission* mm = waiting_mountainous_missions_.getEntry(i);
 		if (!mm->get_is_promoted() && mm->getWD() > AutoP)
 		{
-			Event* eve = new Promotion(current_day_, mm->getID(), this);
-			events_list_.enqueue(eve);
+			Promotion pr(current_day_, mm->getID(), this);
+			pr.Execute();
 
 		}
 
