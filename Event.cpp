@@ -1,7 +1,8 @@
 #include "Event.h"
 
-Event::Event(int ed,int id)
+Event::Event(int ed,int id, MarsStation* m_s)
 {
+	M_S = m_s;
 	ED = ed;
 	ID = id;
 }

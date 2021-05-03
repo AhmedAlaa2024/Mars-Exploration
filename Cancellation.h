@@ -8,7 +8,7 @@ class Cancellation :
 	
 	
 public:
-	Cancellation(int ed, int id);
+	Cancellation(int ed, int id, MarsStation* m_s);
 	virtual void Execute();
 
 };
