@@ -1,17 +1,17 @@
 #include "MarsStation.h"
 #include <iostream>
 #include <fstream>
-
+#include "Defs.h"
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
-#include "Defs.h"
-
-MarsStation::MarsStation() :AutoP(0)
+MarsStation::MarsStation() :AutoP(0), current_day_(0)
 {
 
 	my_ui = new UI(this);
 	read_input_file();
+
+
 }
 
 SIM_MODE MarsStation::get_input_mode() const
@@ -160,7 +160,15 @@ bool MarsStation::writeOutputFile() const
 
 void MarsStation::CollectStatistics_Console()
 {
+
+
+
+
 }
+
+
+
+
 
 int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
 {
@@ -198,4 +206,230 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	AvgEx = ED / Missions;
 	Auto = (Auto / MM) * 100;
 	return Auto;
+}
+
+void MarsStation::simulate_day()
+{
+	current_day_++; //advance the day
+	Event* eve;
+
+	//execute for events
+	while (true)
+	{
+		events_list_.peek(eve);
+		if (eve->get_ED() == current_day_)
+		{
+			events_list_.dequeue(eve);
+			eve->Execute();
+		}
+		else
+			break;
+
+	}
+
+	//assign missions
+	assign_missions();
+
+
+	//check completion
+	check_completed_missions();
+
+
+
+}
+
+void move_to_in_ex_list(Mission * miss)
+{
+	//in_execution_missions_ add
+
+	//remove from waiting
+
+	MISSION_TYPE type = miss->getMT();
+
+	if(type == MISSION_TYPE::MOUNTAINOUS)
+	{
+		
+	}
+
+	
+}
+
+
+void MarsStation::assign_missions()
+{
+	Mission* mm;
+
+	//first assign emergency missions
+	LinkedPriorityQueue<Mission*, int> temp;
+	while (waiting_emergency_missions_.dequeue(mm))
+	{
+		Rover* r;
+		if (available_rovers_emergency_.dequeue(r))
+		{
+			
+			mm->Assign(r);
+			//add to in_ex list
+			move_to_in_ex_list(mm);
+
+		}
+		else if (available_rovers_mountainous_.dequeue(r))
+		{
+			mm->Assign(r);
+			//add to in_ex list
+			move_to_in_ex_list(mm);
+
+
+		}
+		else if (available_rovers_polar_.dequeue(r)) {
+			mm->Assign(r);
+
+			//add to in_ex list
+			move_to_in_ex_list(mm);
+
+
+		}
+		else //no rover is available
+		{
+			mm->WaitAnotherDay();
+			Pair<Mission*, int> p(mm, mm->get_priority());
+			temp.enqueue(p);
+
+		}
+
+
+	}
+	waiting_emergency_missions_ = temp;
+
+	while (temp.dequeue(mm)) // to clear it
+	{
+
+	}
+
+	//second: assign polar missions
+
+	while (waiting_polar_missions_.dequeue(mm))
+	{
+		Rover* r;
+		if (available_rovers_polar_.dequeue(r)) {
+			mm->Assign(r);
+			//add to in_ex list
+
+		}
+		else //no rover is available
+		{
+			mm->WaitAnotherDay();
+			Pair<Mission*, int> p(mm, mm->get_priority());
+			temp.enqueue(p);
+
+		}
+
+	}
+
+
+	//now The Mountainous
+	//NOTE:: we don't need temp here
+	while (waiting_emergency_missions_.dequeue(mm)) //----------TODO :---(CHANGE THIS)---
+	{
+		Rover* r;
+
+		if (!mm->get_is_promoted() && mm->getWD() > AutoP)
+		{
+			mm->Promote();
+		}
+
+
+
+
+		if (mm->get_is_promoted()) //treat it as an emergency
+		{
+			if (available_rovers_emergency_.dequeue(r))
+			{
+				mm->Assign(r);
+				r->AssignTo(mm,current_day_);
+				//add to in_ex list
+				move_to_in_ex_list(mm);
+
+
+			}
+			else if (available_rovers_mountainous_.dequeue(r))
+			{
+				mm->Assign(r);
+				r->AssignTo(mm, current_day_);
+
+				//add to in_ex list
+				move_to_in_ex_list(mm);
+
+
+
+			}
+			else if (available_rovers_polar_.dequeue(r)) {
+				mm->Assign(r);
+				r->AssignTo(mm, current_day_);
+
+				//add to in_ex list
+				move_to_in_ex_list(mm);
+
+
+			}
+			else //no rover is available
+			{
+				mm->WaitAnotherDay();
+				Pair<Mission*, int> p(mm, mm->get_priority());
+				temp.enqueue(p);
+
+			}
+
+		}
+		else //a normal Mountainous
+		{
+			if (available_rovers_mountainous_.dequeue(r))
+			{
+				mm->Assign(r);
+				r->AssignTo(mm, current_day_);
+
+				//add to in_ex list
+				move_to_in_ex_list(mm);
+
+
+
+			}
+			else if (available_rovers_emergency_.dequeue(r))
+			{
+				mm->Assign(r);
+				r->AssignTo(mm, current_day_);
+
+				//add to in_ex list
+				move_to_in_ex_list(mm);
+
+
+
+			}
+			else //no rover is available
+			{
+				mm->WaitAnotherDay();
+				Pair<Mission*, int> p(mm, mm->get_priority());
+				//temp.enqueue(p);
+
+
+
+			}
+		}
+
+	}
+
+
+
+
+}
+
+void MarsStation::check_completed_missions()
+{
+	
+
+
+	
+	
+
+	
+
 }

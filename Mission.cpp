@@ -1,9 +1,12 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md, int sig, int id) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING), TL(tl), MD(md), asigned(false), WD(0), CD(0), SIG(sig),ID(id)
+
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
+TL(tl), MD(md), asigned(false), WD(0), CD(0)
+
 {
-	// Nothing To do
+	is_promoted = false;
 }
 
 
@@ -49,14 +52,30 @@ int Mission::getID() const
 
 bool Mission::isCompleted(int currentDay) const
 {
-	if (CD > currentDay)
-		return false;
-	return true;
+	if (CD == currentDay)
+		return true;
+	return false;
 }
 
-int Mission::getRoverId() const
+Rover* Mission::getRover() const
 {
-	return assignedRoverId;
+	return assignedRover;
+}
+
+void Mission::Assign(Rover* r)
+{
+	assignedRover = r;
+	asigned = true;
+}
+
+int Mission::get_priority() const
+{
+	return priority_;
+}
+
+bool Mission::get_is_promoted() const
+{
+	return is_promoted;
 }
 
 bool Mission::setFD(int fd)
@@ -65,6 +84,7 @@ bool Mission::setFD(int fd)
 		return false;
 
 	FD = fd;
+	return true;
 }
 
 bool Mission::setMT(MISSION_TYPE mt)
@@ -108,21 +128,19 @@ bool Mission::setWD(int wd)
 	return true;
 }
 
-bool Mission::setSssignedRoverId(int id)
+void Mission::set_priority(int prio)
 {
-	if (asigned)
-		return false;
-
-	assignedRoverId = id;
-	asigned = true;
-	return true;
+	priority_ = prio;
 }
+
+
 
 bool Mission::setMS(MISSION_STATUS ms)
 {
 	MS = ms;
 	return true;
 }
+
 
 bool Mission::WaitAnotherDay()
 {
@@ -144,15 +162,14 @@ bool Mission::Complete(int speed)
 
 bool Mission::Promote()
 {
-	if (CD != 0) // Means that the mission is already completed, So no need to be promoted!
-		return false;
-
 	if (MT != MISSION_TYPE::MOUNTAINOUS) // The Mountainous missions only are allowed to be promoted!
 		return false;
 
+	is_promoted = true;
 	MT = MISSION_TYPE::EMERGENCY;
+
+	
 	return true;
-}
 
 
 

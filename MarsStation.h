@@ -30,6 +30,7 @@ private:
 	LinkedPriorityQueue<Mission*, int> waiting_emergency_missions_;
 	LinkedList<Mission*> waiting_mountainous_missions_;
 	LinkedQueue<Mission*> waiting_polar_missions_;
+	
 	LinkedList<Mission*> in_execution_missions_;
 	LinkedList<Mission*> completed_missions_;
 
@@ -45,6 +46,9 @@ private:
 	//masc info
 	int AutoP;
 
+	int current_day_;
+
+
 public:
 	MarsStation();
 
@@ -57,6 +61,17 @@ public:
 
 	bool writeOutputFile() const;
 	void CollectStatistics_Console();  // TODO like for file
+
+
+
+	//Simulation
+	void simulate_day();
+	void assign_missions();
+	void check_completed_missions();
+
+
+
+};
 
 
 

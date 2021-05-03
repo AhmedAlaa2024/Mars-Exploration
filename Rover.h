@@ -31,7 +31,7 @@ public:
 	Mission* getAssignedMission() const;
 	int getID() const;
 
-	
+
 	// Setters
 	bool setRT(ROVER_TYPE rt);
 	bool setCheckUPDuration(int checkupDur);
@@ -42,4 +42,6 @@ public:
 	// Specific Member Functions
 	bool AssignTo(Mission* m, int currentDay);
 	bool CheckUP(int currentDay);
+
+	
 };
