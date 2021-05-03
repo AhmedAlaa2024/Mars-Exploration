@@ -40,13 +40,18 @@ private:
 
 	// User Interface
 	UI* my_ui;
-	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&) const;
-
+	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 
 	//masc info
 	int AutoP;
 
 	int current_day_;
+
+	int MRCount;
+	int PRCount;
+	int ERCount;
+
+	//Some utility functions
 
 
 public:
@@ -59,7 +64,7 @@ public:
 	bool read_input_file();
 
 
-	bool writeOutputFile() const;
+	bool writeOutputFile();
 	void CollectStatistics_Console();  // TODO like for file
 
 

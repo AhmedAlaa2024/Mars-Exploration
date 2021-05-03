@@ -37,12 +37,14 @@ SIM_MODE UI::get_input_mode()
 // TO BE CHANGED....
 void UI::InteractivePrinting() const
 {
+	cout << "Interactive Mode\n";
 	p_station->CollectStatistics_Console();
 	// TODO:: cout statistics and wait for cin
 }
 // TO BE CHANGED....
 void UI::StepByStepPrinting() const
 {
+	cout << "Step by step Mode\n";
 	p_station->CollectStatistics_Console();
 	// TODO:: cout statistics and wait for some time then cout
 }
@@ -51,5 +53,10 @@ void UI::SilentPrinting() const
 {
 	cout << "Silent Mode\n";
 	cout << "Simulation Starts...\n";
-	cout << "Simulation ends, Output file created\n";
+
+	bool isWritten = p_station->writeOutputFile();
+	if (isWritten)
+		cout << "Simulation ends, Output file created\n";
+	else
+		cout << "Error! writing into file\n";
 }

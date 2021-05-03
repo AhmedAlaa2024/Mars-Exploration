@@ -34,10 +34,14 @@ public:
 
 	// Setters
 	bool setRT(ROVER_TYPE rt);
+	void SetRS(ROVER_STATUS rs);
 	bool setCheckUPDuration(int checkupDur);
 	bool setSpeed(int sp);
 	bool setMaxMissions(int max);
 	bool setID(int id);
+
+
+	void incrementCompletedMissions();
 
 	// Specific Member Functions
 	bool AssignTo(Mission* m, int currentDay);

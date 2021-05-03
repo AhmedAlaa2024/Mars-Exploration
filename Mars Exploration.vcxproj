@@ -171,6 +171,7 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="input.txt" />
     <Text Include="Team Tasks.txt" />
   </ItemGroup>
   <ItemGroup>

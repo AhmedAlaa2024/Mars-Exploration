@@ -55,7 +55,7 @@ LinkedBAG<Mission*>& MarsStation::get_mission_DB()
 
 LinkedPriorityQueue<Mission*, int>& MarsStation::get_W_E_M()
 {
-	return waiting_emergency_missions_;;
+	return waiting_emergency_missions_;
 }
 
 
@@ -82,8 +82,7 @@ bool MarsStation::read_input_file()
 
 
 
-	int M, P, E; //no of each Rover Type
-	my_file >> M >> P >> E;
+	my_file >> MRCount >> PRCount >> ERCount;
 	int SM, SP, SE; //speed of each type
 	my_file >> SM >> SP >> SE;
 
@@ -96,7 +95,7 @@ bool MarsStation::read_input_file()
 	int ids = 0;
 	
 	// Create Mountainous Rovers
-	for (int i = 0; i < M; ++i)
+	for (int i = 0; i < MRCount; ++i)
 	{
 		Rover* r = new Rover(ROVER_TYPE::MOUNTAINOUS, CM, SM, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
@@ -104,7 +103,7 @@ bool MarsStation::read_input_file()
 	}
 
 	// Create Polar Rovers
-	for (int i = 0; i < P; ++i)
+	for (int i = 0; i < PRCount; ++i)
 	{
 		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
@@ -112,7 +111,7 @@ bool MarsStation::read_input_file()
 	}
 	
 	// Create Emergency Rovers
-	for (int i = 0; i < E; ++i)
+	for (int i = 0; i < ERCount; ++i)
 	{
 		Rover* r = new Rover(ROVER_TYPE::EMERGENCY, CE, SE, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
@@ -174,7 +173,7 @@ bool MarsStation::read_input_file()
 	return true;
 }
 
-bool MarsStation::writeOutputFile() const
+bool MarsStation::writeOutputFile()
 {
 	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
 	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
@@ -203,36 +202,41 @@ void MarsStation::CollectStatistics_Console()
 
 
 
-int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
+int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
 {
+	Mission* Ptr = nullptr;
 	int Auto = 0;
 	int WD = 0;
 	int ED = 0;
 	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
-	char TYP = 'j'; //mission type, TO BE CHANGED
-	while (true) // To be changed after making CM Queue
+	MISSION_TYPE TYP;
+	int dummy = 1;
+	while (!completed_missions_.isEmpty())
 	{
+		Ptr = completed_missions_.getNodeAt(dummy)->getItem();
+		TYP = Ptr->getMT();
 		Missions++;
-		//WD += WD for the current mission
-		//ED += ED for the current mission
+		WD += Ptr->getWD();
+		ED += Ptr->getCD() - (Ptr->getFD() + Ptr->getWD());
 		switch (TYP)
 		{
-		case 'M':
+		case MISSION_TYPE::MOUNTAINOUS:
 			MM++;
 			break;
-		case 'P':
+		case MISSION_TYPE::POLAR:
 			PM++;
 			break;
-		case 'E':
+		case MISSION_TYPE::UNDETERMINED:
 			EM++;
 			break;
 		}
+		dummy++;
 	}
-	while (true) // To be changed after making Rovers
-	{
-		//counting rovers and their type
-	}
-
+	MR = MRCount;
+	PR = PRCount;
+	ER = ERCount;
+	Rovers = MR + PR + ER;
+	
 	//TODO:: Calcuclate Auto
 
 	AvgW = WD / Missions;
@@ -457,12 +461,25 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
-	
+	int Count = in_execution_missions_.getItemCount();
+	Mission* MPtr = nullptr;
+	Rover* RPtr = nullptr;
+	bool isComp = false;
+	for (int i = 1; i <= Count; i++)
+	{
+		MPtr = in_execution_missions_.getNodeAt(i)->getItem();
+		isComp = MPtr->isCompleted(current_day_);
+		if (isComp)
+		{
 
-
-	
-	
-
-	
-
+			RPtr = MPtr->getRover();
+			RPtr->incrementCompletedMissions();
+			if (RPtr->getMaxMissions() == RPtr->getNumCompletedMissions())
+				RPtr->CheckUP(current_day_);
+			else
+				RPtr->SetRS(ROVER_STATUS::WAITING);
+			completed_missions_.insert(MPtr);
+			in_execution_missions_.remove(i);
+		}
+	}
 }
