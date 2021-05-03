@@ -3,7 +3,7 @@
 
 template <typename T>
 class LinkedList :
-    public ListADT<T>
+	public ListADT<T>
 {
 private:
 	Node<T>* Head;	//Pointer to the head of the list
@@ -20,8 +20,8 @@ public:
 	virtual bool isEmpty() const;
 	virtual bool insert(const T&);
 	virtual bool remove(int index);
-	virtual bool clear() ;
-	virtual int getEntry(const T&) const;
+	virtual bool clear();
+	virtual T getEntry(const int) const;
 	virtual bool contains(T&) const;
 	int getItemCount();
 	void DeleteAll();
@@ -55,7 +55,7 @@ LinkedList<T>::LinkedList(LinkedList& l)
 template <typename T>
 Node<T>* LinkedList<T>::getNodeAt(int index)
 {
-	if (index > itemCount  || index <= 0) return nullptr;
+	if (index > itemCount || index <= 0) return nullptr;
 	Node<T>* curPtr = Head;
 	for (int i = 1; i < index; i++)
 	{
@@ -104,7 +104,7 @@ template <typename T>
 bool LinkedList<T>::insert(const T& data)
 {
 	Node<T>* R = new Node<T>(data);
-	
+
 	if (!R)
 		return false;
 
@@ -120,7 +120,7 @@ template <typename T>
 bool LinkedList<T>::remove(int index)
 {
 	bool ableToRemove = (index >= 1 && index <= itemCount);
-	
+
 	if (ableToRemove)
 	{
 		Node<T>* curptr = nullptr;
@@ -135,7 +135,7 @@ bool LinkedList<T>::remove(int index)
 			curptr = prevPtr->getNext();
 			prevPtr->setNext(curptr->getNext());
 		}
-
+		
 		curptr->setNext(nullptr);
 		itemCount--;
 	}
@@ -152,9 +152,19 @@ bool LinkedList<T>::clear()
 
 
 template <typename T>
-int LinkedList<T>::getEntry(const T&) const
+T LinkedList<T>::getEntry(const int ind) const
 {
-	return 0;
+	Node<T>* ptr = Head;
+
+
+	for (int i = 1; i < ind; ++i)
+	{
+		ptr = ptr->getNext();
+	}
+
+	if (ptr)
+		return ptr->getItem();
+	return nullptr;
 }
 
 

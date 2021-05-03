@@ -51,9 +51,9 @@ private:
 	int PRCount;
 	int ERCount;
 
-	//Some utility functions
-
-
+	void check_auto_promotion();
+	//utility functions
+	void move_to_in_ex_list(Mission* miss);
 public:
 	MarsStation();
 
