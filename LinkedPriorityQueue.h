@@ -8,7 +8,7 @@
 
 
 template <typename T, typename F>
-class LinkedPriorityQueue :public PriorityQueueADT<Pair<T, F>>
+class LinkedPriorityQueue :public PriorityQueueADT<T, F>
 {
 	//data members
 	Node<Pair<T, F>>* front;
@@ -17,10 +17,10 @@ class LinkedPriorityQueue :public PriorityQueueADT<Pair<T, F>>
 public:
 	LinkedPriorityQueue();
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
-	virtual bool isEmpty() const ;
-	virtual bool enqueue(const Pair<T,F>&);
-	virtual bool dequeue(Pair<T, F>&);
-	virtual bool peek(Pair<T, F>&);
+	virtual bool isEmpty() const;
+	virtual bool enqueue(const Pair<T, F>&);
+	virtual bool dequeue(T&);
+	virtual bool peek(T&);
 	virtual ~LinkedPriorityQueue();
 };
 

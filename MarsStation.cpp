@@ -199,3 +199,187 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	Auto = (Auto / MM) * 100;
 	return Auto;
 }
+
+void MarsStation::simulate_day()
+{
+	current_day_++; //advance the day
+	Event* eve;
+
+	//execute for events
+	while (true)
+	{
+		events_list_.peek(eve);
+		if (eve->get_ED() == current_day_)
+		{
+			events_list_.dequeue(eve);
+			eve->Execute();
+		}
+		else
+			break;
+
+	}
+
+	//assign missions
+	assign_missions();
+
+
+	//check completion
+	check_completed_missions();
+
+
+
+}
+
+void MarsStation::assign_missions()
+{
+	Mission* mm;
+
+	//first assign emergency missions
+	LinkedPriorityQueue<Mission*, int> temp;
+	while (waiting_emergency_missions_.dequeue(mm))
+	{
+		Rover* r;
+		if (available_rovers_emergency_.dequeue(r))
+		{
+			
+			mm->Assign(r->get_id());
+			//add to in_ex list
+
+		}
+		else if (available_rovers_mountainous_.dequeue(r))
+		{
+			mm->Assign(r->get_id());
+			//add to in_ex list
+
+		}
+		else if (available_rovers_polar_.dequeue(r)) {
+			mm->Assign(r->get_id());
+
+			//add to in_ex list
+
+		}
+		else //no rover is available
+		{
+			mm->WaitAnotherDay();
+			Pair<Mission*, int> p(mm, mm->get_priority());
+			temp.enqueue(p);
+
+		}
+
+
+	}
+	waiting_emergency_missions_ = temp;
+
+	while (temp.dequeue(mm)) // to clear it
+	{
+
+	}
+
+	//second: assign polar missions
+
+	while (waiting_polar_missions_.dequeue(mm))
+	{
+		Rover* r;
+		if (available_rovers_polar_.dequeue(r)) {
+			mm->Assign(r->get_id());
+			//add to in_ex list
+
+		}
+		else //no rover is available
+		{
+			mm->WaitAnotherDay();
+			Pair<Mission*, int> p(mm, mm->get_priority());
+			temp.enqueue(p);
+
+		}
+
+	}
+
+
+	//now The Mountainous
+	while (waiting_emergency_missions_.dequeue(mm)) //TODO :,,,CHANGE THIS,,
+	{
+		Rover* r;
+
+		if (!mm->get_is_promoted() && mm->getWD() > AutoP)
+		{
+			mm->Promote();
+		}
+
+
+
+
+		if (mm->get_is_promoted()) //treat it as an emergency
+		{
+			if (available_rovers_emergency_.dequeue(r))
+			{
+				mm->Assign(r->get_id());
+				//add to in_ex list
+
+			}
+			else if (available_rovers_mountainous_.dequeue(r))
+			{
+				mm->Assign(r->get_id());
+				//add to in_ex list
+
+
+			}
+			else if (available_rovers_polar_.dequeue(r)) {
+				mm->Assign(r->get_id());
+				//add to in_ex list
+
+			}
+			else //no rover is available
+			{
+				mm->WaitAnotherDay();
+				Pair<Mission*, int> p(mm, mm->get_priority());
+				temp.enqueue(p);
+
+			}
+
+		}
+		else //a normal Mountainous
+		{
+			if (available_rovers_mountainous_.dequeue(r))
+			{
+				mm->Assign(r->get_id());
+				//add to in_ex list
+
+
+			}
+			else if (available_rovers_emergency_.dequeue(r))
+			{
+				mm->Assign(r->get_id());
+				//add to in_ex list
+
+
+			}
+			else //no rover is available
+			{
+				mm->WaitAnotherDay();
+				Pair<Mission*, int> p(mm, mm->get_priority());
+				temp.enqueue(p);
+
+
+
+			}
+		}
+
+	}
+
+
+
+
+}
+
+void MarsStation::check_completed_missions()
+{
+	
+
+
+	
+	
+
+	
+
+}

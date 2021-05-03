@@ -3,6 +3,8 @@
 #include "Mission.h"
 #include "Defs.h"
 
+class Mission;
+
 class Rover
 {
 private:
