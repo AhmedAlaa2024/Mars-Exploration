@@ -12,6 +12,7 @@ class LinkedQueue :
 private:
     Node<T>* front;
     Node<T>* back;
+    int itemCount;
 
 public:
     // Zero Argument Default Constructor
@@ -26,12 +27,14 @@ public:
     bool dequeue(T&); // Complexity = O(1)
     bool peek(T&); // Complexity = O(1)
 
+    int get_itemCount();
+
     // Destructor
     ~LinkedQueue(); // Complexity = O(n)
 };
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue() {
+LinkedQueue<T>::LinkedQueue():itemCount(0){
     front = nullptr;
     back = nullptr;
 }
@@ -58,6 +61,11 @@ LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> &LQ) {    //why do not you use 
     }
 }
 
+template <typename T>
+int LinkedQueue<T>::get_itemCount()
+{
+    return itemCount;
+}
 
 template <typename T>
 bool LinkedQueue<T>::isEmpty() const {
@@ -75,6 +83,7 @@ bool LinkedQueue<T>::enqueue(const T& newEntry) {
         back->setNext(ptr);
 
     back = ptr;
+    itemCount++;
     return true;
 }
 
@@ -93,6 +102,7 @@ bool LinkedQueue<T>::dequeue(T& fEntry)
         back = nullptr;
 
     delete ptr;
+    itemCount--;
     return true;
 }
 

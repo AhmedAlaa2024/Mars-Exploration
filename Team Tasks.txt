@@ -4,14 +4,17 @@
 2. Private Members of MarsStation -> Need To be written!                       [*]
 3. Input Methods -> Need to be completed!                                      [ ]
 4. Output Methods -> Need to be completed!                                     [ ]
-5. Classess Cancellation, Formulation, Pronotion -> Need to be completed!      [ ]
-6. Class List ADT, LinkedList -> Need to be completed!                         [ ]
+5. Classess Cancellation, Formulation, Pronotion -> Need to be completed!      [*]
+6. Class List ADT, LinkedList -> Need to be completed!                         [*]
 
 x - Simulation
 	7- Events Implementations (P,X, F)
 	8- Missions Assignment
 	9- The Completion process
 	10- Modes Implementations
+		10.1. interactive                                                      [*]
+		10.2. step by step
+		10.3. silent
 
 
 
@@ -34,5 +37,6 @@ No of tasks: 4																   [ ]
 ----------------------------------------------------------
 [4] - Doaa Magdy:															   [ ]
 ------------------
-No of tasks: 5, 6															   [ ]
- 7 																			   [ ]
+No of tasks: 5, 6															   [*]
+ 7 																			   [*]
+ 10.1                                                                          [*]

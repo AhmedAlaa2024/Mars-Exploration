@@ -5,7 +5,7 @@
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
-MarsStation::MarsStation() :AutoP(0), current_day_(0)
+MarsStation::MarsStation() :AutoP(0), current_day_(0), Cancelled_M(0), Formulated_M(0)
 {
 
 	my_ui = new UI(this);
@@ -39,7 +39,6 @@ void MarsStation::execute_mode(SIM_MODE mode)
 }
 
 
-//I will move those funcs in the .cpp file isa do not worry 
 
 LinkedList<Mission*>& MarsStation::get_waiting_mountainous_missions_()
 {
@@ -68,6 +67,42 @@ LinkedList<Mission*>& MarsStation::get_W_M_M()
 LinkedQueue<Mission*>& MarsStation::get_W_P_M()
 {
 	return waiting_polar_missions_;
+}
+
+
+LinkedList<Mission*>& MarsStation::get_in_execution_missions()
+{
+	return in_execution_missions_;
+}
+
+LinkedList<Rover*>& MarsStation::get_check_up_rovers_()
+{
+	return check_up_rovers_;
+}
+
+LinkedList<Mission*>& MarsStation::get_completed_missions_()
+{
+	return completed_missions_;
+}
+
+LinkedPriorityQueue<Rover*, double>& MarsStation::get_available_rovers_emergency_()
+{
+	return available_rovers_emergency_;
+}
+
+LinkedPriorityQueue<Rover*, double>& MarsStation::get_available_rovers_mountainous_()
+{
+	return available_rovers_mountainous_;
+}
+
+LinkedPriorityQueue<Rover*, double>& MarsStation::get_available_rovers_polar_()
+{
+	return available_rovers_polar_;
+}
+
+int MarsStation::get_current_day()
+{
+	return current_day_;
 }
 
 
@@ -241,6 +276,30 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	return Auto;
 }
 
+
+bool MarsStation::check_Last_Day()
+{
+	// first of all we have to check on both the event list and the the completed list
+	//if the no of missoins in the completed list == # formulated missions - # cancelled missions
+	// && the event list is empty 
+	//then no simulate_day() any more 
+	return (completed_missions_.getItemCount() == Formulated_M - Cancelled_M) && (events_list_.isEmpty());
+
+}
+
+
+void MarsStation::increment_Cancelled_M()
+{
+	Cancelled_M++;
+}
+
+
+void MarsStation::increment_Formulated_M()
+{
+	Formulated_M++;
+}
+
+
 void MarsStation::simulate_day()
 {
 	current_day_++; //advance the day
@@ -251,7 +310,7 @@ void MarsStation::simulate_day()
 	Event* eve;
 
 	//execute events
-	while (true)
+	while (true)      //why loop ?? because there may be more than one event in the same day
 	{
 		events_list_.peek(eve);
 		if (eve->get_ED() == current_day_)

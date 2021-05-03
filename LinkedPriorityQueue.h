@@ -13,7 +13,7 @@ class LinkedPriorityQueue :public PriorityQueueADT<T, F>
 	//data members
 	Node<Pair<T, F>>* front;
 	Node<Pair<T, F>>* back;   //or call it rear i think ---> which is better ):
-
+	int itemCount;
 public:
 	LinkedPriorityQueue();
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
@@ -22,11 +22,12 @@ public:
 	virtual bool dequeue(T&);
 	virtual bool peek(T&);
 	virtual ~LinkedPriorityQueue();
+	int get_itemCount();
 };
 
 
 template <typename T, typename F>
-LinkedPriorityQueue<T, F>::LinkedPriorityQueue()
+LinkedPriorityQueue<T, F>::LinkedPriorityQueue():itemCount(0)
 {
 	front = nullptr;
 	back = nullptr;
@@ -48,6 +49,13 @@ LinkedPriorityQueue<T, F>::LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& 
 
 
 template <typename T, typename F>
+int LinkedPriorityQueue<T, F>::get_itemCount()
+{
+	return itemCount;
+}
+
+
+template <typename T, typename F>
 bool LinkedPriorityQueue<T, F>::isEmpty() const
 {
 	return front == nullptr;
@@ -64,6 +72,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 		front = new Node<Pair<T, F>>(item);
 		back = front;
 		back->setNext(nullptr);
+		itemCount++;
 		return true;
 	}
 
@@ -75,6 +84,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 	{
 		insert->setNext(front);
 		front = insert;
+		itemCount++;
 		return true;
 	}
 
@@ -88,6 +98,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 			searchPos->setNext(insert);
 			insert->setNext(nullptr);
 			back = insert;
+			itemCount++;
 			return true;
 		}
 
@@ -95,6 +106,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 		{
 			insert->setNext(searchPos->getNext());
 			searchPos->setNext(insert);
+			itemCount++;
 			return true;
 		}
 		searchPos = searchPos->getNext();
@@ -115,6 +127,7 @@ bool LinkedPriorityQueue<T, F>::dequeue(T& item)
 		item = front->getItem().getItem();
 		delete front;
 		front = back = nullptr;
+		itemCount--;
 		return true;
 	}
 	//otherwise --> depueue the first item
@@ -122,6 +135,7 @@ bool LinkedPriorityQueue<T, F>::dequeue(T& item)
 	item = front->getItem().getItem();
 	front = front->getNext();
 	delete delPtr;
+	itemCount--;
 	return true;
 }
 
