@@ -10,6 +10,8 @@ Formulation::Formulation(char typ,int ed, int id, double tloc, int mdur, int sig
 
 void Formulation::Execute()   //creat the mission and put it in the appropriate list
 {
+	M_S->increment_Formulated_M();
+
 	Mission* m = new Mission(get_ED(), MISSION_TYPE::UNDETERMINED, TLOC, MDUR, SIG, get_ID());
 
 	//fill the data base list first
