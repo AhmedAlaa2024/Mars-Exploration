@@ -8,22 +8,31 @@
 6. Class List ADT, LinkedList -> Need to be completed!                         [ ]
 
 x - Simulation
+	7- Events Implementations (P,X, F)
+	8- Missions Assignment
+	9- The Completion process
+	10- Modes Implementations
+
+
+
+
 -----------------------------------------------------------
 [1] - Ahmed Alaa:															   [*]
 ------------------
 No of tasks: 1, 2															   [*]
-
+,10																			   [ ]
 ----------------------------------------------------------
 [2] - Ahmed Ata:															   [ ]
 -----------------
 No of tasks: 3																   [*]
-
+8																			   [ ]
 ----------------------------------------------------------
 [3] - Rufaida Mohamed:														   [ ]
 -----------------------
 No of tasks: 4																   [ ]
-
+ 9 																			   [ ]
 ----------------------------------------------------------
 [4] - Doaa Magdy:															   [ ]
 ------------------
 No of tasks: 5, 6															   [ ]
+ 7 																			   [ ]

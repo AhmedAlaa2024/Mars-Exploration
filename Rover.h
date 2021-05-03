@@ -42,4 +42,6 @@ public:
 	// Specific Member Functions
 	bool AssignTo(Mission* m, int currentDay);
 	bool CheckUP(int currentDay);
+
+	
 };

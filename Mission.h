@@ -2,6 +2,8 @@
 #pragma once
 #include "Defs.h"
 
+class Rover;
+
 class Mission
 {
 private:
@@ -13,7 +15,9 @@ private:
 	bool asigned;
 	int WD; // Waiting Durations
 	int CD; // Complete Date
-	int assignedRoverId;
+	Rover* assignedRover;
+	int priority_;
+	bool is_promoted;
 public:
 	// Default Constructor
 	Mission(int fd = 0, MISSION_TYPE mt = MISSION_TYPE::UNDETERMINED, int tl = 0, int md = 0);
@@ -28,15 +32,19 @@ public:
 	int getWD() const;
 	int getCD() const;
 	bool isCompleted(int currentDay) const;
-	int getRoverId() const;
+	Rover* getRover() const;
 
+	
+	void Assign(Rover* r);
+	int get_priority()const;
+	bool get_is_promoted() const;
 	// Setters
 	bool setFD(int fd);
 	bool setMT(MISSION_TYPE mt);
 	bool setTL(int tl);
 	bool setMD(int md);
 	bool setWD(int wd);
-	bool setSssignedRoverId(int id);
+	void set_priority(int prio);
 
 	// Specific Member Functions
 	bool WaitAnotherDay();

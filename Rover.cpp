@@ -103,7 +103,7 @@ bool Rover::AssignTo(Mission* m, int currentDay)
 	}
 	completedMissions++;
 	mission = m;
-	mission->setSssignedRoverId(ID);
+	
 	return true;
 }
 
