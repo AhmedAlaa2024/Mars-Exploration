@@ -67,7 +67,6 @@ void Mission::Assign(Rover* r)
 {
 	assignedRover = r;
 	asigned = true;
-	CD = WD + FD + MD; //Rufaida
 }
 
 int Mission::get_priority() const
