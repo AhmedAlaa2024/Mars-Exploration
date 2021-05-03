@@ -1,7 +1,7 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Rover.h"
 
-Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max, int id): RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr), ID(id)
+Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max, int id) : RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr), ID(id)
 {
 }
 

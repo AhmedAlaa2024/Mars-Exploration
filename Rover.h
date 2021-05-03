@@ -3,8 +3,6 @@
 #include "Mission.h"
 #include "Defs.h"
 
-class Mission;
-
 class Rover
 {
 private:
@@ -33,7 +31,7 @@ public:
 	Mission* getAssignedMission() const;
 	int getID() const;
 
-	
+
 	// Setters
 	bool setRT(ROVER_TYPE rt);
 	bool setCheckUPDuration(int checkupDur);

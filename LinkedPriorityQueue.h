@@ -13,12 +13,12 @@ class LinkedPriorityQueue :public PriorityQueueADT<T, F>
 	//data members
 	Node<Pair<T, F>>* front;
 	Node<Pair<T, F>>* back;   //or call it rear i think ---> which is better ):
-	
+
 public:
 	LinkedPriorityQueue();
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
-	virtual bool isEmpty() const ;
-	virtual bool enqueue(const Pair<T,F>&);
+	virtual bool isEmpty() const;
+	virtual bool enqueue(const Pair<T, F>&);
 	virtual bool dequeue(T&);
 	virtual bool peek(T&);
 	virtual ~LinkedPriorityQueue();
@@ -26,7 +26,7 @@ public:
 
 
 template <typename T, typename F>
-LinkedPriorityQueue<T,F>::LinkedPriorityQueue()
+LinkedPriorityQueue<T, F>::LinkedPriorityQueue()
 {
 	front = nullptr;
 	back = nullptr;
@@ -61,7 +61,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 	//in case the list is empty
 	if (!front)
 	{
-		front = new Node<Pair<T,F>>(item);
+		front = new Node<Pair<T, F>>(item);
 		back = front;
 		back->setNext(nullptr);
 		return true;
@@ -71,7 +71,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 	Node<Pair<T, F>>* insert = new Node<Pair<T, F>>(item);
 	Node<Pair<T, F>>* searchPos = front;
 	//in case it has the highest priority
-	if (insert->getItem().getPriority() > front->getItem().getPriority())    
+	if (insert->getItem().getPriority() > front->getItem().getPriority())
 	{
 		insert->setNext(front);
 		front = insert;
@@ -99,8 +99,8 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 		}
 		searchPos = searchPos->getNext();
 	}
-	
-	
+
+
 }
 
 template <typename T, typename F>
@@ -142,7 +142,7 @@ bool LinkedPriorityQueue<T, F>::peek(T& item)
 }
 
 template <typename T, typename F>
-LinkedPriorityQueue<T, F>::~LinkedPriorityQueue() 
+LinkedPriorityQueue<T, F>::~LinkedPriorityQueue()
 {
 	T temp;
 	//delete all items 

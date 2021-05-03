@@ -1,17 +1,17 @@
 #include "MarsStation.h"
 #include <iostream>
 #include <fstream>
-
+#include "Defs.h"
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
-#include "Defs.h"
-
-MarsStation::MarsStation() :AutoP(0)
+MarsStation::MarsStation() :AutoP(0), current_day_(0)
 {
 
 	my_ui = new UI(this);
 	read_input_file();
+
+
 }
 
 SIM_MODE MarsStation::get_input_mode() const
@@ -160,7 +160,15 @@ bool MarsStation::writeOutputFile() const
 
 void MarsStation::CollectStatistics_Console()
 {
+
+
+
+
 }
+
+
+
+
 
 int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
 {
