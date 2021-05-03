@@ -48,7 +48,10 @@ private:
 
 	int current_day_;
 
-
+	void check_auto_promotion();
+	//utility functions
+	void move_to_in_ex_list(Mission* miss);
+	
 public:
 	MarsStation();
 
