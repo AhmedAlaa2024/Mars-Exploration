@@ -35,7 +35,8 @@ enum class MISSION_TYPE {
 enum class MISSION_STATUS {
 	WAITING,
 	IN_EXECUTION,
-	COMPLETED
+	COMPLETED,
+	CANCELLED
 };
 
 //////////////////////////////////////////////////////////////////////////////////////
