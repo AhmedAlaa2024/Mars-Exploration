@@ -233,9 +233,9 @@ void UI::InteractivePrinting() const
 		cout << ") " << "{";
 
 
-		int n_PR = p_station->get_available_rovers_mountainous_().get_itemCount();
+		int n_MR = p_station->get_available_rovers_mountainous_().get_itemCount();
 		j = 0;
-		for (int i = 0; i < n_PR; i++)
+		for (int i = 0; i < n_MR; i++)
 		{
 			p_station->get_available_rovers_mountainous_().dequeue(r);
 			if (r->getRT() == ROVER_TYPE::MOUNTAINOUS)
