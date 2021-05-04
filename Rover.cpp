@@ -1,7 +1,9 @@
 /////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Rover.h"
 
-Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max, int id) : RS(ROVER_STATUS::WAITING), RT(rt), checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max), completedMissions(0), mission(nullptr), ID(id)
+Rover::Rover(ROVER_TYPE rt, int checkupDur, int sp, int max, int id) : RS(ROVER_STATUS::WAITING), RT(rt),
+checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max),
+completedMissions(0), mission(nullptr), ID(id)
 {
 }
 
@@ -73,13 +75,10 @@ bool Rover::setCheckUPDuration(int checkupDur)
 	return true;
 }
 
-bool Rover::setSpeed(int sp)
+void Rover::setSpeed(int sp)
 {
-	if (speed != 0) // Means that it already has its own value
-		return false;
-
 	speed = sp;
-	return true;
+	
 }
 
 bool Rover::setMaxMissions(int max)
@@ -105,16 +104,13 @@ void Rover::incrementCompletedMissions()
 	completedMissions++;
 }
 
-bool Rover::AssignTo(Mission* m, int currentDay)
+void Rover::AssignTo(Mission* m, int currentDay)
 {
-	if (completedMissions == MaxMissions && m->isCompleted(currentDay)) {
-		CheckUP(currentDay);
-		return false;
-	}
+	
 	completedMissions++;
 	mission = m;
 	
-	return true;
+	
 }
 
 

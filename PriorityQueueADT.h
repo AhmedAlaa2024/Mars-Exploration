@@ -1,5 +1,3 @@
-// i think that there is no need to this class ---> we can use the QueueADT class because they have the same functions ---> question to Ahmed Alaa
-//aslan ana 3malt copy ll class ally enta kont 3amlo :D
 //------- Doaa
 #pragma once
 #include "Pair.h"
