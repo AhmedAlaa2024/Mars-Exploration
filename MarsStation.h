@@ -58,8 +58,8 @@ private:
 	//utility functions
 	void move_to_in_ex_list(Mission* miss);
 
-	void MoveToAvailable(Rover*, int);
-	void MoveToCheckUp(Rover*, int);
+	void MoveToAvailable(Rover*);
+	void MoveToCheckUp(Rover*);
 	void SortCompletedList();
 public:
 	MarsStation();

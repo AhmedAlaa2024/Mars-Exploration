@@ -368,10 +368,16 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 
 
 }
-void MarsStation::MoveToAvailable(Rover* RPtr, int i)
+void MarsStation::MoveToAvailable(Rover* RPtr)
 {
-
-	in_execution_rovers_.remove(i);
+	int count = in_execution_rovers_.getItemCount();
+	for (int i = 1; i <= count; i++)
+	{
+		if (RPtr == in_execution_rovers_.getEntry(i))
+		{
+			in_execution_rovers_.remove(i);
+		}
+	}
 	Pair<Rover*, double> pair(RPtr, RPtr->getSpeed());
 	switch (RPtr->getRT())
 	{
@@ -386,10 +392,17 @@ void MarsStation::MoveToAvailable(Rover* RPtr, int i)
 		break;
 	}
 }
-void MarsStation::MoveToCheckUp(Rover* RPtr, int i)
+void MarsStation::MoveToCheckUp(Rover* RPtr)
 {
 	RPtr->CheckUP(current_day_);
-	in_execution_rovers_.remove(i);
+	int count = in_execution_rovers_.getItemCount();
+	for (int i = 1; i <= count; i++)
+	{
+		if (RPtr == in_execution_rovers_.getEntry(i))
+		{
+			in_execution_rovers_.remove(i);
+		}
+	}
 	check_up_rovers_.insert(RPtr);
 }
 
@@ -572,9 +585,9 @@ void MarsStation::check_completed_missions()
 			RPtr = MPtr->getRover();
 			RPtr->incrementCompletedMissions();
 			if (RPtr->getMaxMissions() == RPtr->getNumCompletedMissions())
-				MoveToCheckUp(RPtr, i);
+				MoveToCheckUp(RPtr);
 			else
-				MoveToAvailable(RPtr, i);
+				MoveToAvailable(RPtr);
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
