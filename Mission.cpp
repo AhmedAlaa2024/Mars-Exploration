@@ -2,12 +2,15 @@
 #include "Mission.h"
 
 
-Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md, int sig , int id ): FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
+Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md, int sig, int id) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
 TL(tl), MD(md), asigned(false), WD(0), CD(0)
 {
 	is_promoted = false;
 	ID = id;
 	SIG = sig;
+	priority_ = 0;
+	assignedRover = nullptr;
+
 }
 
 
@@ -99,7 +102,7 @@ bool Mission::setMT(MISSION_TYPE mt)
 
 bool Mission::setTL(int tl)
 {
-	if (TL != 0) // Means that it already has its own value
+	if (TL != -1) // Means that it already has its own value
 		return false;
 
 	TL = tl;
@@ -143,21 +146,22 @@ bool Mission::setMS(MISSION_STATUS ms)
 }
 
 
-bool Mission::WaitAnotherDay()
+void Mission::WaitAnotherDay()
 {
-	if (CD != 0) // Means that the mission is already completed, So no need to wait another day!
-		return false;
+	
 	WD++;
-	return true;
+	
 }
 
-bool Mission::Complete(int speed)
+bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THIS
 {
 	if (CD != 0) // Means that the mission is already completed, So no need to be completed!
 		return false;
 
 	MS = MISSION_STATUS::COMPLETED;
+	
 	CD = FD + (TL / speed) * 2 + MD + WD;
+	
 	return true;
 }
 
