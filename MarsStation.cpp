@@ -118,9 +118,9 @@ bool MarsStation::read_input_file()
 	}
 
 
-
 	my_file >> MRCount >> PRCount >> ERCount;
-	int SM, SP, SE; //speed of each type
+
+	double SM, SP, SE; //speed of each type
 	my_file >> SM >> SP >> SE;
 
 
@@ -355,7 +355,8 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 			Mission* m = waiting_mountainous_missions_.getEntry(i);
 			if (m->getID() == miss->getID())
 			{
-				waiting_mountainous_missions_.remove(i); 
+				waiting_mountainous_missions_.remove(i);
+				
 				return;
 
 			}
@@ -448,7 +449,7 @@ void MarsStation::SortCompletedList()
 void MarsStation::check_auto_promotion()
 {
 
-	for (int i = 0; i < waiting_mountainous_missions_.getItemCount(); ++i) //TODO :: YOU might NEED TO Change The LIMITS
+	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i)
 	{
 
 		Mission* mm = waiting_mountainous_missions_.getEntry(i);
@@ -466,8 +467,7 @@ void MarsStation::check_auto_promotion()
 
 void MarsStation::assign_missions()
 {
-	//TODO:: ADD THE CD Assignment
-	
+
 	Mission* mm;
 
 	//first assign emergency missions
@@ -478,16 +478,17 @@ void MarsStation::assign_missions()
 		if (available_rovers_emergency_.dequeue(r))
 		{
 
-			mm->Assign(r);
-			r->AssignTo(mm, current_day_);
+			mm->Assign(r, r->getSpeed(), current_day_);
+
+			r->AssignTo(mm);
 			//add to in_ex list
 			move_to_in_ex_list(mm);
 
 		}
 		else if (available_rovers_mountainous_.dequeue(r))
 		{
-			mm->Assign(r);
-			r->AssignTo(mm, current_day_);
+			mm->Assign(r, r->getSpeed(), current_day_);
+			r->AssignTo(mm);
 
 			//add to in_ex list
 			move_to_in_ex_list(mm);
@@ -495,8 +496,9 @@ void MarsStation::assign_missions()
 
 		}
 		else if (available_rovers_polar_.dequeue(r)) {
-			mm->Assign(r);
-			r->AssignTo(mm, current_day_);
+			mm->Assign(r, r->getSpeed(), current_day_);
+
+			r->AssignTo(mm);
 
 			//add to in_ex list
 			move_to_in_ex_list(mm);
@@ -525,8 +527,9 @@ void MarsStation::assign_missions()
 	{
 		Rover* r;
 		if (available_rovers_polar_.dequeue(r)) {
-			mm->Assign(r);
-			r->AssignTo(mm, current_day_);
+			mm->Assign(r, r->getSpeed(), current_day_);
+
+			r->AssignTo(mm);
 
 			//add to in_ex list
 			move_to_in_ex_list(mm);
@@ -547,8 +550,8 @@ void MarsStation::assign_missions()
 	}
 
 	//now The Mountainous
-	
-	for (int i = 0; i < waiting_mountainous_missions_.getItemCount(); ++i) //TODO :: YOU might NEED TO Change The LIMITS
+
+	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) //TODO :: YOU might NEED TO Change The LIMITS
 	{
 		Rover* r;
 		mm = waiting_mountainous_missions_.getEntry(i);
@@ -556,8 +559,9 @@ void MarsStation::assign_missions()
 
 		if (available_rovers_mountainous_.dequeue(r))
 		{
-			mm->Assign(r);
-			r->AssignTo(mm, current_day_);
+			mm->Assign(r, r->getSpeed(), current_day_);
+
+			r->AssignTo(mm);
 			//add to in_ex list
 			Pair<Mission*, int> p(mm, mm->get_priority());
 			temp.enqueue(p);
@@ -565,8 +569,9 @@ void MarsStation::assign_missions()
 		}
 		else if (available_rovers_emergency_.dequeue(r))
 		{
-			mm->Assign(r);
-			r->AssignTo(mm, current_day_);
+			mm->Assign(r, r->getSpeed(), current_day_);
+
+			r->AssignTo(mm);
 
 			//add to in_ex list
 			Pair<Mission*, int> p(mm, mm->get_priority());
@@ -577,15 +582,14 @@ void MarsStation::assign_missions()
 		{
 			mm->WaitAnotherDay();
 		}
-		while (temp.dequeue(mm)) // to clear it
-		{
-			move_to_in_ex_list(mm);
 
-		}
 
-		
 	}
+	while (temp.dequeue(mm)) // to clear it
+	{
+		move_to_in_ex_list(mm);
 
+	} //to move all the Assigned Mountainous missions to in_ex List
 
 
 

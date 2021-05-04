@@ -71,9 +71,14 @@ Rover* Mission::getRover() const
 	return assignedRover;
 }
 
-void Mission::Assign(Rover* r)
+void Mission::Assign(Rover* r, double r_speed, int currentDay)
 {
 	assignedRover = r;
+
+	ED = int((((TL / r_speed) * 2) / 25) + MD);
+	CD = currentDay + ED;
+
+
 	asigned = true;
 }
 
@@ -158,9 +163,9 @@ bool Mission::setMS(MISSION_STATUS ms)
 
 void Mission::WaitAnotherDay()
 {
-	
+
 	WD++;
-	
+
 }
 
 bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THIS
@@ -169,9 +174,9 @@ bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THI
 		return false;
 
 	MS = MISSION_STATUS::COMPLETED;
-	
+
 	CD = FD + (TL / speed) * 2 + MD + WD;
-	
+
 	return true;
 }
 
