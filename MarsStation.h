@@ -50,12 +50,14 @@ private:
 	int MRCount;
 	int PRCount;
 	int ERCount;
+	int AutoPCount;
 
 	void check_auto_promotion();
 	//utility functions
 	void move_to_in_ex_list(Mission* miss);
 	void MoveToAvailable(Rover*);
 	void MoveToCheckUp(Rover*);
+	void SortCompletedList();
 public:
 	MarsStation();
 

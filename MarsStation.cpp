@@ -5,7 +5,7 @@
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
-MarsStation::MarsStation() :AutoP(0), current_day_(0)
+MarsStation::MarsStation() :AutoP(0), current_day_(0), PRCount(0), ERCount(0), MRCount(0), AutoPCount(0)
 {
 
 	my_ui = new UI(this);
@@ -176,7 +176,6 @@ bool MarsStation::read_input_file()
 bool MarsStation::writeOutputFile()
 {
 	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
-	int fd = 0, cd = 0, wd = 0;
 	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
 	Mission* Ptr = nullptr;
 	ofstream outFile("output.txt");
@@ -184,10 +183,8 @@ bool MarsStation::writeOutputFile()
 	outFile << "CD\tID\tFD\tWD\tED\n";
 	for (int i = 1; i <= Missions; i++)
 	{
-		fd = Ptr->getFD();
-		wd = Ptr->getWD();
-		cd = Ptr->getCD();
-		cout << cd << '\t' << Ptr->getID() << '\t' << fd << '\t' << wd << '\t' << cd - (fd + wd) << endl;
+		Ptr = completed_missions_.getEntry(i);
+		cout << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
 	}
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
@@ -222,7 +219,7 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 		TYP = Ptr->getMT();
 		Missions++;
 		WD += Ptr->getWD();
-		ED += Ptr->getCD() - (Ptr->getFD() + Ptr->getWD());
+		ED += Ptr->getED();
 		switch (TYP)
 		{
 		case MISSION_TYPE::MOUNTAINOUS:
@@ -240,12 +237,9 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	PR = PRCount;
 	ER = ERCount;
 	Rovers = MR + PR + ER;
-	
-	//TODO:: Calcuclate Auto
-
 	AvgW = WD / Missions;
 	AvgEx = ED / Missions;
-	Auto = (Auto / MM) * 100;
+	Auto = (AutoPCount / MM) * 100;
 	return Auto;
 }
 
@@ -321,7 +315,6 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 	switch (RPtr->getRT())
 	{
 	case ROVER_TYPE::MOUNTAINOUS:
-
 		available_rovers_mountainous_.enqueue(pair);
 		break;
 	case ROVER_TYPE::POLAR:
@@ -339,6 +332,24 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 	check_up_rovers_.add(RPtr);
 }
 
+void MarsStation::SortCompletedList()
+{
+	int count = completed_missions_.getItemCount();
+	Mission* CPtr = nullptr;
+	Mission* FPtr = nullptr;
+	if (count > 0)
+		CPtr = completed_missions_.getEntry(1);
+	for (int i = 1; i < count; i++)
+	{
+		FPtr = completed_missions_.getEntry(i + 1);
+		if (CPtr->getCD() == FPtr->getCD())
+		{
+			if (CPtr->getED() > FPtr->getED());
+		}
+		CPtr = FPtr;
+	}
+}
+
 void MarsStation::check_auto_promotion()
 {
 
@@ -350,6 +361,7 @@ void MarsStation::check_auto_promotion()
 		{
 			Promotion pr(current_day_, mm->getID(), this);
 			pr.Execute();
+			AutoPCount++;
 
 		}
 
