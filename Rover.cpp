@@ -22,7 +22,7 @@ int Rover::getCheckUPDuration() const
 	return checkUPDuration;
 }
 
-int Rover::getSpeed() const
+double Rover::getSpeed() const
 {
 	return speed;
 }
@@ -70,7 +70,7 @@ bool Rover::setCheckUPDuration(int checkupDur)
 	return true;
 }
 
-void Rover::setSpeed(int sp)
+void Rover::setSpeed(double sp)
 {
 	speed = sp;
 	
@@ -94,7 +94,7 @@ bool Rover::setID(int id)
 	return true;
 }
 
-void Rover::AssignTo(Mission* m, int currentDay)
+void Rover::AssignTo(Mission* m)
 {
 	
 	completedMissions++;
