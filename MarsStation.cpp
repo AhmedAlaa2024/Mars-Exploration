@@ -342,16 +342,16 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 
 	MISSION_TYPE type = miss->getMT();
 
-	if (type == MISSION_TYPE::MOUNTAINOUS) //TODO: AFTER LISTADT
+	if (type == MISSION_TYPE::MOUNTAINOUS)
 	{
 		//Delete it from waiting
 
-		for (int i = 0; i < waiting_mountainous_missions_.getItemCount(); ++i) //TODO :: YOU might NEED TO Change The LIMITS
+		for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) //3lshan 5ater Rofaida
 		{
 			Mission* m = waiting_mountainous_missions_.getEntry(i);
 			if (m->getID() == miss->getID())
 			{
-				waiting_mountainous_missions_.remove(i); //i'll trust them
+				waiting_mountainous_missions_.remove(i); 
 				return;
 
 			}
@@ -378,15 +378,14 @@ void MarsStation::check_auto_promotion()
 
 		}
 
-
-
-
 	}
 
 }
 
 void MarsStation::assign_missions()
 {
+	//TODO:: ADD THE CD Assignment
+	
 	Mission* mm;
 
 	//first assign emergency missions
