@@ -11,12 +11,12 @@ private:
 	//utility functions
 /*	Node<T>* getPointerTo(const T&) ;
 	Node<T>* getPrevOf(const T&);*/
+	Node<T>* getNodeAt(int index);
 public:
 
 	LinkedList();
 	~LinkedList();
 	LinkedList(LinkedList& l);
-	Node<T>* getNodeAt(int index);
 	virtual bool isEmpty() const;
 	virtual bool insert(const T&);
 	virtual bool remove(int index);

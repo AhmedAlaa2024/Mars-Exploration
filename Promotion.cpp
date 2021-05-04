@@ -9,15 +9,15 @@ void Promotion::Execute()
 	int count = M_S->get_W_M_M().getItemCount();
 	for (int i = 1; i <= count; i++)
 	{
-		Node<Mission*>* m = M_S->get_W_M_M().getNodeAt(i);
-		if (m->getItem()->getID() == get_ID() && m->getItem()->getMT() == MISSION_TYPE::MOUNTAINOUS)
-		{
+		Mission* m = M_S->get_W_M_M().getEntry(i);
+		if (m->getID() == get_ID() && m->getMT() == MISSION_TYPE::MOUNTAINOUS)  //no need to check if it is M_M or not because it is inside the W_M_M
+		{                                                                       //I think also there is no need to  check inside the promote function ??
 			//then update its data
-			m->getItem()->setMT(MISSION_TYPE::EMERGENCY);
+			m->Promote();
 			
 			//then move it to the emergency list
 			M_S->get_W_M_M().remove(i);
-			Pair<Mission*, int> pM(m->getItem(), m->getItem()->Weight());
+			Pair<Mission*, int> pM(m, m->get_priority());
 			M_S->get_W_E_M().enqueue(pM);
 		}
 	}

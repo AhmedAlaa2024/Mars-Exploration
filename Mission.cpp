@@ -8,7 +8,11 @@ TL(tl), MD(md), asigned(false), WD(0), CD(0), ED(0)
 	is_promoted = false;
 	ID = id;
 	SIG = sig;
-	priority_ = 0;
+
+	if (MT == MISSION_TYPE::EMERGENCY)
+		set_priority(Weight());
+	else
+		priority_ = 0;
 	assignedRover = nullptr;
 
 }
@@ -188,6 +192,8 @@ bool Mission::Promote()
 	is_promoted = true;
 	MT = MISSION_TYPE::EMERGENCY;
 
+	//set its priority
+	set_priority(Weight());
 
 	return true;
 
@@ -197,5 +203,5 @@ int Mission::Weight()
 {
 	//return the value of the weighted equation
 
-	return (40 * SIG + 15 * TL + 10 * MD + 5 * FD);
+	return (70 * SIG + 15 * TL + 10 * MD + 5 * FD);
 }
