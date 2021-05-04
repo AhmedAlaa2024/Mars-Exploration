@@ -409,8 +409,10 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 void MarsStation::SortCompletedList()
 {
 	int count = completed_missions_.getItemCount();
+	int index = 0;
 	Mission* CPtr = nullptr;
 	Mission* FPtr = nullptr;
+	LinkedList<Mission*> Temp;
 	if (count > 0)
 		CPtr = completed_missions_.getEntry(1);
 	for (int i = 1; i < count; i++)
@@ -418,7 +420,26 @@ void MarsStation::SortCompletedList()
 		FPtr = completed_missions_.getEntry(i + 1);
 		if (CPtr->getCD() == FPtr->getCD())
 		{
-			if (CPtr->getED() > FPtr->getED());
+			index = index ? index : i;
+			if (!Temp.contains(CPtr))
+				Temp.insert(CPtr);
+			if (!Temp.contains(FPtr))
+				Temp.insert(FPtr);
+
+		}
+		else
+		{
+			if (Temp.isEmpty())
+				continue;
+			//sort list using a sorting algorithm
+			//then remove
+			int j = 1;
+			while (!Temp.isEmpty())
+			{
+				//if(completed_missions_.contains(Temp.getEntry(j)))
+				//insert in 
+			}
+			index = 0;
 		}
 		CPtr = FPtr;
 	}
