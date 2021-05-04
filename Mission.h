@@ -25,7 +25,7 @@ private:
 
 public:
 	// Default Constructor
-	Mission(int fd = 0, MISSION_TYPE mt = MISSION_TYPE::UNDETERMINED, int tl = 0, int md = 0, int sig = 0, int id = 0);
+	Mission(int fd = 0, MISSION_TYPE mt = MISSION_TYPE::UNDETERMINED, int tl = -1, int md = 0, int sig = 0, int id = 0);
 
 	
 	// Getters
@@ -62,7 +62,7 @@ public:
 
 
 	// Specific Member Functions
-	bool WaitAnotherDay();
+	void WaitAnotherDay();
 	bool Complete(int speed);
 	bool Promote();
 	int Weight();
