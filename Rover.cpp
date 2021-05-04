@@ -61,6 +61,11 @@ bool Rover::setRT(ROVER_TYPE rt)
 	return true;
 }
 
+void Rover::SetRS(ROVER_STATUS rs)
+{
+	RS = rs;
+}
+
 bool Rover::setCheckUPDuration(int checkupDur)
 {
 	if (checkUPDuration != 0) // Means that it already has its own value
@@ -94,6 +99,11 @@ bool Rover::setID(int id)
 	return true;
 }
 
+void Rover::incrementCompletedMissions()
+{
+	completedMissions++;
+}
+
 void Rover::AssignTo(Mission* m)
 {
 	
@@ -102,6 +112,7 @@ void Rover::AssignTo(Mission* m)
 	
 	
 }
+
 
 bool Rover::CheckUP(int currentDay)
 {

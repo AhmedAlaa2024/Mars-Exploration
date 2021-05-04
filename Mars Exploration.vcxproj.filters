@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Team Tasks.txt" />
+    <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="phase 1 Report.docx" />

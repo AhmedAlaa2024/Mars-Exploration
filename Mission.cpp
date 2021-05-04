@@ -49,6 +49,11 @@ int Mission::getCD() const
 	return CD;
 }
 
+int Mission::getED() const
+{
+	return ED;
+}
+
 int Mission::getID() const
 {
 	return ID;
@@ -135,6 +140,11 @@ bool Mission::setWD(int wd)
 
 	MD = wd;
 	return true;
+}
+
+void Mission::setED(int ed)
+{
+	ED = ed;
 }
 
 void Mission::set_priority(int prio)

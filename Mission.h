@@ -16,8 +16,7 @@ private:
 	bool asigned;
 	int WD; // Waiting Durations
 	int CD; // Complete Date
-	int ED; //Executions Days
-	
+	int ED; // Execution days
 	
 	Rover* assignedRover;
 	int priority_;
@@ -39,6 +38,7 @@ public:
 	bool IsAssigned() const;
 	int getWD() const;
 	int getCD() const;
+	int getED() const;
 	bool isCompleted(int currentDay) const;
 
 	Rover* getRover() const;
@@ -57,6 +57,7 @@ public:
 	bool setTL(int tl);
 	bool setMD(int md);
 	bool setWD(int wd);
+	void setED(int ed);
 
 	void set_priority(int prio);
 

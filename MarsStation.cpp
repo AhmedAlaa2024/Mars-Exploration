@@ -5,7 +5,9 @@
 #include "Formulation.h"
 #include "Promotion.h"
 #include "Cancellation.h"
-MarsStation::MarsStation() :AutoP(0), current_day_(0), Cancelled_M(0), Formulated_M(0)
+
+MarsStation::MarsStation() :AutoP(0), current_day_(0), PRCount(0), ERCount(0), MRCount(0), AutoPCount(0)
+
 {
 
 	my_ui = new UI(this);
@@ -116,9 +118,8 @@ bool MarsStation::read_input_file()
 	}
 
 
+	my_file >> MRCount >> PRCount >> ERCount;
 
-	int M, P, E; //no of each Rover Type
-	my_file >> M >> P >> E;
 	double SM, SP, SE; //speed of each type
 	my_file >> SM >> SP >> SE;
 
@@ -131,7 +132,7 @@ bool MarsStation::read_input_file()
 	int ids = 0;
 
 	// Create Mountainous Rovers
-	for (int i = 0; i < M; ++i)
+	for (int i = 0; i < MRCount; ++i)
 	{
 		Rover* r = new Rover(ROVER_TYPE::MOUNTAINOUS, CM, SM, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
@@ -139,7 +140,7 @@ bool MarsStation::read_input_file()
 	}
 
 	// Create Polar Rovers
-	for (int i = 0; i < P; ++i)
+	for (int i = 0; i < PRCount; ++i)
 	{
 		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
@@ -147,7 +148,7 @@ bool MarsStation::read_input_file()
 	}
 
 	// Create Emergency Rovers
-	for (int i = 0; i < E; ++i)
+	for (int i = 0; i < ERCount; ++i)
 	{
 		Rover* r = new Rover(ROVER_TYPE::EMERGENCY, CE, SE, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
@@ -209,21 +210,23 @@ bool MarsStation::read_input_file()
 	return true;
 }
 
-bool MarsStation::writeOutputFile() const
+bool MarsStation::writeOutputFile()
 {
 	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
 	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
+	Mission* Ptr = nullptr;
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
 	outFile << "CD\tID\tFD\tWD\tED\n";
-	while (true) // To be changed after making CM Queue
+	for (int i = 1; i <= Missions; i++)
 	{
-		//TODO:: writing info about missions
+		Ptr = completed_missions_.getEntry(i);
+		cout << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
 	}
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
 	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n' << "Auto-promoted: " << Auto_promoted << "%\n";
-	return false;
+	return true;
 }
 
 void MarsStation::CollectStatistics_Console()
@@ -238,41 +241,42 @@ void MarsStation::CollectStatistics_Console()
 
 
 
-int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx) const
+int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
 {
+	Mission* Ptr = nullptr;
 	int Auto = 0;
 	int WD = 0;
 	int ED = 0;
 	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
-	char TYP = 'j'; //mission type, TO BE CHANGED
-	while (true) // To be changed after making CM Queue
+	MISSION_TYPE TYP;
+	int Count = completed_missions_.getItemCount();
+	for(int i = 1; i <= Count; i++)
 	{
+		Ptr = completed_missions_.getEntry(i);
+		TYP = Ptr->getMT();
 		Missions++;
-		//WD += WD for the current mission
-		//ED += ED for the current mission
+		WD += Ptr->getWD();
+		ED += Ptr->getED();
 		switch (TYP)
 		{
-		case 'M':
+		case MISSION_TYPE::MOUNTAINOUS:
 			MM++;
 			break;
-		case 'P':
+		case MISSION_TYPE::POLAR:
 			PM++;
 			break;
-		case 'E':
+		case MISSION_TYPE::UNDETERMINED:
 			EM++;
 			break;
 		}
 	}
-	while (true) // To be changed after making Rovers
-	{
-		//counting rovers and their type
-	}
-
-	//TODO:: Calcuclate Auto
-
+	MR = MRCount;
+	PR = PRCount;
+	ER = ERCount;
+	Rovers = MR + PR + ER;
 	AvgW = WD / Missions;
 	AvgEx = ED / Missions;
-	Auto = (Auto / MM) * 100;
+	Auto = (AutoPCount / MM) * 100;
 	return Auto;
 }
 
@@ -365,6 +369,83 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 
 
 }
+void MarsStation::MoveToAvailable(Rover* RPtr)
+{
+	int count = in_execution_rovers_.getItemCount();
+	for (int i = 1; i <= count; i++)
+	{
+		if (RPtr == in_execution_rovers_.getEntry(i))
+		{
+			in_execution_rovers_.remove(i);
+		}
+	}
+	Pair<Rover*, double> pair(RPtr, RPtr->getSpeed());
+	switch (RPtr->getRT())
+	{
+	case ROVER_TYPE::MOUNTAINOUS:
+		available_rovers_mountainous_.enqueue(pair);
+		break;
+	case ROVER_TYPE::POLAR:
+		available_rovers_polar_.enqueue(pair);
+		break;
+	case ROVER_TYPE::EMERGENCY:
+		available_rovers_emergency_.enqueue(pair);
+		break;
+	}
+}
+void MarsStation::MoveToCheckUp(Rover* RPtr)
+{
+	RPtr->CheckUP(current_day_);
+	int count = in_execution_rovers_.getItemCount();
+	for (int i = 1; i <= count; i++)
+	{
+		if (RPtr == in_execution_rovers_.getEntry(i))
+		{
+			in_execution_rovers_.remove(i);
+		}
+	}
+	check_up_rovers_.insert(RPtr);
+}
+
+void MarsStation::SortCompletedList()
+{
+	int count = completed_missions_.getItemCount();
+	int index = 0;
+	Mission* CPtr = nullptr;
+	Mission* FPtr = nullptr;
+	LinkedList<Mission*> Temp;
+	if (count > 0)
+		CPtr = completed_missions_.getEntry(1);
+	for (int i = 1; i < count; i++)
+	{
+		FPtr = completed_missions_.getEntry(i + 1);
+		if (CPtr->getCD() == FPtr->getCD())
+		{
+			index = index ? index : i;
+			if (!Temp.contains(CPtr))
+				Temp.insert(CPtr);
+			if (!Temp.contains(FPtr))
+				Temp.insert(FPtr);
+
+		}
+		else
+		{
+			if (Temp.isEmpty())
+				continue;
+			//sort list using a sorting algorithm
+			//then remove
+			int j = 1;
+			while (!Temp.isEmpty())
+			{
+				//if(completed_missions_.contains(Temp.getEntry(j)))
+				//insert in 
+			}
+			index = 0;
+		}
+		CPtr = FPtr;
+	}
+}
+
 void MarsStation::check_auto_promotion()
 {
 
@@ -376,6 +457,7 @@ void MarsStation::check_auto_promotion()
 		{
 			Promotion pr(current_day_, mm->getID(), this);
 			pr.Execute();
+			AutoPCount++;
 
 		}
 
@@ -515,12 +597,26 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
+	int Count = in_execution_missions_.getItemCount();
+	Mission* MPtr = nullptr;
+	Rover* RPtr = nullptr;
+	bool isComp = false;
+	for (int i = 1; i <= Count; i++)
+	{
+		MPtr = in_execution_missions_.getEntry(i);
+		isComp = MPtr->isCompleted(current_day_);
+		if (isComp)
+		{
+			RPtr = MPtr->getRover();
+			RPtr->incrementCompletedMissions();
+			if (RPtr->getMaxMissions() == RPtr->getNumCompletedMissions())
+				MoveToCheckUp(RPtr);
+			else
+				MoveToAvailable(RPtr);
 
-
-
-
-
-
-
-
+			MPtr->setMS(MISSION_STATUS::COMPLETED);
+			in_execution_missions_.remove(i);
+			completed_missions_.insert(MPtr);
+		}
+	}
 }
