@@ -9,7 +9,7 @@ private:
 	ROVER_TYPE RT;
 	ROVER_STATUS RS;
 	int checkUPDuration;
-	int speed; // Don't forget that the day in Mars = 25 hours
+	double speed; // Don't forget that the day in Mars = 25 hours
 	bool assigned;
 	int MaxMissions;
 	int completedMissions;
@@ -24,7 +24,7 @@ public:
 	ROVER_STATUS getRS() const;
 	ROVER_TYPE getRT() const;
 	int getCheckUPDuration() const;
-	int getSpeed() const;
+	double getSpeed() const;
 	bool Assigned() const;
 	int getMaxMissions() const;
 	int getNumCompletedMissions() const;
@@ -35,12 +35,12 @@ public:
 	// Setters
 	bool setRT(ROVER_TYPE rt);
 	bool setCheckUPDuration(int checkupDur);
-	void setSpeed(int sp);
+	void setSpeed(double sp);
 	bool setMaxMissions(int max);
 	bool setID(int id);
 
 	// Specific Member Functions
-	void AssignTo(Mission* m, int currentDay);
+	void AssignTo(Mission* m);
 	
 	bool CheckUP(int currentDay);
 

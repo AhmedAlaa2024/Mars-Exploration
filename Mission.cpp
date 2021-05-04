@@ -3,7 +3,7 @@
 
 
 Mission::Mission(int fd, MISSION_TYPE mt, int tl, int md, int sig, int id) : FD(fd), MT(mt), MS(MISSION_STATUS::WAITING),
-TL(tl), MD(md), asigned(false), WD(0), CD(0)
+TL(tl), MD(md), asigned(false), WD(0), CD(0), ED(0)
 {
 	is_promoted = false;
 	ID = id;
@@ -66,9 +66,14 @@ Rover* Mission::getRover() const
 	return assignedRover;
 }
 
-void Mission::Assign(Rover* r)
+void Mission::Assign(Rover* r, double r_speed, int currentDay)
 {
 	assignedRover = r;
+
+	ED = int((((TL / r_speed) * 2) / 25) + MD);
+	CD = currentDay + ED;
+
+
 	asigned = true;
 }
 
@@ -148,9 +153,9 @@ bool Mission::setMS(MISSION_STATUS ms)
 
 void Mission::WaitAnotherDay()
 {
-	
+
 	WD++;
-	
+
 }
 
 bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THIS
@@ -159,9 +164,9 @@ bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THI
 		return false;
 
 	MS = MISSION_STATUS::COMPLETED;
-	
+
 	CD = FD + (TL / speed) * 2 + MD + WD;
-	
+
 	return true;
 }
 
