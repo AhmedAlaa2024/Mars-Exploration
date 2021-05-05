@@ -8,16 +8,16 @@ Cancellation::Cancellation(int ed,int id, MarsStation* m_s):Event(ed,id, m_s)
 void Cancellation::Execute()   //cancel a requested mountainous mission (if found and is waiting)
 {
 	
-	int count = M_S->get_waiting_mountainous_missions_().getItemCount();
+	int count = M_S->get_W_M_M().getItemCount();
 	// loop on the list
 	for (int i = 1; i <= count; i++)
 	{
-		Mission* m = M_S->get_waiting_mountainous_missions_().getEntry(i);
+		Mission* m = M_S->get_W_M_M().getEntry(i);
 		if (m->getID() == get_ID() && m->getMT() == MISSION_TYPE::MOUNTAINOUS)
 		{
 			m->setMS(MISSION_STATUS::CANCELLED);
 			//then cancel it
-			M_S->get_waiting_mountainous_missions_().remove(i);   //function remove does not delete
+			M_S->get_W_M_M().remove(i);   //function remove does not delete
 			M_S->increment_Cancelled_M();
 		}
 
