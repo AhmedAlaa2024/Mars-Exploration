@@ -42,12 +42,6 @@ void MarsStation::execute_mode(SIM_MODE mode)
 
 
 
-LinkedList<Mission*>& MarsStation::get_waiting_mountainous_missions_()
-{
-	return waiting_mountainous_missions_;
-}
-
-
 LinkedBAG<Mission*>& MarsStation::get_mission_DB()
 {
 	return MISSIONS_DB;

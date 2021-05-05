@@ -85,7 +85,7 @@ public:
 
 
 	//getters
-	LinkedList<Mission*>& get_waiting_mountainous_missions_();
+	
 	LinkedBAG<Mission*>& get_mission_DB();
 	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
 	LinkedQueue<Mission*>& get_W_P_M();
