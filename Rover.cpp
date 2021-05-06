@@ -52,6 +52,11 @@ int Rover::getID() const
 	return ID;
 }
 
+int Rover::getCheckupEND() const
+{
+	return checkupENDDay;
+}
+
 bool Rover::setRT(ROVER_TYPE rt)
 {
 	if (rt != ROVER_TYPE::UNDETERMINED) // Means that it already has its own value
@@ -118,7 +123,7 @@ bool Rover::CheckUP(int currentDay)
 {
 	if (!mission->isCompleted(currentDay)) // To make sure that the rover has been finished the assigned mission before check-up
 		return false;
-
+	checkupENDDay = currentDay + checkUPDuration; // TO BE REVISED IF -1
 	completedMissions = 0;
 	mission = nullptr;
 	RS = ROVER_STATUS::CHECKUP;
