@@ -86,8 +86,8 @@ public:
 	void check_completed_missions();
 
 
-	//getters
-	LinkedList<Mission*>& get_waiting_mountainous_missions_();
+	//getters --> Don't create new functions without making sure it's not here
+	
 	LinkedBAG<Mission*>& get_mission_DB();
 	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
 	LinkedQueue<Mission*>& get_W_P_M();
