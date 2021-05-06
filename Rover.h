@@ -15,6 +15,7 @@ private:
 	int completedMissions;
 	Mission* mission;
 	int ID;
+	int checkupENDDay;
 
 public:
 	// Default Arguments Constructor
@@ -31,6 +32,7 @@ public:
 	Mission* getAssignedMission() const;
 	int getID() const;
 
+	int getCheckupEND() const;
 
 	// Setters
 	bool setRT(ROVER_TYPE rt);

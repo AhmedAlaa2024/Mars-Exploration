@@ -55,10 +55,12 @@ private:
 	int AutoPCount;
 
 	void check_auto_promotion();
+	void check_checkup_list();
 	//utility functions
 	void move_to_in_ex_list(Mission* miss);
 
 	void MoveToAvailable(Rover*);
+	void MoveToAvailable(int);
 	void MoveToCheckUp(Rover*);
 	void SortCompletedList();
 public:
