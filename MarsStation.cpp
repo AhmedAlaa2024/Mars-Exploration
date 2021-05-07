@@ -337,7 +337,7 @@ void MarsStation::simulate_day()
 
 void MarsStation::move_to_in_ex_list(Mission* miss)
 {
-	in_execution_missions_.insert(miss);
+	in_execution_missions_.insertBeg(miss);
 
 	//remove from waiting
 
@@ -424,7 +424,7 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 			in_execution_rovers_.remove(i);
 		}
 	}
-	check_up_rovers_.insert(RPtr);
+	check_up_rovers_.insertBeg(RPtr);
 }
 
 void MarsStation::SortCompletedList()
@@ -443,9 +443,9 @@ void MarsStation::SortCompletedList()
 		{
 			index = index ? index : i;
 			if (!Temp.contains(CPtr))
-				Temp.insert(CPtr);
+				Temp.insertBeg(CPtr);
 			if (!Temp.contains(FPtr))
-				Temp.insert(FPtr);
+				Temp.insertBeg(FPtr);
 
 		}
 		else
@@ -647,7 +647,7 @@ void MarsStation::check_completed_missions()
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
-			completed_missions_.insert(MPtr);
+			completed_missions_.insertBeg(MPtr);
 		}
 	}
 }

@@ -27,7 +27,7 @@ void Formulation::Execute()   //creat the mission and put it in the appropriate 
 	else if (TYP == 'M')
 	{
 		m->setMT(MISSION_TYPE::MOUNTAINOUS);
-		M_S->get_W_M_M().insert(m);
+		M_S->get_W_M_M().insertEnd(m);
 	}
 
 	else
