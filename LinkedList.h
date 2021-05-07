@@ -18,7 +18,8 @@ public:
 	~LinkedList();
 	LinkedList(LinkedList& l);
 	virtual bool isEmpty() const;
-	virtual bool insert(const T&);
+	virtual bool insertBeg(const T&);
+	virtual void insertEnd(const T&);
 	virtual bool remove(int index);
 	virtual bool clear();
 	virtual T getEntry(const int) const;
@@ -101,7 +102,7 @@ bool LinkedList<T>::isEmpty() const
 
 
 template <typename T>
-bool LinkedList<T>::insert(const T& data)
+bool LinkedList<T>::insertBeg(const T& data)
 {
 	Node<T>* R = new Node<T>(data);
 
@@ -112,6 +113,22 @@ bool LinkedList<T>::insert(const T& data)
 	Head = R;
 	itemCount++;
 	return true;
+}
+
+
+template <typename T>
+void LinkedList<T>::insertEnd(const T& data)
+{
+	Node<T>* R = new Node<T>(data);
+	if (!Head)
+	{
+		Head = R;
+		return;
+	}
+	Node<T>* p = Head;
+	while (p->getNext())
+		p = p->getNext();
+	p->setNext(R);
 }
 
 
@@ -145,7 +162,7 @@ bool LinkedList<T>::remove(int index)
 
 
 template <typename T>
-bool LinkedList<T>::clear()
+bool LinkedList<T>::clear()    
 {
 	return 0;
 }
@@ -170,9 +187,20 @@ T LinkedList<T>::getEntry(const int ind) const
 
 
 template <typename T>
-bool LinkedList<T>::contains(T&) const
+bool LinkedList<T>::contains(T& item) const
 {
-	return 0;
+	//empty list
+	if (!Head) return false;
+
+	Node<T>* ptr = Head;
+	while (ptr)
+	{
+		if (ptr->getItem() == item)
+			return true;
+		ptr = ptr->getNext();
+	}
+
+	return false;
 }
 
 
