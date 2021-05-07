@@ -16,6 +16,9 @@ x - Simulation
 		10.2. step by step
 		10.3. silent
 
+x- BONUS:
+	11- Diff Speed in Rovers
+	12- Mission Maintenance 
 
 
 
@@ -29,11 +32,13 @@ No of tasks: 1, 2															   [*]
 -----------------
 No of tasks: 3																   [*]
 8																			   [ ]
+11
 ----------------------------------------------------------
 [3] - Rufaida Mohamed:														   [ ]
 -----------------------
 No of tasks: 4																   [ ]
  9 																			   [ ]
+ 12
 ----------------------------------------------------------
 [4] - Doaa Magdy:															   [ ]
 ------------------

@@ -55,10 +55,12 @@ private:
 	int AutoPCount;
 
 	void check_auto_promotion();
+	void check_checkup_list();
 	//utility functions
 	void move_to_in_ex_list(Mission* miss);
 
 	void MoveToAvailable(Rover*);
+	void MoveToAvailable(int);
 	void MoveToCheckUp(Rover*);
 	void SortCompletedList();
 public:
@@ -84,8 +86,8 @@ public:
 	void check_completed_missions();
 
 
-	//getters
-	LinkedList<Mission*>& get_waiting_mountainous_missions_();
+	//getters --> Don't create new functions without making sure it's not here
+	
 	LinkedBAG<Mission*>& get_mission_DB();
 	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
 	LinkedQueue<Mission*>& get_W_P_M();

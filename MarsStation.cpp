@@ -42,12 +42,6 @@ void MarsStation::execute_mode(SIM_MODE mode)
 
 
 
-LinkedList<Mission*>& MarsStation::get_waiting_mountainous_missions_()
-{
-	return waiting_mountainous_missions_;
-}
-
-
 LinkedBAG<Mission*>& MarsStation::get_mission_DB()
 {
 	return MISSIONS_DB;
@@ -311,6 +305,9 @@ void MarsStation::simulate_day()
 	//at the beginning of The day, See if any Mount Mission was auto_promoted
 	check_auto_promotion();
 
+	//check for rovers finished checkup
+	check_checkup_list();
+
 	Event* eve;
 
 	//execute events
@@ -372,11 +369,14 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 void MarsStation::MoveToAvailable(Rover* RPtr)
 {
 	int count = in_execution_rovers_.getItemCount();
-	for (int i = 1; i <= count; i++)
+	if (RPtr->getRS() == ROVER_STATUS::IN_EXECUTION)
 	{
-		if (RPtr == in_execution_rovers_.getEntry(i))
+		for (int i = 1; i <= count; i++)
 		{
-			in_execution_rovers_.remove(i);
+			if (RPtr == in_execution_rovers_.getEntry(i))
+			{
+				in_execution_rovers_.remove(i);
+			}
 		}
 	}
 	Pair<Rover*, double> pair(RPtr, RPtr->getSpeed());
@@ -392,6 +392,26 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 		available_rovers_emergency_.enqueue(pair);
 		break;
 	}
+	RPtr->SetRS(ROVER_STATUS::WAITING);
+}
+void MarsStation::MoveToAvailable(int i)
+{
+	Rover* RPtr = check_up_rovers_.getEntry(i);
+	check_up_rovers_.remove(i);
+	Pair<Rover*, double> pair(RPtr, RPtr->getSpeed());
+	switch (RPtr->getRT())
+	{
+	case ROVER_TYPE::MOUNTAINOUS:
+		available_rovers_mountainous_.enqueue(pair);
+		break;
+	case ROVER_TYPE::POLAR:
+		available_rovers_polar_.enqueue(pair);
+		break;
+	case ROVER_TYPE::EMERGENCY:
+		available_rovers_emergency_.enqueue(pair);
+		break;
+	}
+	RPtr->SetRS(ROVER_STATUS::WAITING);
 }
 void MarsStation::MoveToCheckUp(Rover* RPtr)
 {
@@ -463,6 +483,17 @@ void MarsStation::check_auto_promotion()
 
 	}
 
+}
+
+void MarsStation::check_checkup_list()
+{
+	int count = check_up_rovers_.getItemCount();
+	for (int i = 1; i <= count; i++)
+	{
+		if (check_up_rovers_.getEntry(i)->getCheckupEND() != current_day_)
+			continue;
+		MoveToAvailable(i);
+	}
 }
 
 void MarsStation::assign_missions()
