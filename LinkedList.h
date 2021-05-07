@@ -18,8 +18,9 @@ public:
 	~LinkedList();
 	LinkedList(LinkedList& l);
 	virtual bool isEmpty() const;
+	virtual bool insertIndex(int, const T&);
 	virtual bool insertBeg(const T&);
-	virtual void insertEnd(const T&);
+	virtual bool insertEnd(const T&);
 	virtual bool remove(int index);
 	virtual bool clear();
 	virtual T getEntry(const int) const;
@@ -100,6 +101,40 @@ bool LinkedList<T>::isEmpty() const
 }
 
 
+template <typename T>
+bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the other 2 functions and replace them by this function only
+{
+	bool validIndex = index <= itemCount + 1 && index >= 1;
+
+	if (validIndex)
+	{
+		Node<T>* ptr = Head;
+		Node<T>* insert = new Node<T>(data);
+		if (!insert) return false;
+		//special case ---> the index is the first index ------> i know in this case the user should use the function insertBeg ---> but i assume a folish user
+		if (index == 1)
+		{
+			insert->setNext(Head);
+			Head = insert;
+			itemCount++;
+			return true;
+		}
+
+		for (int i = 1; i < index; i++)
+		{
+			ptr = ptr->getNext();
+		}
+		//now ptr is pointing at the item after which we want to insert the data
+		
+		insert->setNext(ptr->getNext());
+		ptr->setNext(insert);
+		itemCount++;
+		return true;
+	}
+	return false;
+}
+
+
 
 template <typename T>
 bool LinkedList<T>::insertBeg(const T& data)
@@ -117,18 +152,22 @@ bool LinkedList<T>::insertBeg(const T& data)
 
 
 template <typename T>
-void LinkedList<T>::insertEnd(const T& data)
+bool LinkedList<T>::insertEnd(const T& data)
 {
 	Node<T>* R = new Node<T>(data);
+	if (!R) return false;   //no space in the memory
 	if (!Head)
 	{
 		Head = R;
-		return;
+		itemCount++;
+		return true;
 	}
 	Node<T>* p = Head;
 	while (p->getNext())
 		p = p->getNext();
 	p->setNext(R);
+	itemCount++;
+	return true;
 }
 
 
