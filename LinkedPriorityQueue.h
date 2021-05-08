@@ -39,12 +39,21 @@ const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPri
 	while (dequeue(temp));
 
 	//copy all items in the right queue in the left one
-	for (int i = 0; i < right_LQ.itemCount; i++)
+	while (right_LQ.front)
+	{
+		enqueue(right_LQ.front->getItem());
+		right_LQ.front = right_LQ.front->getNext();
+	}
+
+
+
+	//copy all items in the right queue in the left one
+	/*for (int i = 0; i < right_LQ.itemCount; i++)
 	{
 		enqueue(right_LQ.front->getItem());
 		right_LQ.dequeue(temp);
 		right_LQ.enqueue(front->getItem());
-	}
+	}*/
 	return *this;
 }
 
