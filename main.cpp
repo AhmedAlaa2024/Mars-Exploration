@@ -12,7 +12,7 @@ int main()
 	
 	MarsStation station_;
 	
-	station_.read_input_file();
+	
 	
 	SIM_MODE mode = station_.get_input_mode();
 

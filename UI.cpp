@@ -41,7 +41,7 @@ void UI::InteractivePrinting() const
 {
 	p_station->CollectStatistics_Console();     //i do not know why this line is written here 
 	// TODO:: cout statistics and wait for cin
-	
+
 	char key;
 	//cin >> key;
 	//check if end of days
@@ -52,6 +52,7 @@ void UI::InteractivePrinting() const
 			//continue;
 
 		p_station->simulate_day();
+
 		cout << "Current Day : " << p_station->get_current_day() << endl;
 
 
@@ -60,13 +61,15 @@ void UI::InteractivePrinting() const
 		//calculate # of waiting missions
 		int no_W_M = p_station->get_W_E_M().get_itemCount() + p_station->get_W_P_M().get_itemCount() + p_station->get_W_M_M().getItemCount();
 
-		cout << no_W_M <<" Waiting Missions : ";
+		cout << no_W_M << " Waiting Missions : ";
 		//first --> print the ID of the E missions
 		cout << " [";
-		Mission* m;
+		Mission* m = nullptr;
 		Mission* fm;     //first mission in the queue
 		p_station->get_W_E_M().peek(m); //TODO:: CHECK IF THE RETURN IS NULL --> many other cases below too
-		int first_id = m->getID();
+		int first_id;
+		if (m)
+			first_id = m->getID();
 
 		while (true)
 		{
@@ -87,20 +90,21 @@ void UI::InteractivePrinting() const
 			}
 			else
 				cout << m->getID() << ",";
-			
+
 			//then enqueue it again
 			Pair<Mission*, int> pm(m, m->get_priority());
 			p_station->get_W_E_M().enqueue(pm);
 
-			
+
 		}
 
 
 		//second --> print the ID of the polar Mission
 		cout << " (";
-		p_station->get_W_P_M().peek(m); 
-		first_id = m->getID();
-	
+		p_station->get_W_P_M().peek(m);
+		if (m)
+			first_id = m->getID();
+
 		while (true)
 		{
 			//check if there is no mission in the queue
@@ -147,13 +151,13 @@ void UI::InteractivePrinting() const
 		//calculate no of In-Execution Missions/Rovers
 		int no_exe = p_station->get_in_execution_missions().getItemCount();
 		cout << no_exe << " In-Execution Missions/Rovers: ";
-		cout << " ["; 
+		cout << " [";
 		int j = 0;
 		for (int i = 1; i <= p_station->get_in_execution_missions().getItemCount(); i++)
 		{
 			if (p_station->get_in_execution_missions().getEntry(i)->getMT() == MISSION_TYPE::EMERGENCY)
 			{
-				if(j == 0)
+				if (j == 0)
 					cout << p_station->get_in_execution_missions().getEntry(i)->getID() << "/" << p_station->get_in_execution_missions().getEntry(i)->getRover()->getID();
 				else
 					cout << "," << p_station->get_in_execution_missions().getEntry(i)->getID() << "/" << p_station->get_in_execution_missions().getEntry(i)->getRover()->getID();
@@ -198,7 +202,7 @@ void UI::InteractivePrinting() const
 
 		int no_R = p_station->get_available_rovers_emergency_().get_itemCount() + p_station->get_available_rovers_mountainous_().get_itemCount() + p_station->get_available_rovers_polar_().get_itemCount();
 		int n_ER = p_station->get_available_rovers_emergency_().get_itemCount();
-		Rover* r;
+		Rover* r = nullptr;
 		cout << no_R << "Available Rovers: " << " {";
 		j = 0;
 		for (int i = 0; i < n_ER; i++)
@@ -217,7 +221,7 @@ void UI::InteractivePrinting() const
 			p_station->get_available_rovers_emergency_().enqueue(pr);
 		}
 		cout << "] " << "(";
-		
+
 
 		int n_PR = p_station->get_available_rovers_polar_().get_itemCount();
 		j = 0;
@@ -262,7 +266,7 @@ void UI::InteractivePrinting() const
 		cout << "--------------------------------------------------------------------------------------------" << endl;
 
 		//In-Checkup Rovers
-		
+
 		cout << p_station->get_check_up_rovers_().getItemCount() << " In-Checkup Rovers: ";
 		cout << " [";
 		j = 0;
@@ -270,7 +274,7 @@ void UI::InteractivePrinting() const
 		{
 			if (p_station->get_check_up_rovers_().getEntry(i)->getRT() == ROVER_TYPE::EMERGENCY)
 			{
-				if(j == 0)
+				if (j == 0)
 					cout << p_station->get_check_up_rovers_().getEntry(i)->getID();
 				else
 					cout << "," << p_station->get_check_up_rovers_().getEntry(i)->getID();
