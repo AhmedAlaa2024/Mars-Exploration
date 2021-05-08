@@ -9,6 +9,8 @@
 MarsStation::MarsStation() :AutoP(0), current_day_(0), PRCount(0), ERCount(0), MRCount(0), AutoPCount(0)
 
 {
+	Cancelled_M =0;
+	Formulated_M = 0;
 
 	my_ui = new UI(this);
 	read_input_file();

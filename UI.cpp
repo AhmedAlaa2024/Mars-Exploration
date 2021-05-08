@@ -48,8 +48,8 @@ void UI::InteractivePrinting() const
 	while (!p_station->check_Last_Day())
 	{
 		cin >> key;
-		if (key != 10)   //ASCII CODE of "ENTER" is 10
-			continue;
+		//if (key != 10)   //TODO:: Change this
+			//continue;
 
 		p_station->simulate_day();
 		cout << "Current Day : " << p_station->get_current_day() << endl;
@@ -65,7 +65,7 @@ void UI::InteractivePrinting() const
 		cout << " [";
 		Mission* m;
 		Mission* fm;     //first mission in the queue
-		p_station->get_W_E_M().peek(m);
+		p_station->get_W_E_M().peek(m); //TODO:: CHECK IF THE RETURN IS NULL --> many other cases below too
 		int first_id = m->getID();
 
 		while (true)
@@ -98,7 +98,7 @@ void UI::InteractivePrinting() const
 
 		//second --> print the ID of the polar Mission
 		cout << " (";
-		p_station->get_W_P_M().peek(m);
+		p_station->get_W_P_M().peek(m); 
 		first_id = m->getID();
 	
 		while (true)
@@ -367,7 +367,7 @@ void UI::InteractivePrinting() const
 		//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
 	}
 
-	//finally creat the file
+	//finally create the file
 	p_station->writeOutputFile();
 }
 
