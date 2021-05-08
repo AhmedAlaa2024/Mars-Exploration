@@ -39,7 +39,7 @@ SIM_MODE UI::get_input_mode()
 // TO BE CHANGED....
 void UI::InteractivePrinting() const
 {
-	p_station->CollectStatistics_Console();     //i do not know why this line is written here 
+	
 	// TODO:: cout statistics and wait for cin
 
 	char key;
