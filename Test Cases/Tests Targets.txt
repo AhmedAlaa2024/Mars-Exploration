@@ -1,0 +1,11 @@
+Test#1: testing empty rovers
+Test#2: testing few rovers with few events
+Test#3: testing few rovers with a lot of events
+Test#4: testing a lot of rovers with few events
+Test#5: testing a lot of rovers with a lot of events
+Test#6: testing promoting a deleted mission
+Test#7: testing empty events
+Test#8: testing zero-speed-rovers
+Test#9: testing zero-duration-checkups
+Test#10: testing AutoP = 0
+Test#11: testing zero events
