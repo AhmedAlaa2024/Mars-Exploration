@@ -365,7 +365,8 @@ void UI::Output_Console()const
 void UI::InteractivePrinting() const
 {
 	cout << "Interactive Mode\n";
-	// TODO:: cout statistics and wait for cin
+
+	//TODO:: cout statistics and wait for cin
 
 	char key;
 	//cin >> key;

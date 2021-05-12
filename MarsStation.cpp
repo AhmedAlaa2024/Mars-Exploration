@@ -9,7 +9,7 @@
 MarsStation::MarsStation() :AutoP(0), current_day_(0), PRCount(0), ERCount(0), MRCount(0), AutoPCount(0)
 
 {
-	Cancelled_M =0;
+	Cancelled_M = 0;
 	Formulated_M = 0;
 
 	read_input_file();
@@ -252,7 +252,7 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
 	MISSION_TYPE TYP;
 	int Count = completed_missions_.getItemCount();
-	for(int i = 1; i <= Count; i++)
+	for (int i = 1; i <= Count; i++)
 	{
 		Ptr = completed_missions_.getEntry(i);
 		TYP = Ptr->getMT();
@@ -316,7 +316,7 @@ void MarsStation::simulate_day()
 	//check for rovers finished checkup
 	check_checkup_list();
 
-	Event* eve =nullptr;
+	Event* eve = nullptr;
 
 	//execute events
 	while (true)      //why loop ?? because there may be more than one event in the same day
@@ -326,6 +326,8 @@ void MarsStation::simulate_day()
 		{
 			events_list_.dequeue(eve);
 			eve->Execute();
+			eve = nullptr;
+
 		}
 		else
 			break;
@@ -361,7 +363,7 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 			if (m->getID() == miss->getID())
 			{
 				waiting_mountainous_missions_.remove(i);
-				
+
 				return;
 
 			}
@@ -642,8 +644,13 @@ void MarsStation::check_completed_missions()
 	bool isComp = false;
 	for (int i = 1; i <= Count; i++)
 	{
+		isComp = false;
 		MPtr = in_execution_missions_.getEntry(i);
-		isComp = MPtr->isCompleted(current_day_);
+		if (MPtr)
+		{
+			isComp = MPtr->isCompleted(current_day_);
+
+		}
 		if (isComp)
 		{
 			RPtr = MPtr->getRover();
