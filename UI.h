@@ -18,7 +18,7 @@ public:
 	void InteractivePrinting() const;
 	void StepByStepPrinting() const;
 	void SilentPrinting() const;
-
+	void Output_Console()const;
 
 };
 
