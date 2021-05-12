@@ -173,6 +173,18 @@
   <ItemGroup>
     <Text Include="input.txt" />
     <Text Include="Team Tasks.txt" />
+    <Text Include="Test Cases\test#1.txt" />
+    <Text Include="Test Cases\test#10.txt" />
+    <Text Include="Test Cases\test#11.txt" />
+    <Text Include="Test Cases\test#2.txt" />
+    <Text Include="Test Cases\test#3.txt" />
+    <Text Include="Test Cases\test#4.txt" />
+    <Text Include="Test Cases\test#5.txt" />
+    <Text Include="Test Cases\test#6.txt" />
+    <Text Include="Test Cases\test#7.txt" />
+    <Text Include="Test Cases\test#8.txt" />
+    <Text Include="Test Cases\test#9.txt" />
+    <Text Include="Test Cases\Tests Targets.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="phase 1 Report.docx" />

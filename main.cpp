@@ -11,6 +11,9 @@ int main()
 {
 	
 	MarsStation station_;
+	
+	
+	
 	SIM_MODE mode = station_.get_input_mode();
 
 	station_.execute_mode(mode);
@@ -70,6 +73,29 @@ int main()
 
 	Node<int>* n = l.getNodeAt(1);
 	cout << n->getItem();*/
+
+
+
+	/*LinkedPriorityQueue<int, int> l;
+	LinkedPriorityQueue<int, int> q;
+
+
+	Pair<int, int> p1(3, 1);
+	Pair<int, int> p2(33, 6);
+	Pair<int, int> p3(8, 3);
+	Pair<int, int> p4(5, 4);
+
+	l.enqueue(p1);
+	l.enqueue(p2);
+	l.enqueue(p3);
+	l.enqueue(p4);
+
+	q = l;
+
+	int temp;
+	q.peek(temp);
+	cout << temp;*/
+
 
 
 	return 0;

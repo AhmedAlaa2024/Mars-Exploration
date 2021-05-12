@@ -9,9 +9,12 @@
 MarsStation::MarsStation() :AutoP(0), current_day_(0), PRCount(0), ERCount(0), MRCount(0), AutoPCount(0)
 
 {
+	Cancelled_M =0;
+	Formulated_M = 0;
 
-	my_ui = new UI(this);
 	read_input_file();
+	MarsStation* it = this;
+	my_ui = new UI(it);
 
 
 }
@@ -131,6 +134,7 @@ bool MarsStation::read_input_file()
 		Rover* r = new Rover(ROVER_TYPE::MOUNTAINOUS, CM, SM, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_mountainous_.enqueue(p);
+		ROVERS_DB.add(r);
 	}
 
 	// Create Polar Rovers
@@ -139,6 +143,8 @@ bool MarsStation::read_input_file()
 		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_polar_.enqueue(p);
+		ROVERS_DB.add(r);
+
 	}
 
 	// Create Emergency Rovers
@@ -147,6 +153,8 @@ bool MarsStation::read_input_file()
 		Rover* r = new Rover(ROVER_TYPE::EMERGENCY, CE, SE, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_emergency_.enqueue(p);
+		ROVERS_DB.add(r);
+
 	}
 
 
@@ -308,13 +316,13 @@ void MarsStation::simulate_day()
 	//check for rovers finished checkup
 	check_checkup_list();
 
-	Event* eve;
+	Event* eve =nullptr;
 
 	//execute events
 	while (true)      //why loop ?? because there may be more than one event in the same day
 	{
 		events_list_.peek(eve);
-		if (eve->get_ED() == current_day_)
+		if (eve && eve->get_ED() == current_day_)
 		{
 			events_list_.dequeue(eve);
 			eve->Execute();
@@ -337,7 +345,7 @@ void MarsStation::simulate_day()
 
 void MarsStation::move_to_in_ex_list(Mission* miss)
 {
-	in_execution_missions_.insert(miss);
+	in_execution_missions_.insertBeg(miss);
 
 	//remove from waiting
 
@@ -424,7 +432,7 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 			in_execution_rovers_.remove(i);
 		}
 	}
-	check_up_rovers_.insert(RPtr);
+	check_up_rovers_.insertBeg(RPtr);
 }
 
 void MarsStation::SortCompletedList()
@@ -443,9 +451,9 @@ void MarsStation::SortCompletedList()
 		{
 			index = index ? index : i;
 			if (!Temp.contains(CPtr))
-				Temp.insert(CPtr);
+				Temp.insertBeg(CPtr);
 			if (!Temp.contains(FPtr))
-				Temp.insert(FPtr);
+				Temp.insertBeg(FPtr);
 
 		}
 		else
@@ -647,7 +655,7 @@ void MarsStation::check_completed_missions()
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
-			completed_missions_.insert(MPtr);
+			completed_missions_.insertBeg(MPtr);
 		}
 	}
 }

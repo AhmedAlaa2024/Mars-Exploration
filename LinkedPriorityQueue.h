@@ -14,6 +14,7 @@ class LinkedPriorityQueue :public PriorityQueueADT<T, F>
 	Node<Pair<T, F>>* front;
 	Node<Pair<T, F>>* back;   //or call it rear i think ---> which is better ):
 	int itemCount;
+	
 public:
 	LinkedPriorityQueue();
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
@@ -23,7 +24,43 @@ public:
 	virtual bool peek(T&);
 	virtual ~LinkedPriorityQueue();
 	int get_itemCount();
+
+	const LinkedPriorityQueue<T,F>& operator = (LinkedPriorityQueue&);
 };
+
+template <typename T, typename F>
+const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPriorityQueue& right_LQ)  // i think it should be passed const ---> but we will call non const member func on it so we can not pass it const ---> is it ok ????
+{
+	//in case the right obj is empty
+	if (right_LQ.isEmpty()) return *this;
+
+	T temp;
+	//delete all items in the left queue
+	while (dequeue(temp));
+
+	//copy all items in the right queue in the left one
+	while (right_LQ.front)
+	{
+		enqueue(right_LQ.front->getItem());
+		right_LQ.front = right_LQ.front->getNext();
+	}
+
+
+
+	//copy all items in the right queue in the left one
+	/*for (int i = 0; i < right_LQ.itemCount; i++)
+	{
+		enqueue(right_LQ.front->getItem());
+		right_LQ.dequeue(temp);
+		right_LQ.enqueue(front->getItem());
+	}*/
+	return *this;
+}
+
+
+
+
+
 
 
 template <typename T, typename F>
@@ -154,6 +191,7 @@ bool LinkedPriorityQueue<T, F>::peek(T& item)
 	item = front->getItem().getItem();
 	return true;
 }
+
 
 template <typename T, typename F>
 LinkedPriorityQueue<T, F>::~LinkedPriorityQueue()
