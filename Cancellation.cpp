@@ -8,9 +8,9 @@ Cancellation::Cancellation(int ed,int id, MarsStation* m_s):Event(ed,id, m_s)
 void Cancellation::Execute()   //cancel a requested mountainous mission (if found and is waiting)
 {
 	
-	int count = M_S->get_W_M_M().getItemCount();
+	//int count = M_S->get_W_M_M().getItemCount();
 	// loop on the list
-	for (int i = 1; i <= count; i++)
+	for (int i = 1; i <= M_S->get_W_M_M().getItemCount(); i++)
 	{
 		Mission* m = M_S->get_W_M_M().getEntry(i);
 		if (m->getID() == get_ID() && m->getMT() == MISSION_TYPE::MOUNTAINOUS)

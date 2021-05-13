@@ -10,7 +10,6 @@ public:
 	virtual bool insertBeg(const T&) = 0;
 	virtual bool insertEnd(const T&) = 0;
 	virtual bool remove(int index) = 0;
-	virtual bool clear() = 0;
 	virtual T getEntry(const int) const = 0;
 	virtual bool contains(T&) const = 0;
 
