@@ -496,7 +496,7 @@ void MarsStation::check_auto_promotion()
 			Promotion pr(current_day_, mm->getID(), this);
 			pr.Execute();
 			AutoPCount++;
-
+			i--;
 		}
 
 	}
