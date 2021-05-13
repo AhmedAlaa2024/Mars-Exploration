@@ -140,11 +140,12 @@ const LinkedQueue<T>& LinkedQueue<T>::operator = (LinkedQueue<T>& right_LQ)  // 
     //delete all items in the left queue
     while (dequeue(temp));
 
+    Node<T>* ptr = right_LQ.front;
     //copy all items in the right queue in the left one
-    while (right_LQ.front)
+    while (ptr)
     {
-        enqueue(right_LQ.front->getItem());
-        right_LQ.front = right_LQ.front->getNext();
+        enqueue(ptr->getItem());
+       ptr = ptr->getNext();
     }
 
 
