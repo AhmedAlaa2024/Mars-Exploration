@@ -22,21 +22,33 @@ public:
 	virtual bool insertBeg(const T&);
 	virtual bool insertEnd(const T&);
 	virtual bool remove(int index);
-	virtual bool clear();
 	virtual T getEntry(const int) const;
 	virtual bool contains(T&) const;
 	int getItemCount();
 	void DeleteAll();
-
+	const LinkedList<T>& operator = (LinkedList&);
 };
-
-
 
 template <typename T>
 LinkedList<T>::LinkedList()
 {
 	Head = nullptr;
 	itemCount = 0;
+}
+
+
+template <typename T>
+const LinkedList<T>& LinkedList<T>::operator = (LinkedList& right_list)
+{
+	if (!isEmpty())  DeleteAll();
+
+	Node<T>* ptr = right_list.Head;
+	while (ptr)
+	{
+		insertEnd(ptr->getItem());
+		ptr = ptr->getNext();
+	}
+	return *this;
 }
 
 
@@ -200,18 +212,14 @@ bool LinkedList<T>::remove(int index)
 
 
 
-template <typename T>
-bool LinkedList<T>::clear()    
-{
-	return 0;
-}
 
 
 template <typename T>
 T LinkedList<T>::getEntry(const int ind) const
 {
 	Node<T>* ptr = Head;
-
+	
+	if(!ptr) return nullptr; //doaa
 
 	for (int i = 1; i < ind; ++i)
 	{

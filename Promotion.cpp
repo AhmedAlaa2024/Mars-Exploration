@@ -6,8 +6,8 @@ Promotion::Promotion(int ed, int id, MarsStation* m_s) :Event(ed, id, m_s)
 
 void Promotion::Execute()
 {
-	int count = M_S->get_W_M_M().getItemCount();
-	for (int i = 1; i <= count; i++)
+	//int count = M_S->get_W_M_M().getItemCount();
+	for (int i = 1; i <= M_S->get_W_M_M().getItemCount(); i++)
 	{
 		Mission* m = M_S->get_W_M_M().getEntry(i);
 		if (m->getID() == get_ID() && m->getMT() == MISSION_TYPE::MOUNTAINOUS)  //no need to check if it is M_M or not because it is inside the W_M_M
