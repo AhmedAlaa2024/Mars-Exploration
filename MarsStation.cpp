@@ -276,9 +276,9 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	PR = PRCount;
 	ER = ERCount;
 	Rovers = MR + PR + ER;
-	AvgW = WD / Missions;
-	AvgEx = ED / Missions;
-	Auto = (AutoPCount / MM) * 100;
+	//AvgW = WD / Missions;
+	//AvgEx = ED / Missions;
+	//Auto = (AutoPCount / MM) * 100;
 	return Auto;
 }
 
@@ -451,9 +451,9 @@ void MarsStation::SortCompletedList()
 		{
 			index = index ? index : i;
 			if (!Temp.contains(CPtr))
-				Temp.insertBeg(CPtr);
+				Temp.insertEnd(CPtr);
 			if (!Temp.contains(FPtr))
-				Temp.insertBeg(FPtr);
+				Temp.insertEnd(FPtr);
 
 		}
 		else
@@ -655,7 +655,7 @@ void MarsStation::check_completed_missions()
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
-			completed_missions_.insertBeg(MPtr);
+			completed_missions_.insertEnd(MPtr);
 		}
 	}
 }
