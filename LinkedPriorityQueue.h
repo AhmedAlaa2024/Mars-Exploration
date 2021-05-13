@@ -38,11 +38,12 @@ const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPri
 	//delete all items in the left queue
 	while (dequeue(temp));
 
+	Node<Pair<T, F>>* ptr = right_LQ.front;
 	//copy all items in the right queue in the left one
-	while (right_LQ.front)
+	while (ptr)
 	{
-		enqueue(right_LQ.front->getItem());
-		right_LQ.front = right_LQ.front->getNext();
+		enqueue(ptr->getItem());
+		ptr = ptr->getNext();
 	}
 
 

@@ -31,6 +31,8 @@ public:
 
     // Destructor
     ~LinkedQueue(); // Complexity = O(n)
+
+    const LinkedQueue<T>& operator = (LinkedQueue&);
 };
 
 template <typename T>
@@ -122,6 +124,40 @@ LinkedQueue<T>::~LinkedQueue() {
     T temp;
 
     while (dequeue(temp));
+}
+
+
+
+
+//doaa
+template <typename T>
+const LinkedQueue<T>& LinkedQueue<T>::operator = (LinkedQueue<T>& right_LQ)  // i think it should be passed const ---> but we will call non const member func on it so we can not pass it const ---> is it ok ????
+{
+    //in case the right obj is empty
+    if (right_LQ.isEmpty()) return *this;
+
+    T temp;
+    //delete all items in the left queue
+    while (dequeue(temp));
+
+    Node<T>* ptr = right_LQ.front;
+    //copy all items in the right queue in the left one
+    while (ptr)
+    {
+        enqueue(ptr->getItem());
+       ptr = ptr->getNext();
+    }
+
+
+
+    //copy all items in the right queue in the left one
+    /*for (int i = 0; i < right_LQ.itemCount; i++)
+    {
+        enqueue(right_LQ.front->getItem());
+        right_LQ.dequeue(temp);
+        right_LQ.enqueue(front->getItem());
+    }*/
+    return *this;
 }
 
 #endif // !QUEUEADT_H_

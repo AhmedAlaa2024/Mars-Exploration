@@ -54,72 +54,41 @@ void UI::Output_Console()const
 	//first --> print the ID of the E missions
 	cout << " [";
 	Mission* m = nullptr;
-	Mission* fm;     //first mission in the queue
-	p_station->get_W_E_M().peek(m); //TODO:: CHECK IF THE RETURN IS NULL --> many other cases below too
-	int first_id;
-	if (m)
-		first_id = m->getID();
-
-	while (true)
+	int j = 0;
+	for (int i = 1; i <= p_station->get_W_E_M().get_itemCount(); i++)
 	{
-		//check if there is no mission in the queue
-		if (p_station->get_W_E_M().isEmpty())  //it will be executed in each iteration ---> overhead ---> later
-		{
-			cout << "]";
-			break;
-		}
 		p_station->get_W_E_M().dequeue(m);
 
-		p_station->get_W_E_M().peek(fm);
-
-		if (fm->getID() == first_id)  //if it is the last mission in the queue
-		{
-			cout << m->getID() << "] ";
-			break;
-		}
+		if (j == 0)
+			cout << m->getID();
 		else
-			cout << m->getID() << ",";
-
+			cout << "," << m->getID();
+		j++;
 		//then enqueue it again
 		Pair<Mission*, int> pm(m, m->get_priority());
 		p_station->get_W_E_M().enqueue(pm);
-
-
 	}
+	cout << "]";
 
-
+	
 	//second --> print the ID of the polar Mission
 	cout << " (";
-	p_station->get_W_P_M().peek(m);
-	if (m)
-		first_id = m->getID();
-
-	while (true)
+	j = 0;
+	for (int i = 1; i <= p_station->get_W_P_M().get_itemCount(); i++)
 	{
-		//check if there is no mission in the queue
-		if (p_station->get_W_P_M().isEmpty())   //it will be executed in each iteration ---> overhead ---> later
-		{
-			cout << ")";
-			break;
-		}
 		p_station->get_W_P_M().dequeue(m);
 
-		p_station->get_W_P_M().peek(fm);
-
-		if (fm->getID() == first_id)  //if it is the last mission in the queue
-		{
-			cout << m->getID() << ") ";
-			break;
-		}
+		if (j == 0)
+			cout << m->getID();
 		else
-			cout << m->getID() << ",";
-
+			cout << "," << m->getID();
+		j++;
 		//then enqueue it again
 		p_station->get_W_P_M().enqueue(m);
 	}
+	cout << ")";
 
-
-
+	
 
 	//third --> print the ID of the mountainous missions
 	cout << " {";
@@ -141,7 +110,7 @@ void UI::Output_Console()const
 	int no_exe = p_station->get_in_execution_missions().getItemCount();
 	cout << no_exe << " In-Execution Missions/Rovers: ";
 	cout << " [";
-	int j = 0;
+	j = 0;
 	for (int i = 1; i <= p_station->get_in_execution_missions().getItemCount(); i++)
 	{
 		if (p_station->get_in_execution_missions().getEntry(i)->getMT() == MISSION_TYPE::EMERGENCY)
@@ -194,7 +163,7 @@ void UI::Output_Console()const
 	Rover* r = nullptr;
 	cout << no_R << " Available Rovers: " << " [";
 	j = 0;
-	for (int i = 0; i < n_ER; i++)
+	for (int i = 1; i <= n_ER; i++)
 	{
 		p_station->get_available_rovers_emergency_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::EMERGENCY)
@@ -214,7 +183,7 @@ void UI::Output_Console()const
 
 	int n_PR = p_station->get_available_rovers_polar_().get_itemCount();
 	j = 0;
-	for (int i = 0; i < n_PR; i++)
+	for (int i = 1; i <= n_PR; i++)
 	{
 		p_station->get_available_rovers_polar_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::POLAR)
@@ -234,7 +203,7 @@ void UI::Output_Console()const
 
 	int n_MR = p_station->get_available_rovers_mountainous_().get_itemCount();
 	j = 0;
-	for (int i = 0; i < n_MR; i++)
+	for (int i = 1; i <= n_MR; i++)
 	{
 		p_station->get_available_rovers_mountainous_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::MOUNTAINOUS)
@@ -365,7 +334,8 @@ void UI::Output_Console()const
 void UI::InteractivePrinting() const
 {
 	cout << "Interactive Mode\n";
-	// TODO:: cout statistics and wait for cin
+
+	//TODO:: cout statistics and wait for cin
 
 	char key;
 	//cin >> key;
@@ -411,7 +381,7 @@ void UI::StepByStepPrinting() const
 		Sleep(1000);
 	}
 
-	p_station->writeOutputFile();
+	p_station->writeOutputFile();  // i think it should be removed
 
 	bool isWritten = p_station->writeOutputFile();
 	if (isWritten)
@@ -424,6 +394,11 @@ void UI::SilentPrinting() const
 {
 	cout << "Silent Mode\n";
 	cout << "Simulation Starts...\n";
+
+	while (!p_station->check_Last_Day())
+	{
+		p_station->simulate_day();
+	}
 
 	bool isWritten = p_station->writeOutputFile();
 	if (isWritten)
