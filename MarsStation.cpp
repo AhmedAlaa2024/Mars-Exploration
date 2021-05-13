@@ -563,7 +563,8 @@ void MarsStation::assign_missions()
 	}
 
 	//second: assign polar missions
-
+	LinkedQueue<Mission*> tmp2;
+	
 	while (waiting_polar_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -579,15 +580,15 @@ void MarsStation::assign_missions()
 		else //no rover is available
 		{
 			mm->WaitAnotherDay();
-			Pair<Mission*, int> p(mm, mm->get_priority());
-			temp.enqueue(p);
+			
+			tmp2.enqueue(mm);
 
 		}
 
 	}
-	while (temp.dequeue(mm)) // to clear it
+	while (tmp2.dequeue(mm)) // to clear it
 	{
-
+		waiting_polar_missions_.enqueue(mm);
 	}
 
 	//now The Mountainous
