@@ -276,9 +276,13 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	PR = PRCount;
 	ER = ERCount;
 	Rovers = MR + PR + ER;
-	AvgW = WD / Missions;
-	AvgEx = ED / Missions;
-	Auto = (AutoPCount / MM) * 100;
+	if (Missions != 0)    // doaa --> assume there is no mission at all ---> division by 0
+	{
+		AvgW = WD / Missions;
+		AvgEx = ED / Missions;
+	}
+	if(MM != 0)    //doaa --> same as above
+		Auto = (AutoPCount / MM) * 100;   
 	return Auto;
 }
 
@@ -404,6 +408,8 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 	}
 	RPtr->SetRS(ROVER_STATUS::WAITING);
 }
+
+
 void MarsStation::MoveToAvailable(int i)
 {
 	Rover* RPtr = check_up_rovers_.getEntry(i);
@@ -423,6 +429,8 @@ void MarsStation::MoveToAvailable(int i)
 	}
 	RPtr->SetRS(ROVER_STATUS::WAITING);
 }
+
+
 void MarsStation::MoveToCheckUp(Rover* RPtr)
 {
 	RPtr->CheckUP(current_day_);
@@ -512,7 +520,7 @@ void MarsStation::assign_missions()
 	Mission* mm;
 
 	//first assign emergency missions
-	LinkedPriorityQueue<Mission*, int> temp;
+	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ????
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -563,8 +571,9 @@ void MarsStation::assign_missions()
 	}
 
 	//second: assign polar missions
-	LinkedQueue<Mission*> tmp2;
-	
+
+	LinkedQueue<Mission*> temp_p;
+
 	while (waiting_polar_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -580,13 +589,17 @@ void MarsStation::assign_missions()
 		else //no rover is available
 		{
 			mm->WaitAnotherDay();
-			
-			tmp2.enqueue(mm);
+			//Pair<Mission*, int> p(mm, mm->get_priority());
+			//temp.enqueue(p);
+			temp_p.enqueue(mm);  //doaa
 
 		}
 
 	}
-	while (tmp2.dequeue(mm)) // to clear it
+
+	waiting_polar_missions_ = temp_p;   //doaa
+
+	while (temp_p.dequeue(mm)) // to clear it
 	{
 		waiting_polar_missions_.enqueue(mm);
 	}
@@ -599,7 +612,7 @@ void MarsStation::assign_missions()
 		mm = waiting_mountainous_missions_.getEntry(i);
 
 
-		if (available_rovers_mountainous_.dequeue(r))
+		if (available_rovers_mountainous_.dequeue(r))  
 		{
 			mm->Assign(r, r->getSpeed(), current_day_);
 
@@ -639,11 +652,11 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
-	int Count = in_execution_missions_.getItemCount();
+	//int Count = in_execution_missions_.getItemCount();
 	Mission* MPtr = nullptr;
 	Rover* RPtr = nullptr;
 	bool isComp = false;
-	for (int i = 1; i <= Count; i++)
+	for (int i = 1; i <= in_execution_missions_.getItemCount(); i++)
 	{
 		isComp = false;
 		MPtr = in_execution_missions_.getEntry(i);
@@ -667,3 +680,15 @@ void MarsStation::check_completed_missions()
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -114,7 +114,8 @@ void Rover::AssignTo(Mission* m)
 	
 	completedMissions++;
 	mission = m;
-	
+	assigned = true; // doaa temporarly---> i will delete it
+	RS = ROVER_STATUS::IN_EXECUTION;  //doaa
 	
 }
 
@@ -127,5 +128,6 @@ bool Rover::CheckUP(int currentDay)
 	completedMissions = 0;
 	mission = nullptr;
 	RS = ROVER_STATUS::CHECKUP;
+	assigned = false; // doaa temporarly---> i will delete it
 	return true;
 }
