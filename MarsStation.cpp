@@ -597,8 +597,7 @@ void MarsStation::assign_missions()
 
 	}
 
-	waiting_polar_missions_ = temp_p;   //doaa
-
+	
 	while (temp_p.dequeue(mm)) // to clear it
 	{
 		waiting_polar_missions_.enqueue(mm);
@@ -652,7 +651,7 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
-	//int Count = in_execution_missions_.getItemCount();
+	//int Count = in_execution_missions_.getItemCount();  // 1 2 4 5 6
 	Mission* MPtr = nullptr;
 	Rover* RPtr = nullptr;
 	bool isComp = false;
@@ -676,6 +675,7 @@ void MarsStation::check_completed_missions()
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
+			i--;
 			completed_missions_.insertBeg(MPtr);
 		}
 	}
