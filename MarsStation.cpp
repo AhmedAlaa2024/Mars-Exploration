@@ -462,10 +462,16 @@ void MarsStation::SortCompletedList()
 		{
 			index = index ? index : i;
 			if (!Temp.contains(CPtr))
+			{
 				Temp.insertEnd(CPtr);
+				completed_missions_.remove(i);
+			}
 			if (!Temp.contains(FPtr))
+			{
 				Temp.insertEnd(FPtr);
-
+				completed_missions_.remove(i + 1);
+			}
+			i--;
 		}
 		else
 		{
@@ -473,11 +479,14 @@ void MarsStation::SortCompletedList()
 				continue;
 			//sort list using a sorting algorithm
 			//then remove
-			int j = 1;
+			int j = index;
 			while (!Temp.isEmpty())
 			{
+				completed_missions_.insertIndex(j, Temp.getEntry(1));
+				Temp.remove(1);
+				j++;
 				//if(completed_missions_.contains(Temp.getEntry(j)))
-				//insert in 
+				//insert in index
 			}
 			index = 0;
 		}
