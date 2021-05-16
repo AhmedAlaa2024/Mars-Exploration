@@ -39,14 +39,35 @@ const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPri
 	while (dequeue(temp));
 
 	Node<Pair<T, F>>* ptr = right_LQ.front;
+
 	//copy all items in the right queue in the left one
+
 	while (ptr)
 	{
 		enqueue(ptr->getItem());
 		ptr = ptr->getNext();
 	}
 
-
+	//Node<Pair<T, F>>* p = front;
+	////copy all items in the right queue in the left one
+	//while (ptr)
+	//{
+	//	//front->setItem(ptr->getItem());
+	//	Node<Pair<T, F>>* n = new Node< Pair<T, F>>(ptr->getItem());
+	//	if (!front) //first element   --> overhead i know ---> put it outside the loop --> later
+	//	{
+	//		front = n;
+	//		p = front;
+	//		front->setNext(nullptr);
+	//		itemCount++;
+	//		continue;
+	//	}
+	//	p->setNext(n);
+	//	p = p->getNext();
+	//	itemCount++;
+	//	
+	//	ptr = ptr->getNext();
+	//}
 
 	//copy all items in the right queue in the left one
 	/*for (int i = 0; i < right_LQ.itemCount; i++)

@@ -76,25 +76,25 @@ int main()
 
 
 
-	/*LinkedPriorityQueue<int, int> l;
-	LinkedPriorityQueue<int, int> q;
+	//LinkedPriorityQueue<int, int> l;
+	//LinkedPriorityQueue<int, int> q;
 
 
-	Pair<int, int> p1(3, 1);
-	Pair<int, int> p2(33, 6);
-	Pair<int, int> p3(8, 3);
-	Pair<int, int> p4(5, 4);
+	//Pair<int, int> p1(3, 1);
+	//Pair<int, int> p2(33, 6);
+	//Pair<int, int> p3(8, 3);
+	//Pair<int, int> p4(5, 4);
 
-	l.enqueue(p1);
-	l.enqueue(p2);
-	l.enqueue(p3);
-	l.enqueue(p4);
+	//l.enqueue(p1);
+	//l.enqueue(p2);
+	//l.enqueue(p3);
+	//l.enqueue(p4);
 
-	q = l;
+	//q = l;
 
-	int temp;
-	q.peek(temp);
-	cout << temp;*/
+	//int temp;
+	//q.peek(temp);
+	//cout << temp;
 
 
 
