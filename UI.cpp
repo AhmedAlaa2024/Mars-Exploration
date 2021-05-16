@@ -387,7 +387,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1);
+		Sleep(1000);
 	}
 
 	p_station->writeOutputFile();  // i think it should be removed
