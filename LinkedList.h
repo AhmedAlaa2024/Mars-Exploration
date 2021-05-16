@@ -171,6 +171,7 @@ bool LinkedList<T>::insertEnd(const T& data)
 	if (!Head)
 	{
 		Head = R;
+		Head->setNext(nullptr);
 		itemCount++;
 		return true;
 	}

@@ -1,5 +1,6 @@
 #include "UI.h"
 #include <iostream>
+//#include "LinkedPriorityQueue.h"
 #include <fstream>
 #include<Windows.h>  //for the delay
 using namespace std;
@@ -55,7 +56,9 @@ void UI::Output_Console()const
 	cout << " [";
 	Mission* m = nullptr;
 	int j = 0;
-	for (int i = 1; i <= p_station->get_W_E_M().get_itemCount(); i++)
+	int count = p_station->get_W_E_M().get_itemCount();
+	LinkedPriorityQueue<Mission*, int> temp;
+	for (int i = 1; i <= count; i++)
 	{
 		p_station->get_W_E_M().dequeue(m);
 
@@ -66,15 +69,21 @@ void UI::Output_Console()const
 		j++;
 		//then enqueue it again
 		Pair<Mission*, int> pm(m, m->get_priority());
-		p_station->get_W_E_M().enqueue(pm);
+		temp.enqueue(pm);
 	}
 	cout << "]";
+	p_station->get_W_E_M() = temp;
 
+	while (temp.dequeue(m))   //clear temp
+	{
+
+	}
 	
 	//second --> print the ID of the polar Mission
 	cout << " (";
 	j = 0;
-	for (int i = 1; i <= p_station->get_W_P_M().get_itemCount(); i++)
+	count = p_station->get_W_P_M().get_itemCount();
+	for (int i = 1; i <= count; i++)
 	{
 		p_station->get_W_P_M().dequeue(m);
 
@@ -92,7 +101,7 @@ void UI::Output_Console()const
 
 	//third --> print the ID of the mountainous missions
 	cout << " {";
-	for (int i = 1; i <= p_station->get_W_M_M().getItemCount(); i++)
+	for (int i = 1; i <= p_station->get_W_M_M().getItemCount(); i++)   //itemCount does not change during this loop
 	{
 		if (i == p_station->get_W_M_M().getItemCount())   //so print wihtout the ","
 			cout << p_station->get_W_M_M().getEntry(i)->getID();
@@ -378,7 +387,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1000);
+		Sleep(1);
 	}
 
 	p_station->writeOutputFile();  // i think it should be removed

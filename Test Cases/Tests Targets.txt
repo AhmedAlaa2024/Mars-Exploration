@@ -33,7 +33,7 @@ To : Ahmed Atta
 
 2- conflict in my mind ---> why when we store the itemCount of any list in a var < count > 
 then during debugging they take different values ----> i have changd it and use the getItemCount directly and the error is fixed then
-but what is the reasont for that ????  -----> tell me to send you the photo if you do not get the idea i am talking about
+but what is the reason for that ????  -----> tell me to send you the photo if you do not get the idea i am talking about
 
 3- there are some cases still do not work
 
@@ -47,3 +47,13 @@ From : doaa
 To : Rufaida
 ------------------
 read # 3 in Alaa section   ---> i think more modification is needed in the output file ---> because AutoP will be zero but it should be undefined
+
+
+
+
+
+
+Is it allowed to make the return of all getters in the MarsStatoin by ref ----> i do not think so as they said in the doc that before any friedship,
+we have to ask the TAs
+and when we make the return type by ref we have the ability to modify the data member like setters and this is like the friendship
+for ex ---> in class UI 
