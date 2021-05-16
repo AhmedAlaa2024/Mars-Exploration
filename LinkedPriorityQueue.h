@@ -40,6 +40,8 @@ const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPri
 
 	Node<Pair<T, F>>* ptr = right_LQ.front;
 
+	//copy all items in the right queue in the left one
+
 	while (ptr)
 	{
 		enqueue(ptr->getItem());
