@@ -19,6 +19,7 @@ void Promotion::Execute()
 			M_S->get_W_M_M().remove(i);
 			Pair<Mission*, int> pM(m, m->get_priority());
 			M_S->get_W_E_M().enqueue(pM);
+			break;
 		}
 	}
 
