@@ -58,7 +58,7 @@ void UI::Output_Console()const
 	int j = 0;
 	int count = p_station->get_W_E_M().get_itemCount();
 	LinkedPriorityQueue<Mission*, int> temp;
-	for (int i = 1; i <= count; i++)
+	while(p_station->get_W_E_M().peek(m))
 	{
 		p_station->get_W_E_M().dequeue(m);
 
@@ -387,7 +387,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1000);
+		Sleep(1);
 	}
 
 	p_station->writeOutputFile();  // i think it should be removed
