@@ -563,11 +563,11 @@ void MarsStation::assign_missions()
 
 
 	}
-	waiting_emergency_missions_ = temp;
-
+	
 	while (temp.dequeue(mm)) // to clear it
 	{
-
+		Pair<Mission*, int> p(mm, mm->get_priority());
+		waiting_emergency_missions_.enqueue(p);
 	}
 
 	//second: assign polar missions

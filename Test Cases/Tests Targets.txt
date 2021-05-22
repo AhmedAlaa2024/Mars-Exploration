@@ -16,24 +16,31 @@ To : Ahmed Alaa
 ----------------
 1- in test#3 ---> you did not match the following note
 NOTE: The input lines of all events are sorted by the event day in ascending order. --> in the doc. page # 6
+Read   [*]
+Solved [*]
 
 2- in test#8 ----> you gave an identical IDs for more than one mission (the last 3 events)
 i do not know should the program fix such a case or not ---> it is easy to fix i think
+Read   [*]
+Solved [*]
+Note: They are typos generated because I was copy the events and change in them.
 
 3- in test#7 ---> there is no events ---> so in Rufaida part there was a division by zero in the function <CollectStatistics_File>
 i have already fixed it 
 thanks Alaa for putting such a case
+Read   [*]
+Response: I hope you was thanking me not cursing me! XD
 
 
 
 From : doaa
 To : Ahmed Atta
 ------------------
-1- read #2 in Alaa section above  --> should we fix such a case or not
+1- read #2 in Alaa section above  --> should we fix such a case or not**
 
 2- conflict in my mind ---> why when we store the itemCount of any list in a var < count > 
 then during debugging they take different values ----> i have changd it and use the getItemCount directly and the error is fixed then
-but what is the reason for that ????  -----> tell me to send you the photo if you do not get the idea i am talking about
+but what is the reason for that ????  -----> tell me to send you the photo if you do not get the idea i am talking about **
 
 3- there are some cases still do not work
 
