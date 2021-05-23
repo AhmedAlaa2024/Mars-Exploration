@@ -58,7 +58,7 @@ void UI::Output_Console()const
 	int j = 0;
 	int count = p_station->get_W_E_M().get_itemCount();
 	LinkedPriorityQueue<Mission*, int> temp;
-	for (int i = 1; i <= count; i++)
+	while(p_station->get_W_E_M().peek(m))
 	{
 		p_station->get_W_E_M().dequeue(m);
 
