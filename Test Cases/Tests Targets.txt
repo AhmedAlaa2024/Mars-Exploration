@@ -36,18 +36,6 @@ Response: I hope you was thanking me not cursing me! XD
 From : doaa
 To : Ahmed Atta
 ------------------
-1- read #2 in Alaa section above  --> should we fix such a case or not**
-
-2- conflict in my mind ---> why when we store the itemCount of any list in a var < count > 
-then during debugging they take different values ----> i have changd it and use the getItemCount directly and the error is fixed then
-but what is the reason for that ????  -----> tell me to send you the photo if you do not get the idea i am talking about **
-
-3- there are some cases still do not work
-
-4- one confusing case ---> the days does not stop ---> but the problem is fixed when just i reduce the MLOC of some mission  --> How ??
----> ask me for a photo !
-
-5- promotion event can not be on a formulated mission that formulated in a day after the promotion event day ---> should we fix it --> i do not think
 
 
 From : doaa

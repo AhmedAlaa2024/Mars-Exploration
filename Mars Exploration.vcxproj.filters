@@ -117,6 +117,9 @@
     <Text Include="Test Cases\test#10.txt" />
     <Text Include="Test Cases\test#11.txt" />
     <Text Include="Test Cases\Tests Targets.txt" />
+    <Text Include="input_history.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="phase 1 Report.docx" />
