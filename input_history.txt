@@ -1,0 +1,81 @@
+#1
+# just a simple one to test the formulation and Calculating CD  --> [S]
+
+1 1 1
+2 2 2
+3 3 3 3 
+15
+2
+F M 1 1 100 0 5 
+F M 1 2 15 5 4 
+
+
+#2 same target as before with more missions and cancelation of a waiting mission at day 6 --> [S]
+1 1 1
+10 2 2
+3 3 3 3 
+15
+5
+F M 1 1 100 10 5 
+F M 1 2 15 5 4 
+F M 3 3 150 5 10
+F E 3 4 150 5 10
+X 6 3
+
+
+
+#3 same as before with promotion of a waiting mission at day 6 --> [S]
+
+1 1 1
+10 2 2
+3 3 3 3 
+15
+5
+F M 1 1 100 10 5 
+F M 1 2 15 5 4 
+F M 3 3 150 5 10
+F E 3 4 150 5 10
+P 6 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

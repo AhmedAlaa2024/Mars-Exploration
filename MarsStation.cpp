@@ -309,6 +309,13 @@ void MarsStation::increment_Formulated_M()
 	Formulated_M++;
 }
 
+MarsStation::~MarsStation()
+{
+	MISSIONS_DB.clear();
+	ROVERS_DB.clear();
+	delete my_ui;
+}
+
 
 void MarsStation::simulate_day()
 {
@@ -330,6 +337,7 @@ void MarsStation::simulate_day()
 		{
 			events_list_.dequeue(eve);
 			eve->Execute();
+			delete eve;
 			eve = nullptr;
 
 		}

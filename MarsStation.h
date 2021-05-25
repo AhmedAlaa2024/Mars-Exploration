@@ -103,6 +103,10 @@ public:
 	void increment_Cancelled_M();
 	void increment_Formulated_M();
 
+
+	//Destructor
+	~MarsStation();
+
 };
 
 
