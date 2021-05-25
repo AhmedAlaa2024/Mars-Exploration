@@ -310,6 +310,11 @@ void MarsStation::increment_Formulated_M()
 	Formulated_M++;
 }
 
+void MarsStation::setCompletedMission(Mission* mptr)
+{
+	completed_missions_.insertEnd(mptr);
+}
+
 
 void MarsStation::simulate_day()
 {
@@ -455,7 +460,7 @@ void MarsStation::SortCompletedList()
 	LinkedList<Mission*> Temp;
 	if (count > 0)
 		CPtr = completed_missions_.getEntry(1);
-	for (int i = 1; i < count; i++)
+	for (int i = 1; i <= count; i++)
 	{
 		FPtr = completed_missions_.getEntry(i + 1);
 		if (CPtr->getCD() == FPtr->getCD())
@@ -472,6 +477,7 @@ void MarsStation::SortCompletedList()
 				completed_missions_.remove(i + 1);
 			}
 			i--;
+			count--;
 		}
 		else
 		{

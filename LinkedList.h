@@ -57,10 +57,10 @@ template <typename T>
 LinkedList<T>::LinkedList(LinkedList& l)
 {
 	itemCount = l.itemCount;
-	Node<T>* ptr = l->Head;
+	Node<T>* ptr = l.Head;
 	while (ptr)
 	{
-		insert(ptr->getItem());
+		insertEnd(ptr->getItem());
 		ptr = ptr->getNext();
 	}
 }

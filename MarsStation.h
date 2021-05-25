@@ -62,7 +62,6 @@ private:
 	void MoveToAvailable(Rover*);
 	void MoveToAvailable(int);
 	void MoveToCheckUp(Rover*);
-	void SortCompletedList();
 public:
 	MarsStation();
 
@@ -103,6 +102,8 @@ public:
 	void increment_Cancelled_M();
 	void increment_Formulated_M();
 
+	void setCompletedMission(Mission*);
+	void SortCompletedList();
 };
 
 

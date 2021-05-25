@@ -70,4 +70,7 @@ public:
 	bool Promote();
 	int Weight();
 
+	void setID(int id) { ID = id; }
+	void setCD() { CD = FD + WD + ED; }
+
 };
