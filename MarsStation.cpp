@@ -223,7 +223,7 @@ bool MarsStation::writeOutputFile()
 	for (int i = 1; i <= Missions; i++)
 	{
 		Ptr = completed_missions_.getEntry(i);
-		cout << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
+		outFile << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
 	}
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
