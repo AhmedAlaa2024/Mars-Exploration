@@ -364,7 +364,7 @@ void UI::InteractivePrinting() const
 	}
 
 	//finally create the file
-	p_station->writeOutputFile();
+	//p_station->writeOutputFile();
 
 	bool isWritten = p_station->writeOutputFile();
 	if (isWritten)
@@ -387,10 +387,10 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1000);
+		Sleep(1);
 	}
 
-	p_station->writeOutputFile();  // i think it should be removed
+	//p_station->writeOutputFile();  // i think it should be removed
 
 	bool isWritten = p_station->writeOutputFile();
 	if (isWritten)

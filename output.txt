@@ -1,5 +1,11 @@
 CD	ID	FD	WD	ED
-Missions: 0 [M: 0,P: 0,E: 0]
-Rovers: 125 [M: 12,P: 65,E: 48]
-Avg Wait = 0, Avg Exec = 0
+235	6	25	192	18
+216	4	2	135	79
+136	1	1	123	12
+123	55	3	96	24
+98	5	18	31	49
+48	3	2	0	46
+Missions: 6 [M: 0,P: 2,E: 0]
+Rovers: 1 [M: 0,P: 1,E: 0]
+Avg Wait = 96, Avg Exec = 38
 Auto-promoted: 0%
