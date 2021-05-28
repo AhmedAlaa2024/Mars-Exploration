@@ -346,12 +346,13 @@ void MarsStation::simulate_day()
 
 	}
 
-	//assign missions
-	assign_missions();
-
 
 	//check completion
 	check_completed_missions();
+
+	//assign missions
+	assign_missions();
+
 
 
 
