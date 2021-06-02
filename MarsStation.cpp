@@ -228,6 +228,8 @@ bool MarsStation::writeOutputFile()
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
 	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n' << "Auto-promoted: " << Auto_promoted << "%\n";
+	outFile.close();
+	if (outFile.is_open())return false;
 	return true;
 }
 
@@ -267,7 +269,7 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 		case MISSION_TYPE::POLAR:
 			PM++;
 			break;
-		case MISSION_TYPE::UNDETERMINED:
+		case MISSION_TYPE::EMERGENCY:
 			EM++;
 			break;
 		}
@@ -399,6 +401,7 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 			if (RPtr == in_execution_rovers_.getEntry(i))
 			{
 				in_execution_rovers_.remove(i);
+				break;
 			}
 		}
 	}
@@ -449,6 +452,7 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 		if (RPtr == in_execution_rovers_.getEntry(i))
 		{
 			in_execution_rovers_.remove(i);
+			break;
 		}
 	}
 	check_up_rovers_.insertBeg(RPtr);
