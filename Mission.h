@@ -17,7 +17,7 @@ private:
 	int WD; // Waiting Durations
 	int CD; // Complete Date
 	int ED; // Execution days
-	
+
 	Rover* assignedRover;
 	int priority_;
 	bool is_promoted;

@@ -14,7 +14,7 @@ class LinkedPriorityQueue :public PriorityQueueADT<T, F>
 	Node<Pair<T, F>>* front;
 	Node<Pair<T, F>>* back;   //or call it rear i think ---> which is better ):
 	int itemCount;
-	
+
 public:
 	LinkedPriorityQueue();
 	LinkedPriorityQueue(const LinkedPriorityQueue<T, F>& PQ);
@@ -25,11 +25,11 @@ public:
 	virtual ~LinkedPriorityQueue();
 	int get_itemCount();
 
-	const LinkedPriorityQueue<T,F>& operator = (LinkedPriorityQueue&);
+	const LinkedPriorityQueue<T, F>& operator = (LinkedPriorityQueue&);
 };
 
 template <typename T, typename F>
-const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPriorityQueue& right_LQ)  // i think it should be passed const ---> but we will call non const member func on it so we can not pass it const ---> is it ok ????
+const LinkedPriorityQueue<T, F>& LinkedPriorityQueue<T, F>::operator = (LinkedPriorityQueue& right_LQ)  // i think it should be passed const ---> but we will call non const member func on it so we can not pass it const ---> is it ok ????
 {
 	//in case the right obj is empty
 	if (right_LQ.isEmpty()) return *this;
@@ -84,7 +84,7 @@ const LinkedPriorityQueue<T,F>& LinkedPriorityQueue<T, F>::operator = (LinkedPri
 
 
 template <typename T, typename F>
-LinkedPriorityQueue<T, F>::LinkedPriorityQueue():itemCount(0)
+LinkedPriorityQueue<T, F>::LinkedPriorityQueue() :itemCount(0)
 {
 	front = nullptr;
 	back = nullptr;

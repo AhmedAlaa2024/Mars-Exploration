@@ -20,7 +20,7 @@ public:
 
 
 template <typename T, typename F>
-Pair<T,F>::Pair(const T& i, const F& p)
+Pair<T, F>::Pair(const T& i, const F& p)
 {
 	setItem(i);
 	setPriority(p);

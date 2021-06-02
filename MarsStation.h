@@ -30,7 +30,7 @@ private:
 	LinkedPriorityQueue<Mission*, int> waiting_emergency_missions_;
 	LinkedList<Mission*> waiting_mountainous_missions_;
 	LinkedQueue<Mission*> waiting_polar_missions_;
-	
+
 	LinkedList<Mission*> in_execution_missions_;
 	LinkedList<Mission*> completed_missions_;
 
@@ -87,7 +87,7 @@ public:
 
 
 	//getters --> Don't create new functions without making sure it's not here
-	
+
 	LinkedBAG<Mission*>& get_mission_DB();
 	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
 	LinkedQueue<Mission*>& get_W_P_M();

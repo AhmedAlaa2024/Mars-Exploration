@@ -14,7 +14,7 @@ class UI
 public:
 	UI(MarsStation* p_s);
 	SIM_MODE get_input_mode();
-	
+
 	void InteractivePrinting() const;
 	void StepByStepPrinting() const;
 	void SilentPrinting() const;
