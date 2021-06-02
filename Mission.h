@@ -17,7 +17,7 @@ private:
 	int WD; // Waiting Durations
 	int CD; // Complete Date
 	int ED; // Execution days
-	
+
 	Rover* assignedRover;
 	int priority_;
 	bool is_promoted;
@@ -69,8 +69,5 @@ public:
 	bool Complete(int speed);
 	bool Promote();
 	int Weight();
-
-	void setID(int id) { ID = id; }
-	void setCD() { CD = FD + WD + ED; }
 
 };

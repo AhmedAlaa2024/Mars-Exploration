@@ -9,16 +9,16 @@
 
 int main()
 {
-	
+
 	MarsStation station_;
-	
-	
-	
-	/*SIM_MODE mode = station_.get_input_mode();
 
-	station_.execute_mode(mode);*/
 
-	
+
+	SIM_MODE mode = station_.get_input_mode();
+
+	station_.execute_mode(mode);
+
+
 
 	//for Ahmed Atta ---> please, do not delete this large comment because i need it temporarily  
 
@@ -76,55 +76,28 @@ int main()
 
 
 
-	/*LinkedPriorityQueue<int, int> l;
-	LinkedPriorityQueue<int, int> q;
+	//LinkedPriorityQueue<int, int> l;
+	//LinkedPriorityQueue<int, int> q;
 
 
-	Pair<int, int> p1(3, 1);
-	Pair<int, int> p2(33, 6);
-	Pair<int, int> p3(8, 3);
-	Pair<int, int> p4(5, 4);
+	//Pair<int, int> p1(3, 1);
+	//Pair<int, int> p2(33, 6);
+	//Pair<int, int> p3(8, 3);
+	//Pair<int, int> p4(5, 4);
 
-	l.enqueue(p1);
-	l.enqueue(p2);
-	l.enqueue(p3);
-	l.enqueue(p4);
+	//l.enqueue(p1);
+	//l.enqueue(p2);
+	//l.enqueue(p3);
+	//l.enqueue(p4);
 
-	q = l;
+	//q = l;
 
-	int temp;
-	q.peek(temp);
-	cout << temp;*/
+	//int temp;
+	//q.peek(temp);
+	//cout << temp;
 
-	Mission* m1 = nullptr, * m2 = nullptr, * m3 = nullptr;
-	m1 = new Mission;
-	m2 = new Mission;
-	m3 = new Mission;
-	m1->setED(10);
-	m2->setED(3);
-	m3->setED(4);
-	m1->setWD(3);
-	m2->setWD(4);
-	m3->setWD(0);
-	m1->setFD(1);
-	m2->setFD(5);
-	m3->setFD(7);
-	m1->setID(1);
-	m2->setID(2);
-	m3->setID(3);
-	m1->setCD();
-	m2->setCD();
-	m3->setCD();
-	station_.setCompletedMission(m1);
-	station_.setCompletedMission(m2);
-	station_.setCompletedMission(m3);
-	station_.SortCompletedList();
-	LinkedList<Mission*> list = station_.get_completed_missions_();
-	int count = list.getItemCount();
-	for (int i = 1; i <= count; i++)
-	{
-		cout << list.getEntry(i)->getID() << ", " << list.getEntry(i)->getCD() << endl;
-	}
+
+
 	return 0;
 }
 

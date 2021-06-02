@@ -223,7 +223,7 @@ bool MarsStation::writeOutputFile()
 	for (int i = 1; i <= Missions; i++)
 	{
 		Ptr = completed_missions_.getEntry(i);
-		cout << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
+		outFile << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
 	}
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
@@ -276,13 +276,12 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	PR = PRCount;
 	ER = ERCount;
 	Rovers = MR + PR + ER;
-
 	if (Missions != 0)    // doaa --> assume there is no mission at all ---> division by 0
 	{
 		AvgW = WD / Missions;
 		AvgEx = ED / Missions;
 	}
-	if(MM != 0)    //doaa --> same as above
+	if (MM != 0)    //doaa --> same as above
 		Auto = (AutoPCount / MM) * 100;
 	return Auto;
 }
@@ -310,9 +309,11 @@ void MarsStation::increment_Formulated_M()
 	Formulated_M++;
 }
 
-void MarsStation::setCompletedMission(Mission* mptr)
+MarsStation::~MarsStation()
 {
-	completed_missions_.insertEnd(mptr);
+	MISSIONS_DB.clear();
+	ROVERS_DB.clear();
+	delete my_ui;
 }
 
 
@@ -336,6 +337,7 @@ void MarsStation::simulate_day()
 		{
 			events_list_.dequeue(eve);
 			eve->Execute();
+			delete eve;
 			eve = nullptr;
 
 		}
@@ -344,12 +346,13 @@ void MarsStation::simulate_day()
 
 	}
 
-	//assign missions
-	assign_missions();
-
 
 	//check completion
 	check_completed_missions();
+
+	//assign missions
+	assign_missions();
+
 
 
 
@@ -460,24 +463,17 @@ void MarsStation::SortCompletedList()
 	LinkedList<Mission*> Temp;
 	if (count > 0)
 		CPtr = completed_missions_.getEntry(1);
-	for (int i = 1; i <= count; i++)
+	for (int i = 1; i < count; i++)
 	{
 		FPtr = completed_missions_.getEntry(i + 1);
 		if (CPtr->getCD() == FPtr->getCD())
 		{
 			index = index ? index : i;
 			if (!Temp.contains(CPtr))
-			{
-				Temp.insertEnd(CPtr);
-				completed_missions_.remove(i);
-			}
+				Temp.insertBeg(CPtr);
 			if (!Temp.contains(FPtr))
-			{
-				Temp.insertEnd(FPtr);
-				completed_missions_.remove(i + 1);
-			}
-			i--;
-			count--;
+				Temp.insertBeg(FPtr);
+
 		}
 		else
 		{
@@ -485,14 +481,11 @@ void MarsStation::SortCompletedList()
 				continue;
 			//sort list using a sorting algorithm
 			//then remove
-			int j = index;
+			int j = 1;
 			while (!Temp.isEmpty())
 			{
-				completed_missions_.insertIndex(j, Temp.getEntry(1));
-				Temp.remove(1);
-				j++;
 				//if(completed_missions_.contains(Temp.getEntry(j)))
-				//insert in index
+				//insert in 
 			}
 			index = 0;
 		}
@@ -579,11 +572,11 @@ void MarsStation::assign_missions()
 
 
 	}
-	waiting_emergency_missions_ = temp;
 
 	while (temp.dequeue(mm)) // to clear it
 	{
-
+		Pair<Mission*, int> p(mm, mm->get_priority());
+		waiting_emergency_missions_.enqueue(p);
 	}
 
 	//second: assign polar missions
@@ -613,7 +606,7 @@ void MarsStation::assign_missions()
 
 	}
 
-	
+
 	while (temp_p.dequeue(mm)) // to clear it
 	{
 		waiting_polar_missions_.enqueue(mm);
@@ -627,7 +620,7 @@ void MarsStation::assign_missions()
 		mm = waiting_mountainous_missions_.getEntry(i);
 
 
-		if (available_rovers_mountainous_.dequeue(r))  
+		if (available_rovers_mountainous_.dequeue(r))
 		{
 			mm->Assign(r, r->getSpeed(), current_day_);
 
@@ -691,8 +684,8 @@ void MarsStation::check_completed_missions()
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
-			completed_missions_.insertEnd(MPtr);
 			i--;
+			completed_missions_.insertBeg(MPtr);
 		}
 	}
 }
