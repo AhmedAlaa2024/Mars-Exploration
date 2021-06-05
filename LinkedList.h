@@ -137,7 +137,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 			ptr = ptr->getNext();
 		}
 		//now ptr is pointing at the item after which we want to insert the data
-		
+
 		insert->setNext(ptr->getNext());
 		ptr->setNext(insert);
 		itemCount++;
@@ -204,7 +204,7 @@ bool LinkedList<T>::remove(int index)
 			curptr = prevPtr->getNext();
 			prevPtr->setNext(curptr->getNext());
 		}
-		
+
 		curptr->setNext(nullptr);
 		itemCount--;
 	}
@@ -219,8 +219,8 @@ template <typename T>
 T LinkedList<T>::getEntry(const int ind) const
 {
 	Node<T>* ptr = Head;
-	
-	if(!ptr) return nullptr; //doaa
+
+	if (!ptr) return nullptr; //doaa
 
 	for (int i = 1; i < ind; ++i)
 	{

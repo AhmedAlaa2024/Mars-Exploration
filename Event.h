@@ -12,7 +12,7 @@ class Event
 protected:
 	MarsStation* M_S;  // for the class to do its job
 public:
-	Event(int ed , int id, MarsStation* m_s);
+	Event(int ed, int id, MarsStation* m_s);
 	virtual void Execute() = 0;
 
 	int get_ED() const;

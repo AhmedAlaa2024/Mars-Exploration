@@ -233,6 +233,8 @@ bool MarsStation::writeOutputFile()
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
 	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n' << "Auto-promoted: " << Auto_promoted << "%\n";
+	outFile.close();
+	if (outFile.is_open())return false;
 	return true;
 }
 
@@ -272,7 +274,7 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 		case MISSION_TYPE::POLAR:
 			PM++;
 			break;
-		case MISSION_TYPE::UNDETERMINED:
+		case MISSION_TYPE::EMERGENCY:
 			EM++;
 			break;
 		}
@@ -286,8 +288,8 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 		AvgW = WD / Missions;
 		AvgEx = ED / Missions;
 	}
-	if(MM != 0)    //doaa --> same as above
-		Auto = (AutoPCount / MM) * 100;   
+	if (MM != 0)    //doaa --> same as above
+		Auto = (AutoPCount / MM) * 100;
 	return Auto;
 }
 
@@ -404,6 +406,7 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 			if (RPtr == in_execution_rovers_.getEntry(i))
 			{
 				in_execution_rovers_.remove(i);
+				break;
 			}
 		}
 	}
@@ -454,6 +457,7 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 		if (RPtr == in_execution_rovers_.getEntry(i))
 		{
 			in_execution_rovers_.remove(i);
+			break;
 		}
 	}
 	check_up_rovers_.insertBeg(RPtr);
@@ -577,7 +581,7 @@ void MarsStation::assign_missions()
 
 
 	}
-	
+
 	while (temp.dequeue(mm)) // to clear it
 	{
 		Pair<Mission*, int> p(mm, mm->get_priority());
@@ -611,7 +615,7 @@ void MarsStation::assign_missions()
 
 	}
 
-	
+
 	while (temp_p.dequeue(mm)) // to clear it
 	{
 		waiting_polar_missions_.enqueue(mm);
@@ -625,7 +629,7 @@ void MarsStation::assign_missions()
 		mm = waiting_mountainous_missions_.getEntry(i);
 
 
-		if (available_rovers_mountainous_.dequeue(r))  
+		if (available_rovers_mountainous_.dequeue(r))
 		{
 			mm->Assign(r, r->getSpeed(), current_day_);
 

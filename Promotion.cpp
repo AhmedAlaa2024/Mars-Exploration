@@ -14,7 +14,7 @@ void Promotion::Execute()
 		{                                                                       //I think also there is no need to  check inside the promote function ??
 			//then update its data
 			m->Promote();
-			
+
 			//then move it to the emergency list
 			M_S->get_W_M_M().remove(i);
 			Pair<Mission*, int> pM(m, m->get_priority());

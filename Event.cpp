@@ -1,6 +1,6 @@
 #include "Event.h"
 
-Event::Event(int ed,int id, MarsStation* m_s)
+Event::Event(int ed, int id, MarsStation* m_s)
 {
 	M_S = m_s;
 	ED = ed;
@@ -9,7 +9,7 @@ Event::Event(int ed,int id, MarsStation* m_s)
 
 int Event::get_ED() const
 {
-    return ED;
+	return ED;
 }
 
 int Event::get_ID() const

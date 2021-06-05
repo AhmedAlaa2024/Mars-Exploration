@@ -41,7 +41,7 @@ SIM_MODE UI::get_input_mode()
 
 void UI::Output_Console()const
 {
-	
+
 
 	cout << "Current Day : " << p_station->get_current_day() << endl;
 
@@ -58,7 +58,7 @@ void UI::Output_Console()const
 	int j = 0;
 	int count = p_station->get_W_E_M().get_itemCount();
 	LinkedPriorityQueue<Mission*, int> temp;
-	while(p_station->get_W_E_M().peek(m))
+	while (p_station->get_W_E_M().peek(m))
 	{
 		p_station->get_W_E_M().dequeue(m);
 
@@ -78,7 +78,7 @@ void UI::Output_Console()const
 	{
 
 	}
-	
+
 	//second --> print the ID of the polar Mission
 	cout << " (";
 	j = 0;
@@ -97,7 +97,7 @@ void UI::Output_Console()const
 	}
 	cout << ")";
 
-	
+
 
 	//third --> print the ID of the mountainous missions
 	cout << " {";
@@ -381,7 +381,7 @@ void UI::InteractivePrinting() const
 void UI::StepByStepPrinting() const
 {
 	cout << "Step by step Mode\n";
-	
+
 	// TODO:: cout statistics and wait for some time then cout
 	while (!p_station->check_Last_Day())
 	{

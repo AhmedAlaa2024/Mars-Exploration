@@ -9,16 +9,16 @@
 
 int main()
 {
-	
+
 	MarsStation station_;
-	
-	
-	
+
+
+
 	SIM_MODE mode = station_.get_input_mode();
 
 	station_.execute_mode(mode);
 
-	
+
 
 	//for Ahmed Atta ---> please, do not delete this large comment because i need it temporarily  
 

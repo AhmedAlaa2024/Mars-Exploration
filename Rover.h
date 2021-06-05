@@ -47,8 +47,8 @@ public:
 
 	// Specific Member Functions
 	void AssignTo(Mission* m);
-	
+
 	bool CheckUP(int currentDay);
 
-	
+
 };

@@ -1,7 +1,7 @@
 #include "Formulation.h"
 
-Formulation::Formulation(char typ,int ed, int id, double tloc, int mdur, int sig, MarsStation* m_s)
-	:Event(ed,id, m_s){
+Formulation::Formulation(char typ, int ed, int id, double tloc, int mdur, int sig, MarsStation* m_s)
+	:Event(ed, id, m_s) {
 	TYP = typ;
 	TLOC = tloc;
 	MDUR = mdur;

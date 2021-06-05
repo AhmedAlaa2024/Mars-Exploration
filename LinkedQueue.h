@@ -20,7 +20,7 @@ public:
 
     // Copy Constructor
     LinkedQueue(const LinkedQueue<T>&); // Complexity = O(n)
-    
+
     // Queue Specified Member Functions
     bool isEmpty() const; // Complexity = O(1)
     bool enqueue(const T&); // Complexity = O(1)
@@ -36,13 +36,13 @@ public:
 };
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue():itemCount(0){
+LinkedQueue<T>::LinkedQueue() :itemCount(0) {
     front = nullptr;
     back = nullptr;
 }
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue(const LinkedQueue<T> &LQ) {    //why do not you use the enqueue() member function ??????  Doaa
+LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ) {    //why do not you use the enqueue() member function ??????  Doaa
     Node<T>* LQptr = LQ.front;
     if (!LQptr)
     {
@@ -145,7 +145,7 @@ const LinkedQueue<T>& LinkedQueue<T>::operator = (LinkedQueue<T>& right_LQ)  // 
     while (ptr)
     {
         enqueue(ptr->getItem());
-       ptr = ptr->getNext();
+        ptr = ptr->getNext();
     }
 
 
