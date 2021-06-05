@@ -233,17 +233,6 @@ bool MarsStation::writeOutputFile()
 	return true;
 }
 
-void MarsStation::CollectStatistics_Console()
-{
-
-
-
-
-}
-
-
-
-
 
 int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
 {
@@ -485,9 +474,11 @@ void MarsStation::SortCompletedList()
 				continue;
 			//sort list using a sorting algorithm
 			//then remove
-			int j = 1;
+			//int j = 1;
 			while (!Temp.isEmpty())
 			{
+				completed_missions_.insertIndex(index++, Temp.getEntry(1));
+				Temp.remove(1);
 				//if(completed_missions_.contains(Temp.getEntry(j)))
 				//insert in 
 			}
@@ -495,6 +486,22 @@ void MarsStation::SortCompletedList()
 		}
 		CPtr = FPtr;
 	}
+}
+
+void MarsStation::InsertSorted(int start, Mission* MPtr)
+{
+	//int index = start;
+	int count = completed_missions_.getItemCount();
+	for (int i = start; i <= count; i++)
+	{
+		if (completed_missions_.getEntry(i)->getED() > MPtr->getED())
+		{
+			completed_missions_.insertIndex(i, MPtr);
+			return;
+		}
+	}
+	completed_missions_.insertEnd(MPtr);
+
 }
 
 void MarsStation::check_auto_promotion()
@@ -664,8 +671,7 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
-	//int Count = in_execution_missions_.getItemCount();  // 1 2 4 5 6
-	Mission* MPtr = nullptr;
+	/*Mission* MPtr = nullptr;
 	Rover* RPtr = nullptr;
 	bool isComp = false;
 	for (int i = 1; i <= in_execution_missions_.getItemCount(); i++)
@@ -690,6 +696,44 @@ void MarsStation::check_completed_missions()
 			in_execution_missions_.remove(i);
 			i--;
 			completed_missions_.insertBeg(MPtr);
+		}
+	}*/
+	Node<Mission*>* LastDistinctPtr = nullptr;
+	int LastDistinctIndex = -1, LastDistinctCD = -1;
+	Mission* MPtr = nullptr;
+	Rover* RPtr = nullptr;
+	bool isComp = false;
+	for (int i = 1; i <= in_execution_missions_.getItemCount(); i++)
+	{
+		isComp = false;
+		MPtr = in_execution_missions_.getEntry(i);
+		if (MPtr)
+		{
+			isComp = MPtr->isCompleted(current_day_);
+
+		}
+		if (isComp)
+		{
+			RPtr = MPtr->getRover();
+			RPtr->incrementCompletedMissions();
+			if (RPtr->getMaxMissions() == RPtr->getNumCompletedMissions())
+				MoveToCheckUp(RPtr);
+			else
+				MoveToAvailable(RPtr);
+
+			MPtr->setMS(MISSION_STATUS::COMPLETED);
+			in_execution_missions_.remove(i);
+			i--;
+			if (current_day_ != LastDistinctCD)
+			{
+				completed_missions_.insertEnd(MPtr);
+				LastDistinctCD = current_day_;
+				LastDistinctIndex = completed_missions_.getItemCount();
+			}
+			else
+			{
+				InsertSorted(LastDistinctIndex, MPtr);
+			}
 		}
 	}
 }

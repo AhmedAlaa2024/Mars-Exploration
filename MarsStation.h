@@ -63,6 +63,7 @@ private:
 	void MoveToAvailable(int);
 	void MoveToCheckUp(Rover*);
 	void SortCompletedList();
+	void InsertSorted(int start, Mission* MPtr);
 public:
 	MarsStation();
 
