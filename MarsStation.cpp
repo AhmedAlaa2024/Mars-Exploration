@@ -117,13 +117,13 @@ bool MarsStation::read_input_file()
 
 	my_file >> MRCount >> PRCount >> ERCount;
 
-	double SM, SP, SE; //speed of each type
-	my_file >> SM >> SP >> SE;
-
 
 
 	int N, CM, CP, CE; // no. of missions before checkup and the checkup durations
 	my_file >> N >> CM >> CP >> CE;
+
+
+	double SM, SP, SE; //speed of each type
 
 
 	int ids = 0;
@@ -131,6 +131,8 @@ bool MarsStation::read_input_file()
 	// Create Mountainous Rovers
 	for (int i = 0; i < MRCount; ++i)
 	{
+		my_file >> SM;
+
 		Rover* r = new Rover(ROVER_TYPE::MOUNTAINOUS, CM, SM, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_mountainous_.enqueue(p);
@@ -140,6 +142,7 @@ bool MarsStation::read_input_file()
 	// Create Polar Rovers
 	for (int i = 0; i < PRCount; ++i)
 	{
+		my_file >> SP;
 		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_polar_.enqueue(p);
@@ -150,6 +153,8 @@ bool MarsStation::read_input_file()
 	// Create Emergency Rovers
 	for (int i = 0; i < ERCount; ++i)
 	{
+		my_file >> SE;
+
 		Rover* r = new Rover(ROVER_TYPE::EMERGENCY, CE, SE, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_emergency_.enqueue(p);

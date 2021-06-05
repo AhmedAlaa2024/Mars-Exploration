@@ -1,0 +1,22 @@
+1 1 1
+3 3 3 3 
+10
+2
+2
+15
+5
+F M 1 1 100 10 5 
+F M 1 2 15 5 4 
+F M 3 3 150 5 10
+F E 3 4 150 5 10
+P 6 3
+
+
+
+
+
+
+
+//F type ED ID TLOC MDUR SIG
+//X ED ID
+//P ED ID
