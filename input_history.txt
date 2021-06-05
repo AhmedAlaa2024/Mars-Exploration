@@ -1,9 +1,28 @@
+
+// M P E  -> no of each rover 
+//  N CM CP CE ->no. of missions before checkup and the checkup durations
+//  SM1 SM2 SM3 ... M times ->speed of each mountainous Rovers
+//  SP1 SP2 SP3 ... P times ->speed of each Polar Rovers
+//  SE1 SE2 SE3 ... E times ->speed of each Emergency Rovers
+
+
+
+
+
+
+
+
+
+
+
 #1
 # just a simple one to test the formulation and Calculating CD  --> [S]
 
 1 1 1
-2 2 2
 3 3 3 3 
+2
+2
+2
 15
 2
 F M 1 1 100 0 5 
@@ -12,8 +31,10 @@ F M 1 2 15 5 4
 
 #2 same target as before with more missions and cancelation of a waiting mission at day 6 --> [S]
 1 1 1
-10 2 2
 3 3 3 3 
+10
+2
+2
 15
 5
 F M 1 1 100 10 5 
@@ -27,8 +48,10 @@ X 6 3
 #3 same as before with promotion of a waiting mission at day 6 --> [S]
 
 1 1 1
-10 2 2
 3 3 3 3 
+10
+2
+2
 15
 5
 F M 1 1 100 10 5 
