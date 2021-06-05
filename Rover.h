@@ -15,11 +15,11 @@ private:
 	int completedMissions;
 	Mission* mission;
 	int ID;
-	int checkupENDDay;
+	int checkupENDDay{};
 
 public:
 	// Default Arguments Constructor
-	Rover(ROVER_TYPE rt = ROVER_TYPE::UNDETERMINED, int checkupDur = 0, int sp = 0, int max = 0, int id = -1);
+	Rover(ROVER_TYPE rt = ROVER_TYPE::UNDETERMINED, int checkupDur = 0, double sp = 0, int max = 0, int id = -1);
 
 	// Getters
 	ROVER_STATUS getRS() const;
