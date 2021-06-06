@@ -222,7 +222,6 @@ bool MarsStation::writeOutputFile()
 {
 	int Missions = completed_missions_.getItemCount();
 	string Text = "";
-	//Mission* Ptr = nullptr;
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
 	if (!Missions)
@@ -230,28 +229,13 @@ bool MarsStation::writeOutputFile()
 	else
 		CollectStatistics_File(Missions, Text);
 	outFile << Text;
-	/*int Auto_promoted , MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
-	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
-	outFile << "CD\tID\tFD\tWD\tED\n";
-	for (int i = 1; i <= Missions; i++)
-	{
-		Ptr = completed_missions_.getEntry(i);
-		outFile << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
-	}
-	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
-	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
-	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n';
-	if (MM)
-		outFile << "Auto-promoted: " << Auto_promoted << "%\n";
-	else
-		outFile << "There are no Mountainious missions.\n";*/
 	outFile.close();
 	if (outFile.is_open())return false;
 	return true;
 }
 
 
-int MarsStation::CollectStatistics_File(const int& Missions, string& s)
+int MarsStation::CollectStatistics_File(int& Missions, string& s)
 {
 	Mission* Ptr = nullptr;
 	int Auto = 0;
@@ -294,7 +278,20 @@ int MarsStation::CollectStatistics_File(const int& Missions, string& s)
 	}
 	if (MM)
 		Auto = ((double)AutoPCount / MM) * 100;
-	s += "Missions: " + to_string(Missions) + " [M: " + to_string(MM) + ",P: " + to_string(PM) + ",E: " + to_string(EM) + "]\n";
+
+	if (!waiting_polar_missions_.isEmpty())
+	{
+		s += "Completed missions: " + to_string(Missions) + " [M: " + to_string(MM);
+		s += ",P: " + to_string(PM);
+		s += ",E: " + to_string(EM) + "]\n";
+		s += "Uncompleted missions:  [P: " + to_string(waiting_polar_missions_.get_itemCount()) + "]\n";
+	}
+	else
+	{
+		s += "Missions: " + to_string(Missions) + " [M: " + to_string(MM);
+		s += ",P: " + to_string(PM);
+		s += ",E: " + to_string(EM) + "]\n";
+	}
 	s += "Rovers: " + to_string(Rovers) + " [M: " + to_string(MR) + ",P: " + to_string(PR) + ",E: " + to_string(ER) + "]\n";
 	s += "Avg Wait = " + to_string(AvgW) + ", " + "Avg Exec = " + to_string(AvgEx) + '\n';
 	if (MM)
