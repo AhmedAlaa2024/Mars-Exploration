@@ -42,7 +42,7 @@ private:
 	UI* my_ui;
 	int CollectStatistics_File(int&, string&);
 
-	//masc info
+	//misc info
 	int AutoP;
 	int Cancelled_M;
 	int Formulated_M;
