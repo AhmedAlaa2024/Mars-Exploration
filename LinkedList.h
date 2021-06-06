@@ -132,7 +132,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 			return true;
 		}
 
-		for (int i = 1; i < index; i++)
+		for (int i = 2; i < index; i++)
 		{
 			ptr = ptr->getNext();
 		}
