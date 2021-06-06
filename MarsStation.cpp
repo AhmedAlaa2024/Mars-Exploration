@@ -219,11 +219,17 @@ bool MarsStation::read_input_file()
 
 bool MarsStation::writeOutputFile()
 {
-	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
-	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
+	int Missions = completed_missions_.getItemCount();
 	Mission* Ptr = nullptr;
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
+	if (!Missions)
+	{
+		outFile << "THERE ARE NO MISSIONS!!!!\n";
+		return true;
+	}
+	int Auto_promoted , MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
+	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
 	outFile << "CD\tID\tFD\tWD\tED\n";
 	for (int i = 1; i <= Missions; i++)
 	{
@@ -232,38 +238,30 @@ bool MarsStation::writeOutputFile()
 	}
 	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
 	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
-	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n' << "Auto-promoted: " << Auto_promoted << "%\n";
+	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n';
+	if (MM)
+		outFile << "Auto-promoted: " << Auto_promoted << "%\n";
+	else
+		outFile << "There are no Mountainious missions.\n";
 	outFile.close();
 	if (outFile.is_open())return false;
 	return true;
 }
 
-void MarsStation::CollectStatistics_Console()
-{
 
-
-
-
-}
-
-
-
-
-
-int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
+int MarsStation::CollectStatistics_File(const int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
 {
 	Mission* Ptr = nullptr;
 	int Auto = 0;
 	int WD = 0;
 	int ED = 0;
-	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
+	MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
 	MISSION_TYPE TYP;
-	int Count = completed_missions_.getItemCount();
-	for (int i = 1; i <= Count; i++)
+	//int Count = completed_missions_.getItemCount();
+	for (int i = 1; i <= Missions; i++)
 	{
 		Ptr = completed_missions_.getEntry(i);
 		TYP = Ptr->getMT();
-		Missions++;
 		WD += Ptr->getWD();
 		ED += Ptr->getED();
 		switch (TYP)
@@ -283,12 +281,12 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 	PR = PRCount;
 	ER = ERCount;
 	Rovers = MR + PR + ER;
-	if (Missions != 0)    // doaa --> assume there is no mission at all ---> division by 0
+	if (Missions)
 	{
 		AvgW = WD / Missions;
 		AvgEx = ED / Missions;
 	}
-	if (MM != 0)    //doaa --> same as above
+	if (MM)
 		Auto = (AutoPCount / MM) * 100;
 	return Auto;
 }
@@ -463,43 +461,19 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 	check_up_rovers_.insertBeg(RPtr);
 }
 
-void MarsStation::SortCompletedList()
+void MarsStation::InsertAccorToED(int start, Mission* MPtr)
 {
+	//int index = start;
+	int i;
 	int count = completed_missions_.getItemCount();
-	int index = 0;
-	Mission* CPtr = nullptr;
-	Mission* FPtr = nullptr;
-	LinkedList<Mission*> Temp;
-	if (count > 0)
-		CPtr = completed_missions_.getEntry(1);
-	for (int i = 1; i < count; i++)
+	for (i = count; i >= start; i--)
 	{
-		FPtr = completed_missions_.getEntry(i + 1);
-		if (CPtr->getCD() == FPtr->getCD())
-		{
-			index = index ? index : i;
-			if (!Temp.contains(CPtr))
-				Temp.insertBeg(CPtr);
-			if (!Temp.contains(FPtr))
-				Temp.insertBeg(FPtr);
-
-		}
+		if (completed_missions_.getEntry(i)->getED() > MPtr->getED());
 		else
-		{
-			if (Temp.isEmpty())
-				continue;
-			//sort list using a sorting algorithm
-			//then remove
-			int j = 1;
-			while (!Temp.isEmpty())
-			{
-				//if(completed_missions_.contains(Temp.getEntry(j)))
-				//insert in 
-			}
-			index = 0;
-		}
-		CPtr = FPtr;
+			break;
 	}
+	completed_missions_.insertIndex(i + 1, MPtr);
+
 }
 
 void MarsStation::check_auto_promotion()
@@ -669,7 +643,7 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
-	//int Count = in_execution_missions_.getItemCount();  // 1 2 4 5 6
+	int LastDistinctIndex = -1, LastDistinctCD = -1;
 	Mission* MPtr = nullptr;
 	Rover* RPtr = nullptr;
 	bool isComp = false;
@@ -694,7 +668,16 @@ void MarsStation::check_completed_missions()
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
 			i--;
-			completed_missions_.insertBeg(MPtr);
+			if (current_day_ != LastDistinctCD)
+			{
+				completed_missions_.insertEnd(MPtr);
+				LastDistinctCD = current_day_;
+				LastDistinctIndex = completed_missions_.getItemCount();
+			}
+			else
+			{
+				InsertAccorToED(LastDistinctIndex, MPtr);
+			}
 		}
 	}
 }

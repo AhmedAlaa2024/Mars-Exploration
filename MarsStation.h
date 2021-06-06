@@ -40,7 +40,7 @@ private:
 
 	// User Interface
 	UI* my_ui;
-	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
+	int CollectStatistics_File(const int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 
 	//masc info
 	int AutoP;
@@ -62,7 +62,7 @@ private:
 	void MoveToAvailable(Rover*);
 	void MoveToAvailable(int);
 	void MoveToCheckUp(Rover*);
-	void SortCompletedList();
+	void InsertAccorToED(int start, Mission* MPtr);
 public:
 	MarsStation();
 
@@ -76,7 +76,6 @@ public:
 
 
 	bool writeOutputFile();
-	void CollectStatistics_Console();  // TODO like for file
 
 
 
