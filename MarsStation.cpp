@@ -287,7 +287,7 @@ int MarsStation::CollectStatistics_File(const int& Missions, int& MM, int& PM, i
 		AvgEx = ED / Missions;
 	}
 	if (MM)
-		Auto = (AutoPCount / MM) * 100;
+		Auto = ((double)AutoPCount / MM) * 100;
 	return Auto;
 }
 
@@ -463,8 +463,7 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 
 void MarsStation::InsertAccorToED(int start, Mission* MPtr)
 {
-	//int index = start;
-	int i;
+	int i = -1;
 	int count = completed_missions_.getItemCount();
 	for (i = count; i >= start; i--)
 	{
@@ -472,7 +471,8 @@ void MarsStation::InsertAccorToED(int start, Mission* MPtr)
 		else
 			break;
 	}
-	completed_missions_.insertIndex(i + 1, MPtr);
+	if (i != -1)
+		completed_missions_.insertIndex(i + 1, MPtr);
 
 }
 
