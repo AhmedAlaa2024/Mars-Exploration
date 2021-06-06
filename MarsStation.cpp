@@ -1,6 +1,7 @@
 #include "MarsStation.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "Defs.h"
 #include "Formulation.h"
 #include "Promotion.h"
@@ -220,50 +221,39 @@ bool MarsStation::read_input_file()
 bool MarsStation::writeOutputFile()
 {
 	int Missions = completed_missions_.getItemCount();
-	Mission* Ptr = nullptr;
+	string Text = "";
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
 	if (!Missions)
-	{
-		outFile << "THERE ARE NO MISSIONS!!!!\n";
-		return true;
-	}
-	int Auto_promoted , MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
-	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
-	outFile << "CD\tID\tFD\tWD\tED\n";
-	for (int i = 1; i <= Missions; i++)
-	{
-		Ptr = completed_missions_.getEntry(i);
-		outFile << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
-	}
-	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
-	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
-	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n';
-	if (MM)
-		outFile << "Auto-promoted: " << Auto_promoted << "%\n";
+		Text = "THERE ARE NO COMPLETED MISSIONS!!!!\n";
 	else
-		outFile << "There are no Mountainious missions.\n";
+		CollectStatistics_File(Missions, Text);
+	outFile << Text;
 	outFile.close();
 	if (outFile.is_open())return false;
 	return true;
 }
 
 
-int MarsStation::CollectStatistics_File(const int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
+int MarsStation::CollectStatistics_File(int& Missions, string& s)
 {
 	Mission* Ptr = nullptr;
 	int Auto = 0;
 	int WD = 0;
 	int ED = 0;
-	MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
+	int CurrWD = 0, CurrED = 0;
+	s = "CD\tID\tFD\tWD\tED\n";
+	int MM = 0, PM = 0, EM = 0, Rovers = 0, MR = 0, PR = 0, ER = 0, AvgW = 0, AvgEx = 0;
 	MISSION_TYPE TYP;
-	//int Count = completed_missions_.getItemCount();
 	for (int i = 1; i <= Missions; i++)
 	{
 		Ptr = completed_missions_.getEntry(i);
+		CurrWD = Ptr->getWD();
+		CurrED = Ptr->getED();
+		s += to_string(Ptr->getCD()) + '\t' + to_string(Ptr->getID()) + '\t' + to_string(Ptr->getFD()) + '\t' + to_string(CurrWD) + '\t' + to_string(CurrED) + '\n';
 		TYP = Ptr->getMT();
-		WD += Ptr->getWD();
-		ED += Ptr->getED();
+		WD += CurrWD;
+		ED += CurrED;
 		switch (TYP)
 		{
 		case MISSION_TYPE::MOUNTAINOUS:
@@ -288,7 +278,27 @@ int MarsStation::CollectStatistics_File(const int& Missions, int& MM, int& PM, i
 	}
 	if (MM)
 		Auto = ((double)AutoPCount / MM) * 100;
-	return Auto;
+
+	if (!waiting_polar_missions_.isEmpty())
+	{
+		s += "Completed missions: " + to_string(Missions) + " [M: " + to_string(MM);
+		s += ",P: " + to_string(PM);
+		s += ",E: " + to_string(EM) + "]\n";
+		s += "Uncompleted missions:  [P: " + to_string(waiting_polar_missions_.get_itemCount()) + "]\n";
+	}
+	else
+	{
+		s += "Missions: " + to_string(Missions) + " [M: " + to_string(MM);
+		s += ",P: " + to_string(PM);
+		s += ",E: " + to_string(EM) + "]\n";
+	}
+	s += "Rovers: " + to_string(Rovers) + " [M: " + to_string(MR) + ",P: " + to_string(PR) + ",E: " + to_string(ER) + "]\n";
+	s += "Avg Wait = " + to_string(AvgW) + ", " + "Avg Exec = " + to_string(AvgEx) + '\n';
+	if (MM)
+		s += "Auto-promoted: " + to_string(Auto) + "%\n";
+	else
+		s += "There are no Mountainious missions.\n";
+	return 0;
 }
 
 

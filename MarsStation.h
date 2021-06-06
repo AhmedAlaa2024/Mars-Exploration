@@ -40,7 +40,7 @@ private:
 
 	// User Interface
 	UI* my_ui;
-	int CollectStatistics_File(const int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
+	int CollectStatistics_File(int&, string&);
 
 	//masc info
 	int AutoP;
