@@ -464,16 +464,15 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 void MarsStation::InsertAccorToED(int start, Mission* MPtr)
 {
 	//int index = start;
+	int i;
 	int count = completed_missions_.getItemCount();
-	for (int i = start; i <= count; i++)
+	for (i = count; i >= start; i--)
 	{
-		if (completed_missions_.getEntry(i)->getED() > MPtr->getED())
-		{
-			completed_missions_.insertIndex(i, MPtr);
-			return;
-		}
+		if (completed_missions_.getEntry(i)->getED() > MPtr->getED());
+		else
+			break;
 	}
-	completed_missions_.insertEnd(MPtr);
+	completed_missions_.insertIndex(i + 1, MPtr);
 
 }
 
