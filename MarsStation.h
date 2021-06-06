@@ -42,7 +42,7 @@ private:
 	UI* my_ui;
 	int CollectStatistics_File(const int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
 
-	//masc info
+	//misc info
 	int AutoP;
 	int Cancelled_M;
 	int Formulated_M;
