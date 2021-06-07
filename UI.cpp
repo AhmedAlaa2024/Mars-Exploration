@@ -1,5 +1,6 @@
 #include "UI.h"
 #include <iostream>
+//#include "LinkedPriorityQueue.h"
 #include <fstream>
 #include<Windows.h>  //for the delay
 using namespace std;
@@ -166,80 +167,68 @@ void UI::Output_Console()const
 
 	//Available Rovers
 
-	LinkedPriorityQueue<Rover*, double> temp_R;
 	int no_R = p_station->get_available_rovers_emergency_().get_itemCount() + p_station->get_available_rovers_mountainous_().get_itemCount() + p_station->get_available_rovers_polar_().get_itemCount();
+	int n_ER = p_station->get_available_rovers_emergency_().get_itemCount();
 	Rover* r = nullptr;
 	cout << no_R << " Available Rovers: " << " [";
 	j = 0;
-	
-	while(p_station->get_available_rovers_emergency_().peek(r))
+	for (int i = 1; i <= n_ER; i++)
 	{
 		p_station->get_available_rovers_emergency_().dequeue(r);
-		
-		if (j == 0)
-			cout << r->getID();
-		else
-			cout << "," << r->getID();
-		
+		if (r->getRT() == ROVER_TYPE::EMERGENCY)
+		{
+			if (j == 0)
+				cout << r->getID();
+			else
+				cout << "," << r->getID();
+		}
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		temp_R.enqueue(pr);
+		p_station->get_available_rovers_emergency_().enqueue(pr);
 	}
 	cout << "] " << "(";
-	p_station->get_available_rovers_emergency_() = temp_R;
-
-	while (temp_R.dequeue(r))   //clear temp
-	{
-
-	}
 
 
+	int n_PR = p_station->get_available_rovers_polar_().get_itemCount();
 	j = 0;
-	while(p_station->get_available_rovers_polar_().peek(r))
+	for (int i = 1; i <= n_PR; i++)
 	{
 		p_station->get_available_rovers_polar_().dequeue(r);
-		if (j == 0)
-			cout << r->getID();
-		else
-			cout << "," << r->getID();
-		
+		if (r->getRT() == ROVER_TYPE::POLAR)
+		{
+			if (j == 0)
+				cout << r->getID();
+			else
+				cout << "," << r->getID();
+		}
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		temp_R.enqueue(pr);
-		//p_station->get_available_rovers_polar_().enqueue(pr);
+		p_station->get_available_rovers_polar_().enqueue(pr);
 	}
 	cout << ") " << "{";
-	p_station->get_available_rovers_polar_() = temp_R;
-	while (temp_R.dequeue(r))   //clear temp
-	{
-
-	}
 
 
-	
+	int n_MR = p_station->get_available_rovers_mountainous_().get_itemCount();
 	j = 0;
-	while(p_station->get_available_rovers_mountainous_().peek(r))
+	for (int i = 1; i <= n_MR; i++)
 	{
 		p_station->get_available_rovers_mountainous_().dequeue(r);
-		
-		if (j == 0)
-			cout << r->getID();
-		else
-			cout << "," << r->getID();
-		
+		if (r->getRT() == ROVER_TYPE::MOUNTAINOUS)
+		{
+			if (j == 0)
+				cout << r->getID();
+			else
+				cout << "," << r->getID();
+		}
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		temp_R.enqueue(pr);
+		p_station->get_available_rovers_mountainous_().enqueue(pr);
 	}
 	cout << "} " << endl;
-	p_station->get_available_rovers_mountainous_() = temp_R;
-	while (temp_R.dequeue(r))   //clear temp
-	{
 
-	}
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
@@ -346,35 +335,37 @@ void UI::Output_Console()const
 
 
 
-	
+	//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
 }
 
 
 // TO BE CHANGED....
 void UI::InteractivePrinting() const
 {
-	if (!p_station->check_valid_data()) return;
-
 	cout << "Interactive Mode\n";
 
 	//TODO:: cout statistics and wait for cin
 
 	char key;
+	//cin >> key;
 	//check if end of days
 	while (!p_station->check_Last_Day())
 	{
 		cin >> key;
-		
+		//if (key != 10)   //TODO:: Change this
+			//continue;
+
 		p_station->simulate_day();
 
 		Output_Console();
-		
 
-		
+
+		//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
 	}
 
 	//finally create the file
-	
+	//p_station->writeOutputFile();
+
 	bool isWritten = p_station->writeOutputFile();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
@@ -389,8 +380,6 @@ void UI::InteractivePrinting() const
 // TO BE CHANGED....
 void UI::StepByStepPrinting() const
 {
-	if (!p_station->check_valid_data()) return;
-
 	cout << "Step by step Mode\n";
 
 	// TODO:: cout statistics and wait for some time then cout
@@ -398,7 +387,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1000);
+		Sleep(1);
 	}
 
 	//p_station->writeOutputFile();  // i think it should be removed
@@ -412,8 +401,6 @@ void UI::StepByStepPrinting() const
 
 void UI::SilentPrinting() const
 {
-	if (!p_station->check_valid_data()) return;
-
 	cout << "Silent Mode\n";
 	cout << "Simulation Starts...\n";
 
