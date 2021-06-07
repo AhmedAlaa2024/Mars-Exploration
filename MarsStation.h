@@ -40,9 +40,9 @@ private:
 
 	// User Interface
 	UI* my_ui;
-	int CollectStatistics_File(int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
+	int collect_statistics_file(int&, string&);
 
-	//masc info
+	//misc info
 	int AutoP;
 	int Cancelled_M;
 	int Formulated_M;
@@ -59,10 +59,10 @@ private:
 	//utility functions
 	void move_to_in_ex_list(Mission* miss);
 
-	void MoveToAvailable(Rover*);
-	void MoveToAvailable(int);
-	void MoveToCheckUp(Rover*);
-	void SortCompletedList();
+	void move_to_available(Rover*);
+	void move_to_available(int);
+	void move_to_checkup(Rover*);
+	void insert_by_ED(int start, Mission* MPtr);
 public:
 	MarsStation();
 
@@ -75,8 +75,7 @@ public:
 	int get_current_day();
 
 
-	bool writeOutputFile();
-	void CollectStatistics_Console();  // TODO like for file
+	bool write_output_file();
 
 
 

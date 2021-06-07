@@ -1,6 +1,7 @@
 #include "MarsStation.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "Defs.h"
 #include "Formulation.h"
 #include "Promotion.h"
@@ -217,55 +218,42 @@ bool MarsStation::read_input_file()
 	return true;
 }
 
-bool MarsStation::writeOutputFile()
+bool MarsStation::write_output_file()
 {
-	int Auto_promoted, Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx;
-	Auto_promoted = CollectStatistics_File(Missions, MM, PM, EM, Rovers, MR, PR, ER, AvgW, AvgEx);
-	Mission* Ptr = nullptr;
+	int Missions = completed_missions_.getItemCount();
+	string Text = "";
 	ofstream outFile("output.txt");
 	if (!(outFile.is_open()))return false;
-	outFile << "CD\tID\tFD\tWD\tED\n";
-	for (int i = 1; i <= Missions; i++)
-	{
-		Ptr = completed_missions_.getEntry(i);
-		outFile << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << Ptr->getWD() << '\t' << Ptr->getED() << endl;
-	}
-	outFile << "Missions: " << Missions << " [M: " << MM << ",P: " << PM << ",E: " << EM << "]\n";
-	outFile << "Rovers: " << Rovers << " [M: " << MR << ",P: " << PR << ",E: " << ER << "]\n";
-	outFile << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n' << "Auto-promoted: " << Auto_promoted << "%\n";
+	if (!Missions)
+		Text = "THERE ARE NO COMPLETED MISSIONS!!!!\n";
+	else
+		collect_statistics_file(Missions, Text);
+	outFile << Text;
 	outFile.close();
 	if (outFile.is_open())return false;
 	return true;
 }
 
-void MarsStation::CollectStatistics_Console()
-{
 
-
-
-
-}
-
-
-
-
-
-int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM, int& Rovers, int& MR, int& PR, int& ER, int& AvgW, int& AvgEx)
+int MarsStation::collect_statistics_file(int& Missions, string& s)
 {
 	Mission* Ptr = nullptr;
 	int Auto = 0;
 	int WD = 0;
 	int ED = 0;
-	Missions = 0; MM = 0; PM = 0; EM = 0; Rovers = 0; MR = 0; PR = 0; ER = 0; AvgW = 0; AvgEx = 0;
+	int CurrWD = 0, CurrED = 0;
+	s = "CD\tID\tFD\tWD\tED\n";
+	int MM = 0, PM = 0, EM = 0, Rovers = 0, AvgW = 0, AvgEx = 0;
 	MISSION_TYPE TYP;
-	int Count = completed_missions_.getItemCount();
-	for (int i = 1; i <= Count; i++)
+	for (int i = 1; i <= Missions; i++)
 	{
 		Ptr = completed_missions_.getEntry(i);
+		CurrWD = Ptr->getWD();
+		CurrED = Ptr->getED();
+		s += to_string(Ptr->getCD()) + '\t' + to_string(Ptr->getID()) + '\t' + to_string(Ptr->getFD()) + '\t' + to_string(CurrWD) + '\t' + to_string(CurrED) + '\n';
 		TYP = Ptr->getMT();
-		Missions++;
-		WD += Ptr->getWD();
-		ED += Ptr->getED();
+		WD += CurrWD;
+		ED += CurrED;
 		switch (TYP)
 		{
 		case MISSION_TYPE::MOUNTAINOUS:
@@ -279,18 +267,36 @@ int MarsStation::CollectStatistics_File(int& Missions, int& MM, int& PM, int& EM
 			break;
 		}
 	}
-	MR = MRCount;
-	PR = PRCount;
-	ER = ERCount;
-	Rovers = MR + PR + ER;
-	if (Missions != 0)    // doaa --> assume there is no mission at all ---> division by 0
+
+	Rovers = MRCount + PRCount + ERCount;
+	if (Missions)
 	{
 		AvgW = WD / Missions;
 		AvgEx = ED / Missions;
 	}
-	if (MM != 0)    //doaa --> same as above
-		Auto = (AutoPCount / MM) * 100;
-	return Auto;
+	if (MM)
+		Auto = ((double)AutoPCount / MM) * 100;
+
+	if (!waiting_polar_missions_.isEmpty())
+	{
+		s += "Completed missions: " + to_string(Missions) + " [M: " + to_string(MM);
+		s += ",P: " + to_string(PM);
+		s += ",E: " + to_string(EM) + "]\n";
+		s += "Uncompleted missions:  [P: " + to_string(waiting_polar_missions_.get_itemCount()) + "]\n";
+	}
+	else
+	{
+		s += "Missions: " + to_string(Missions) + " [M: " + to_string(MM);
+		s += ",P: " + to_string(PM);
+		s += ",E: " + to_string(EM) + "]\n";
+	}
+	s += "Rovers: " + to_string(Rovers) + " [M: " + to_string(MRCount) + ",P: " + to_string(PRCount) + ",E: " + to_string(ERCount) + "]\n";
+	s += "Avg Wait = " + to_string(AvgW) + ", " + "Avg Exec = " + to_string(AvgEx) + '\n';
+	if (MM)
+		s += "Auto-promoted: " + to_string(Auto) + "%\n";
+	else
+		s += "There are no Mountainious missions.\n";
+	return 0;
 }
 
 
@@ -299,6 +305,7 @@ bool MarsStation::check_Last_Day()
 	// first of all we have to check on both the event list and the the completed list
 	//if the no of missoins in the completed list == # formulated missions - # cancelled missions
 	// && the event list is empty 
+
 	//then no simulate_day() any more 
 	
 
@@ -316,6 +323,7 @@ bool MarsStation::check_Last_Day()
 		int count = Formulated_M - Cancelled_M - (waiting_polar_missions_.get_itemCount());
 		return(completed_missions_.getItemCount() == count); //&& (events_list_.isEmpty()));  //why ??
 	}
+
 
 }
 
@@ -531,7 +539,7 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 
 
 }
-void MarsStation::MoveToAvailable(Rover* RPtr)
+void MarsStation::move_to_available(Rover* RPtr)
 {
 	int count = in_execution_rovers_.getItemCount();
 	if (RPtr->getRS() == ROVER_STATUS::IN_EXECUTION)
@@ -562,7 +570,7 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 }
 
 
-void MarsStation::MoveToAvailable(int i)
+void MarsStation::move_to_available(int i)
 {
 	Rover* RPtr = check_up_rovers_.getEntry(i);
 	check_up_rovers_.remove(i);
@@ -583,7 +591,7 @@ void MarsStation::MoveToAvailable(int i)
 }
 
 
-void MarsStation::MoveToCheckUp(Rover* RPtr)
+void MarsStation::move_to_checkup(Rover* RPtr)
 {
 	RPtr->CheckUP(current_day_);
 	int count = in_execution_rovers_.getItemCount();
@@ -598,43 +606,19 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 	check_up_rovers_.insertBeg(RPtr);
 }
 
-void MarsStation::SortCompletedList()
+void MarsStation::insert_by_ED(int start, Mission* MPtr)
 {
+	int i = -1;
 	int count = completed_missions_.getItemCount();
-	int index = 0;
-	Mission* CPtr = nullptr;
-	Mission* FPtr = nullptr;
-	LinkedList<Mission*> Temp;
-	if (count > 0)
-		CPtr = completed_missions_.getEntry(1);
-	for (int i = 1; i < count; i++)
+	for (i = count; i >= start; i--)
 	{
-		FPtr = completed_missions_.getEntry(i + 1);
-		if (CPtr->getCD() == FPtr->getCD())
-		{
-			index = index ? index : i;
-			if (!Temp.contains(CPtr))
-				Temp.insertBeg(CPtr);
-			if (!Temp.contains(FPtr))
-				Temp.insertBeg(FPtr);
-
-		}
+		if (completed_missions_.getEntry(i)->getED() > MPtr->getED());
 		else
-		{
-			if (Temp.isEmpty())
-				continue;
-			//sort list using a sorting algorithm
-			//then remove
-			int j = 1;
-			while (!Temp.isEmpty())
-			{
-				//if(completed_missions_.contains(Temp.getEntry(j)))
-				//insert in 
-			}
-			index = 0;
-		}
-		CPtr = FPtr;
+			break;
 	}
+	if (i != -1)
+		completed_missions_.insertIndex(i + 1, MPtr);
+
 }
 
 void MarsStation::check_auto_promotion()
@@ -658,12 +642,12 @@ void MarsStation::check_auto_promotion()
 
 void MarsStation::check_checkup_list()
 {
-	int count = check_up_rovers_.getItemCount();
-	for (int i = 1; i <= count; i++)
+	for (int i = 1; i <= check_up_rovers_.getItemCount(); i++)
 	{
 		if (check_up_rovers_.getEntry(i)->getCheckupEND() != current_day_)
 			continue;
-		MoveToAvailable(i);
+		move_to_available(i);
+		i--;
 	}
 }
 
@@ -673,7 +657,9 @@ void MarsStation::assign_missions()
 	Mission* mm;
 
 	//first assign emergency missions
-	LinkedPriorityQueue<Mission*, int> temp;  
+
+	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ?? -->the increasing of waiting days?
+	//i must loop through all of them //Dequeue Them all
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -742,9 +728,7 @@ void MarsStation::assign_missions()
 		else //no rover is available
 		{
 			mm->WaitAnotherDay();
-			//Pair<Mission*, int> p(mm, mm->get_priority());
-			//temp.enqueue(p);
-			temp_p.enqueue(mm);  //doaa
+			temp_p.enqueue(mm);  
 
 		}
 
@@ -804,7 +788,7 @@ void MarsStation::assign_missions()
 
 void MarsStation::check_completed_missions()
 {
-	//int Count = in_execution_missions_.getItemCount();  // 1 2 4 5 6
+	int LastDistinctIndex = -1, LastDistinctCD = -1;
 	Mission* MPtr = nullptr;
 	Rover* RPtr = nullptr;
 	bool isComp = false;
@@ -822,14 +806,23 @@ void MarsStation::check_completed_missions()
 			RPtr = MPtr->getRover();
 			RPtr->incrementCompletedMissions();
 			if (RPtr->getMaxMissions() == RPtr->getNumCompletedMissions())
-				MoveToCheckUp(RPtr);
+				move_to_checkup(RPtr);
 			else
-				MoveToAvailable(RPtr);
+				move_to_available(RPtr);
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
 			i--;
-			completed_missions_.insertBeg(MPtr);
+			if (current_day_ != LastDistinctCD)
+			{
+				completed_missions_.insertEnd(MPtr);
+				LastDistinctCD = current_day_;
+				LastDistinctIndex = completed_missions_.getItemCount();
+			}
+			else
+			{
+				insert_by_ED(LastDistinctIndex, MPtr);
+			}
 		}
 	}
 }
