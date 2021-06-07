@@ -380,9 +380,9 @@ void UI::InteractivePrinting() const
 	}
 
 	//finally create the file
-	//p_station->writeOutputFile();
+	//p_station->write_output_file();
 
-	bool isWritten = p_station->writeOutputFile();
+	bool isWritten = p_station->write_output_file();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
 	else
@@ -406,9 +406,9 @@ void UI::StepByStepPrinting() const
 		Sleep(1);
 	}
 
-	//p_station->writeOutputFile();  // i think it should be removed
+	//p_station->write_output_file();  // i think it should be removed
 
-	bool isWritten = p_station->writeOutputFile();
+	bool isWritten = p_station->write_output_file();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
 	else
@@ -425,7 +425,7 @@ void UI::SilentPrinting() const
 		p_station->simulate_day();
 	}
 
-	bool isWritten = p_station->writeOutputFile();
+	bool isWritten = p_station->write_output_file();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
 	else

@@ -17,8 +17,12 @@ x - Simulation
 		10.3. silent
 
 x- BONUS:
-	11- Diff Speed in Rovers
-	12- Mission Maintenance 
+	11- Diff Speed in Rovers        -> **
+	12- Promotion and auto promotion
+	13- Cancelation
+	14- Mountainous
+	15- The output lines must be sorted by CD ONLY.
+	16- No sorting by ED is required.
 
 
 
