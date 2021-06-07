@@ -305,7 +305,10 @@ bool MarsStation::check_Last_Day()
 	// first of all we have to check on both the event list and the the completed list
 	//if the no of missoins in the completed list == # formulated missions - # cancelled missions
 	// && the event list is empty 
-	//then no simulate_day() any more 
+	//then no simulate_day() any more
+	
+	
+	
 	return (completed_missions_.getItemCount() == Formulated_M - Cancelled_M) && (events_list_.isEmpty());
 
 }
@@ -520,7 +523,8 @@ void MarsStation::assign_missions()
 	Mission* mm;
 
 	//first assign emergency missions
-	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ????
+	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ?? -->the increasing of waiting days?
+	//i must loop through all of them //Dequeue Them all
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -589,9 +593,7 @@ void MarsStation::assign_missions()
 		else //no rover is available
 		{
 			mm->WaitAnotherDay();
-			//Pair<Mission*, int> p(mm, mm->get_priority());
-			//temp.enqueue(p);
-			temp_p.enqueue(mm);  //doaa
+			temp_p.enqueue(mm);  
 
 		}
 
