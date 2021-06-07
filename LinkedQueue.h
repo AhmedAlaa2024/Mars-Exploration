@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 
 #ifndef QUEUEADT_H_
 #define QUEUEADT_H_
@@ -42,7 +41,7 @@ LinkedQueue<T>::LinkedQueue() :itemCount(0) {
 }
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ) {    //why do not you use the enqueue() member function ??????  Doaa
+LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ) {    
     Node<T>* LQptr = LQ.front;
     if (!LQptr)
     {
@@ -129,7 +128,7 @@ LinkedQueue<T>::~LinkedQueue() {
 
 
 
-//doaa
+
 template <typename T>
 const LinkedQueue<T>& LinkedQueue<T>::operator = (LinkedQueue<T>& right_LQ)  // i think it should be passed const ---> but we will call non const member func on it so we can not pass it const ---> is it ok ????
 {

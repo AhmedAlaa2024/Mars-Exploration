@@ -1,4 +1,3 @@
-//------- Doaa 
 #pragma once
 
 
@@ -196,12 +195,6 @@ bool LinkedPriorityQueue<T, F>::dequeue(T& item)
 	return true;
 }
 
-//suggestion of < Ahmed Ata > :
-//the previos 2 functions can be implemented in different way
-//instead of putting each item in its correct position in the queue depending on its priority
-//we can put them exactly like the ordinary queue
-//and when we dequeue ---> we will search for the item with highest priority and dequeue it --> (find max technique)
-//but dr. magda does not like this idea because it will have large complexity but i disagree --- > i think same complexity
 
 template <typename T, typename F>
 bool LinkedPriorityQueue<T, F>::peek(T& item)

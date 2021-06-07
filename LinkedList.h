@@ -220,7 +220,7 @@ T LinkedList<T>::getEntry(const int ind) const
 {
 	Node<T>* ptr = Head;
 
-	if (!ptr) return nullptr; //doaa
+	if (!ptr) return nullptr; 
 
 	for (int i = 1; i < ind; ++i)
 	{

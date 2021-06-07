@@ -10,7 +10,6 @@ enum class SIM_MODE
 	SILENT
 };
 
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 
 enum class ROVER_TYPE {
 	UNDETERMINED,

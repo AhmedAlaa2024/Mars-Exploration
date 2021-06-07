@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #ifndef BAGADT_H_
 #define BAGADT_H_
 
@@ -15,4 +14,4 @@ public:
 	virtual bool contains(const T&) const = 0;
 
 };
-#endif // !BAGADT_H_
+#endif 
