@@ -218,7 +218,7 @@ bool MarsStation::read_input_file()
 	return true;
 }
 
-bool MarsStation::writeOutputFile()
+bool MarsStation::write_output_file()
 {
 	int Missions = completed_missions_.getItemCount();
 	string Text = "";
@@ -227,7 +227,7 @@ bool MarsStation::writeOutputFile()
 	if (!Missions)
 		Text = "THERE ARE NO COMPLETED MISSIONS!!!!\n";
 	else
-		CollectStatistics_File(Missions, Text);
+		collect_statistics_file(Missions, Text);
 	outFile << Text;
 	outFile.close();
 	if (outFile.is_open())return false;
@@ -235,7 +235,7 @@ bool MarsStation::writeOutputFile()
 }
 
 
-int MarsStation::CollectStatistics_File(int& Missions, string& s)
+int MarsStation::collect_statistics_file(int& Missions, string& s)
 {
 	Mission* Ptr = nullptr;
 	int Auto = 0;
@@ -243,7 +243,7 @@ int MarsStation::CollectStatistics_File(int& Missions, string& s)
 	int ED = 0;
 	int CurrWD = 0, CurrED = 0;
 	s = "CD\tID\tFD\tWD\tED\n";
-	int MM = 0, PM = 0, EM = 0, Rovers = 0, MR = 0, PR = 0, ER = 0, AvgW = 0, AvgEx = 0;
+	int MM = 0, PM = 0, EM = 0, Rovers = 0, AvgW = 0, AvgEx = 0;
 	MISSION_TYPE TYP;
 	for (int i = 1; i <= Missions; i++)
 	{
@@ -267,10 +267,8 @@ int MarsStation::CollectStatistics_File(int& Missions, string& s)
 			break;
 		}
 	}
-	MR = MRCount;
-	PR = PRCount;
-	ER = ERCount;
-	Rovers = MR + PR + ER;
+
+	Rovers = MRCount + PRCount + ERCount;
 	if (Missions)
 	{
 		AvgW = WD / Missions;
@@ -292,7 +290,7 @@ int MarsStation::CollectStatistics_File(int& Missions, string& s)
 		s += ",P: " + to_string(PM);
 		s += ",E: " + to_string(EM) + "]\n";
 	}
-	s += "Rovers: " + to_string(Rovers) + " [M: " + to_string(MR) + ",P: " + to_string(PR) + ",E: " + to_string(ER) + "]\n";
+	s += "Rovers: " + to_string(Rovers) + " [M: " + to_string(MRCount) + ",P: " + to_string(PRCount) + ",E: " + to_string(ERCount) + "]\n";
 	s += "Avg Wait = " + to_string(AvgW) + ", " + "Avg Exec = " + to_string(AvgEx) + '\n';
 	if (MM)
 		s += "Auto-promoted: " + to_string(Auto) + "%\n";
@@ -404,7 +402,7 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 
 
 }
-void MarsStation::MoveToAvailable(Rover* RPtr)
+void MarsStation::move_to_available(Rover* RPtr)
 {
 	int count = in_execution_rovers_.getItemCount();
 	if (RPtr->getRS() == ROVER_STATUS::IN_EXECUTION)
@@ -435,7 +433,7 @@ void MarsStation::MoveToAvailable(Rover* RPtr)
 }
 
 
-void MarsStation::MoveToAvailable(int i)
+void MarsStation::move_to_available(int i)
 {
 	Rover* RPtr = check_up_rovers_.getEntry(i);
 	check_up_rovers_.remove(i);
@@ -456,7 +454,7 @@ void MarsStation::MoveToAvailable(int i)
 }
 
 
-void MarsStation::MoveToCheckUp(Rover* RPtr)
+void MarsStation::move_to_checkup(Rover* RPtr)
 {
 	RPtr->CheckUP(current_day_);
 	int count = in_execution_rovers_.getItemCount();
@@ -471,7 +469,7 @@ void MarsStation::MoveToCheckUp(Rover* RPtr)
 	check_up_rovers_.insertBeg(RPtr);
 }
 
-void MarsStation::InsertAccorToED(int start, Mission* MPtr)
+void MarsStation::insert_by_ED(int start, Mission* MPtr)
 {
 	int i = -1;
 	int count = completed_missions_.getItemCount();
@@ -507,12 +505,12 @@ void MarsStation::check_auto_promotion()
 
 void MarsStation::check_checkup_list()
 {
-	int count = check_up_rovers_.getItemCount();
-	for (int i = 1; i <= count; i++)
+	for (int i = 1; i <= check_up_rovers_.getItemCount(); i++)
 	{
 		if (check_up_rovers_.getEntry(i)->getCheckupEND() != current_day_)
 			continue;
-		MoveToAvailable(i);
+		move_to_available(i);
+		i--;
 	}
 }
 
@@ -671,9 +669,9 @@ void MarsStation::check_completed_missions()
 			RPtr = MPtr->getRover();
 			RPtr->incrementCompletedMissions();
 			if (RPtr->getMaxMissions() == RPtr->getNumCompletedMissions())
-				MoveToCheckUp(RPtr);
+				move_to_checkup(RPtr);
 			else
-				MoveToAvailable(RPtr);
+				move_to_available(RPtr);
 
 			MPtr->setMS(MISSION_STATUS::COMPLETED);
 			in_execution_missions_.remove(i);
@@ -686,7 +684,7 @@ void MarsStation::check_completed_missions()
 			}
 			else
 			{
-				InsertAccorToED(LastDistinctIndex, MPtr);
+				insert_by_ED(LastDistinctIndex, MPtr);
 			}
 		}
 	}
