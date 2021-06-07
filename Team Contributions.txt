@@ -1,7 +1,7 @@
 [1] Ahmed Alaa:									  |
 ----------------								  |
 1. Data Structures Templates (Self-Implemented)					  |
-2. All Messions, Rovers, Events class and their implementations			  |
+2. All Messions, Rovers, Events class and their members implementations			  |
 3. Execution Function Implementations in Formulation and Promotion events classess|
 __________________________________________________________________________________|
 [2] Ahmed Atta:									  |

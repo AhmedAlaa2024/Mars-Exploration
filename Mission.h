@@ -39,17 +39,12 @@ public:
 	int getCD() const;
 	int getED() const;
 	bool isCompleted(int currentDay) const;
-
 	Rover* getRover() const;
-
-
-
 	int getID() const;
-
-
-	void Assign(Rover* r, double r_speed, int currentDay);
 	int get_priority()const;
 	bool get_is_promoted() const;
+
+
 	// Setters
 	bool setFD(int fd);
 	bool setMT(MISSION_TYPE mt);
@@ -57,16 +52,13 @@ public:
 	bool setMD(int md);
 	bool setWD(int wd);
 	void setED(int ed);
-
 	void set_priority(int prio);
-
-	bool setMS(MISSION_STATUS ms);   //modifiable
+	bool setMS(MISSION_STATUS ms);
 
 
 	// Specific Member Functions
+	void Assign(Rover* r, double r_speed, int currentDay);
 	void WaitAnotherDay();
-	bool Complete(int speed);
 	bool Promote();
 	int Weight();
-
 };
