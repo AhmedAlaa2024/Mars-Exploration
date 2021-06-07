@@ -302,7 +302,7 @@ bool MarsStation::check_Last_Day()
 	//then no simulate_day() any more 
 	
 
-	//now, we have to check if after all mission is completed there sill exists polar missions with no rovers
+	//now, we have to check if after all missions are completed and there sill exists polar missions with no rovers
 	//so we have to force days to stop
 	if (check_polar_R_M())
 	{
@@ -313,8 +313,8 @@ bool MarsStation::check_Last_Day()
 	{
 		// hint : unfor. it will not work if there is a polar rover with speed 0 
 		//there is a sol in my mind but will damage class responsibility
-		int count1 = Formulated_M - Cancelled_M - (waiting_polar_missions_.get_itemCount());
-		return(completed_missions_.getItemCount() == count1); //&& (events_list_.isEmpty()));  //why ??
+		int count = Formulated_M - Cancelled_M - (waiting_polar_missions_.get_itemCount());
+		return(completed_missions_.getItemCount() == count); //&& (events_list_.isEmpty()));  //why ??
 	}
 
 }
@@ -322,21 +322,6 @@ bool MarsStation::check_Last_Day()
 //will be checked before simulation begins
 bool MarsStation::check_valid_data()
 {
-	//first check if all missions has been cancelled or not in the event list
-	//as we know that mountainous only can be cancelled so we have to check if all mission exists are only mount.
-	//if (waiting_emergency_missions_.isEmpty() && waiting_polar_missions_.isEmpty() && !waiting_mountainous_missions_.isEmpty())
-	//{
-	//	Event* e;
-	//	int no_C;
-	//	int no_F;
-	//	while (events_list_.peek(e))
-	//	{
-	//		events_list_.dequeue(e);
-	//		//we will use dynamic cast to know the type of the event
-
-	//		events_list_.enqueue(e);
-	//	}
-	//}
 
 	//in case no of rovers is 0 and there are missions     // with no cancelation for them in the event list
 	if (ROVERS_DB.isEmpty() && !MISSIONS_DB.isEmpty())
@@ -427,30 +412,30 @@ bool MarsStation::check_polar_R_M()
 
 
 	//check also if the speed of all polar rovers is 0
-	else if (!available_rovers_polar_.isEmpty() && !waiting_polar_missions_.isEmpty())
-	{
-		LinkedPriorityQueue<Rover*, double> temp;
-		Rover* r;
-		int zero_speed = 0;
-		int count = available_rovers_polar_.get_itemCount();
-		while(available_rovers_polar_.peek(r))
-		{
-			available_rovers_polar_.dequeue(r);
-			if (r->getSpeed() == 0)
-				zero_speed++;
-			Pair<Rover*, double> pr(r, r->getSpeed());
-			temp.enqueue(pr);
-		}
-		available_rovers_polar_ = temp;
+	//else if (!available_rovers_polar_.isEmpty() && !waiting_polar_missions_.isEmpty())
+	//{
+	//	LinkedPriorityQueue<Rover*, double> temp;
+	//	Rover* r;
+	//	int zero_speed = 0;
+	//	int count = available_rovers_polar_.get_itemCount();
+	//	while(available_rovers_polar_.peek(r))
+	//	{
+	//		available_rovers_polar_.dequeue(r);
+	//		if (r->getSpeed() == 0)
+	//			zero_speed++;
+	//		Pair<Rover*, double> pr(r, r->getSpeed());
+	//		temp.enqueue(pr);
+	//	}
+	//	available_rovers_polar_ = temp;
 
-		while (temp.dequeue(r))   //clear temp
-		{
+	//	while (temp.dequeue(r))   //clear temp
+	//	{
 
-		}
+	//	}
 
-		if (zero_speed == count)
-			return false;
-	}
+	//	if (zero_speed == count)
+	//		return false;
+	//}
 
 	return true;
 }
@@ -688,7 +673,7 @@ void MarsStation::assign_missions()
 	Mission* mm;
 
 	//first assign emergency missions
-	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ????
+	LinkedPriorityQueue<Mission*, int> temp;  
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;

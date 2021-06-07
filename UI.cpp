@@ -1,6 +1,5 @@
 #include "UI.h"
 #include <iostream>
-//#include "LinkedPriorityQueue.h"
 #include <fstream>
 #include<Windows.h>  //for the delay
 using namespace std;
@@ -169,7 +168,6 @@ void UI::Output_Console()const
 
 	LinkedPriorityQueue<Rover*, double> temp_R;
 	int no_R = p_station->get_available_rovers_emergency_().get_itemCount() + p_station->get_available_rovers_mountainous_().get_itemCount() + p_station->get_available_rovers_polar_().get_itemCount();
-	//int n_ER = p_station->get_available_rovers_emergency_().get_itemCount();
 	Rover* r = nullptr;
 	cout << no_R << " Available Rovers: " << " [";
 	j = 0;
@@ -177,13 +175,12 @@ void UI::Output_Console()const
 	while(p_station->get_available_rovers_emergency_().peek(r))
 	{
 		p_station->get_available_rovers_emergency_().dequeue(r);
-		if (r->getRT() == ROVER_TYPE::EMERGENCY)
-		{
-			if (j == 0)
-				cout << r->getID();
-			else
-				cout << "," << r->getID();
-		}
+		
+		if (j == 0)
+			cout << r->getID();
+		else
+			cout << "," << r->getID();
+		
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
@@ -197,19 +194,16 @@ void UI::Output_Console()const
 
 	}
 
-	//int n_PR = p_station->get_available_rovers_polar_().get_itemCount();
+
 	j = 0;
-	//for (int i = 1; i <= n_PR; i++)
 	while(p_station->get_available_rovers_polar_().peek(r))
 	{
 		p_station->get_available_rovers_polar_().dequeue(r);
-		if (r->getRT() == ROVER_TYPE::POLAR)
-		{
-			if (j == 0)
-				cout << r->getID();
-			else
-				cout << "," << r->getID();
-		}
+		if (j == 0)
+			cout << r->getID();
+		else
+			cout << "," << r->getID();
+		
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
@@ -224,24 +218,21 @@ void UI::Output_Console()const
 	}
 
 
-	//int n_MR = p_station->get_available_rovers_mountainous_().get_itemCount();
+	
 	j = 0;
-	//for (int i = 1; i <= n_MR; i++)
 	while(p_station->get_available_rovers_mountainous_().peek(r))
 	{
 		p_station->get_available_rovers_mountainous_().dequeue(r);
-		if (r->getRT() == ROVER_TYPE::MOUNTAINOUS)
-		{
-			if (j == 0)
-				cout << r->getID();
-			else
-				cout << "," << r->getID();
-		}
+		
+		if (j == 0)
+			cout << r->getID();
+		else
+			cout << "," << r->getID();
+		
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
 		temp_R.enqueue(pr);
-		//p_station->get_available_rovers_mountainous_().enqueue(pr);
 	}
 	cout << "} " << endl;
 	p_station->get_available_rovers_mountainous_() = temp_R;
@@ -355,7 +346,7 @@ void UI::Output_Console()const
 
 
 
-	//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
+	
 }
 
 
@@ -369,25 +360,21 @@ void UI::InteractivePrinting() const
 	//TODO:: cout statistics and wait for cin
 
 	char key;
-	//cin >> key;
 	//check if end of days
 	while (!p_station->check_Last_Day())
 	{
 		cin >> key;
-		//if (key != 10)   //TODO:: Change this
-			//continue;
-
+		
 		p_station->simulate_day();
 
 		Output_Console();
+		
 
-
-		//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
+		
 	}
 
 	//finally create the file
-	//p_station->writeOutputFile();
-
+	
 	bool isWritten = p_station->writeOutputFile();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
@@ -411,7 +398,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1);
+		Sleep(1000);
 	}
 
 	//p_station->writeOutputFile();  // i think it should be removed
