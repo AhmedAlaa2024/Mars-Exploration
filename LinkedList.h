@@ -8,9 +8,7 @@ class LinkedList :
 private:
 	Node<T>* Head;	//Pointer to the head of the list
 	int itemCount;
-	//utility functions
-/*	Node<T>* getPointerTo(const T&) ;
-	Node<T>* getPrevOf(const T&);*/
+	
 	Node<T>* getNodeAt(int index);
 public:
 
@@ -79,30 +77,7 @@ Node<T>* LinkedList<T>::getNodeAt(int index)
 }
 
 
-//template <typename T>
-//Node<T>* getPointerTo(const T& target)
-//{
-//	Node<T>* ptr = head;
-//	while (ptr) {
-//		if (ptr->getItem() == target)
-//			return ptr;
-//		ptr = ptr->getNext();
-//	}
-//	return nullptr;
-//}
-//
-//
-//template <typename T>
-//Node<T>* getPrevOf(const T& target)
-//{
-//	Node<T>* ptr = head;
-//	while (ptr->getNext()) {
-//		if (ptr->getNext()->getItem() == target)
-//			return ptr;
-//		ptr = ptr->getNext();
-//	}
-//	return nullptr;
-//}
+
 
 
 
@@ -114,7 +89,7 @@ bool LinkedList<T>::isEmpty() const
 
 
 template <typename T>
-bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the other 2 functions and replace them by this function only
+bool LinkedList<T>::insertIndex(int index, const T& data)   
 {
 	bool validIndex = index <= itemCount + 1 && index >= 1;
 
@@ -123,7 +98,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 		Node<T>* ptr = Head;
 		Node<T>* insert = new Node<T>(data);
 		if (!insert) return false;
-		//special case ---> the index is the first index ------> i know in this case the user should use the function insertBeg ---> but i assume a folish user
+		
 		if (index == 1)
 		{
 			insert->setNext(Head);

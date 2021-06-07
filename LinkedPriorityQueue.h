@@ -45,34 +45,7 @@ const LinkedPriorityQueue<T, F>& LinkedPriorityQueue<T, F>::operator = (LinkedPr
 		ptr = ptr->getNext();
 	}
 
-	//Node<Pair<T, F>>* p = front;
-	////copy all items in the right queue in the left one
-	//while (ptr)
-	//{
-	//	//front->setItem(ptr->getItem());
-	//	Node<Pair<T, F>>* n = new Node< Pair<T, F>>(ptr->getItem());
-	//	if (!front) //first element   --> overhead i know ---> put it outside the loop --> later
-	//	{
-	//		front = n;
-	//		p = front;
-	//		front->setNext(nullptr);
-	//		itemCount++;
-	//		continue;
-	//	}
-	//	p->setNext(n);
-	//	p = p->getNext();
-	//	itemCount++;
-	//	
-	//	ptr = ptr->getNext();
-	//}
-
-	//copy all items in the right queue in the left one
-	/*for (int i = 0; i < right_LQ.itemCount; i++)
-	{
-		enqueue(right_LQ.front->getItem());
-		right_LQ.dequeue(temp);
-		right_LQ.enqueue(front->getItem());
-	}*/
+	
 	return *this;
 }
 
@@ -149,8 +122,7 @@ bool LinkedPriorityQueue<T, F>::enqueue(const Pair<T, F>& item)
 		//if it has the smallest priority
 		if (!searchPos->getNext())
 		{
-			//this means that we have checked on the priority and not found one has less priority
-			//then insert it at the end of the queue
+			
 			searchPos->setNext(insert);
 			insert->setNext(nullptr);
 			back = insert;
