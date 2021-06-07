@@ -360,6 +360,13 @@ void UI::InteractivePrinting() const
 {
 	cout << "Interactive Mode\n";
 
+	if (!p_station->check_valid_data())
+	{
+		bool isWritten = p_station->write_output_file();
+		cout << " Output file created\n";
+		return;
+	}
+
 	//TODO:: cout statistics and wait for cin
 
 	char key;
@@ -396,7 +403,14 @@ void UI::InteractivePrinting() const
 // TO BE CHANGED....
 void UI::StepByStepPrinting() const
 {
+	
 	cout << "Step by step Mode\n";
+	if (!p_station->check_valid_data())
+	{
+		bool isWritten = p_station->write_output_file();
+		cout << " Output file created\n";
+		return;
+	}
 
 	// TODO:: cout statistics and wait for some time then cout
 	while (!p_station->check_Last_Day())
@@ -418,6 +432,12 @@ void UI::StepByStepPrinting() const
 void UI::SilentPrinting() const
 {
 	cout << "Silent Mode\n";
+	if (!p_station->check_valid_data())
+	{
+		bool isWritten = p_station->write_output_file();
+		cout << " Output file created\n";
+		return;
+	}
 	cout << "Simulation Starts...\n";
 
 	while (!p_station->check_Last_Day())
