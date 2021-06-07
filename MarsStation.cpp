@@ -52,8 +52,8 @@ LinkedBAG<Mission*>& MarsStation::get_mission_DB()
 }
 
 
-LinkedPriorityQueue<Mission*, int>& MarsStation::get_W_E_M()
-{
+LinkedPriorityQueue<Mission*, int>& MarsStation::get_W_E_M() // Member Function get the waiting emergency missions
+{ 
 	return waiting_emergency_missions_;
 }
 

@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
 
@@ -14,7 +13,6 @@ TL(tl), MD(md), asigned(false), WD(0), CD(0), ED(0)
 	else
 		priority_ = 0;
 	assignedRover = nullptr;
-
 }
 
 
@@ -186,17 +184,17 @@ bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THI
 
 bool Mission::Promote()
 {
+	// This check is created to make sure no one use it with another mission types by wrong
 	if (MT != MISSION_TYPE::MOUNTAINOUS) // The Mountainous missions only are allowed to be promoted!
 		return false;
 
-	is_promoted = true;
-	MT = MISSION_TYPE::EMERGENCY;
+	is_promoted = true; // Raise the indication of the mission to easily detect late that it is pure emergency of promoted mountainous
+	MT = MISSION_TYPE::EMERGENCY; // Change the type to Emergency
 
-	//set its priority
+	// Set its priority value
 	set_priority(Weight());
 
 	return true;
-
 }
 
 int Mission::Weight()
