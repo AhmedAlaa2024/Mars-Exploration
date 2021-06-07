@@ -605,7 +605,7 @@ void MarsStation::assign_missions()
 	// First assign emergency missions
 	LinkedPriorityQueue<Mission*, int> temp;   
 
-	LinkedPriorityQueue<Mission*, int> temp;  
+	
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
