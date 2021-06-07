@@ -173,7 +173,11 @@
   <ItemGroup>
     <Text Include="input.txt" />
     <Text Include="input_history.txt" />
+
+    <Text Include="Team Contributions.txt" />
+
     <Text Include="output.txt" />
+
     <Text Include="Team Tasks.txt" />
     <Text Include="Test Cases\test#1.txt" />
     <Text Include="Test Cases\test#10.txt" />
