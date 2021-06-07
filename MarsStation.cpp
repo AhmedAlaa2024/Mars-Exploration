@@ -10,11 +10,11 @@ using namespace std;
 #include "Promotion.h"
 #include "Cancellation.h"
 
-MarsStation::MarsStation() :AutoP(0), current_day_(0), PRCount(0), ERCount(0), MRCount(0), AutoPCount(0)
+MarsStation::MarsStation() :auto_p_(0), current_day_(0), pr_count_(0), er_count_(0), mr_count_(0), auto_p_count_(0)
 
 {
-	Cancelled_M = 0;
-	Formulated_M = 0;
+	cancelled_m_ = 0;
+	formulated_m_ = 0;
 
 	read_input_file();
 	MarsStation* it = this;
@@ -49,25 +49,25 @@ void MarsStation::execute_mode(SIM_MODE mode)
 
 
 
-LinkedBAG<Mission*>& MarsStation::get_mission_DB()
+LinkedBAG<Mission*>& MarsStation::get_mission_db()
 {
 	return MISSIONS_DB;
 }
 
 
-LinkedPriorityQueue<Mission*, int>& MarsStation::get_W_E_M() // Member Function get the waiting emergency missions
+LinkedPriorityQueue<Mission*, int>& MarsStation::get_w_e_m() // Member Function get the waiting emergency missions
 { 
 	return waiting_emergency_missions_;
 }
 
 
-LinkedList<Mission*>& MarsStation::get_W_M_M()
+LinkedList<Mission*>& MarsStation::get_w_m_m()
 {
 	return waiting_mountainous_missions_;
 }
 
 
-LinkedQueue<Mission*>& MarsStation::get_W_P_M()
+LinkedQueue<Mission*>& MarsStation::get_w_p_m()
 {
 	return waiting_polar_missions_;
 }
@@ -78,7 +78,7 @@ LinkedList<Mission*>& MarsStation::get_in_execution_missions()
 	return in_execution_missions_;
 }
 
-LinkedList<Rover*>& MarsStation::get_check_up_rovers_()
+LinkedList<Rover*>& MarsStation::get_check_up_rovers()
 {
 	return check_up_rovers_;
 }
@@ -111,7 +111,7 @@ int MarsStation::get_current_day()
 
 bool MarsStation::read_input_file()
 {
-	//TODO:: after the DS is Written
+	
 	ifstream my_file("input.txt");
 
 	if (!my_file) {
@@ -119,7 +119,7 @@ bool MarsStation::read_input_file()
 	}
 
 
-	my_file >> MRCount >> PRCount >> ERCount;
+	my_file >> mr_count_ >> pr_count_ >> er_count_;
 
 
 
@@ -133,7 +133,7 @@ bool MarsStation::read_input_file()
 	int ids = 0;
 
 	// Create Mountainous Rovers
-	for (int i = 0; i < MRCount; ++i)
+	for (int i = 0; i < mr_count_; ++i)
 	{
 		my_file >> SM;
 
@@ -144,7 +144,7 @@ bool MarsStation::read_input_file()
 	}
 
 	// Create Polar Rovers
-	for (int i = 0; i < PRCount; ++i)
+	for (int i = 0; i < pr_count_; ++i)
 	{
 		my_file >> SP;
 		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
@@ -155,7 +155,7 @@ bool MarsStation::read_input_file()
 	}
 
 	// Create Emergency Rovers
-	for (int i = 0; i < ERCount; ++i)
+	for (int i = 0; i < er_count_; ++i)
 	{
 		my_file >> SE;
 
@@ -171,7 +171,7 @@ bool MarsStation::read_input_file()
 
 	int AutoP;
 	my_file >> AutoP;
-	this->AutoP = AutoP;
+	this->auto_p_ = AutoP;
 
 
 	int Events_no;
@@ -276,14 +276,14 @@ int MarsStation::collect_statistics_file(int& Missions, string& str)
 		}
 	}
 
-	Rovers = MRCount + PRCount + ERCount;
+	Rovers = mr_count_ + pr_count_ + er_count_;
 	if (Missions)
 	{
 		AvgW = (float)WD / Missions;
 		AvgEx = (float)ED / Missions;
 	}
-	if (MM)
-		Auto = ((double)AutoPCount / (MM + TotalPrCount)) * 100;
+	if (MM + TotalPrCount)
+		Auto = ((double)auto_p_count_ / (MM + TotalPrCount)) * 100;
 
 	if (!waiting_polar_missions_.isEmpty())
 	{
@@ -298,10 +298,10 @@ int MarsStation::collect_statistics_file(int& Missions, string& str)
 		s << ",P: " << to_string(PM);
 		s << ",E: " << to_string(EM) << "]\n";
 	}
-	s << "Rovers: " << to_string(Rovers) << " [M: " << to_string(MRCount) << ",P: " << to_string(PRCount) << ",E: " << to_string(ERCount) << "]\n";
+	s << "Rovers: " << to_string(Rovers) << " [M: " << to_string(mr_count_) << ",P: " << to_string(pr_count_) << ",E: " << to_string(er_count_) << "]\n";
 	s << fixed << setprecision(2);
 	s << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n';
-	if (MM)
+	if (MM + TotalPrCount)
 		s << "Auto-promoted: " << to_string(Auto) << "%\n";
 	else
 		s << "There are no Mountainious missions.\n";
@@ -310,28 +310,23 @@ int MarsStation::collect_statistics_file(int& Missions, string& str)
 }
 
 
-bool MarsStation::check_Last_Day()
+bool MarsStation::check_last_day()
 {
-	// first of all we have to check on both the event list and the the completed list
-	//if the no of missoins in the completed list == # formulated missions - # cancelled missions
-	// && the event list is empty 
+	
 
 	//then no simulate_day() any more 
-
-
 	//now, we have to check if after all missions are completed and there sill exists polar missions with no rovers
 	//so we have to force days to stop
-	if (check_polar_R_M())
+	if (check_polar_r_m())
 	{
-		return (completed_missions_.getItemCount() == Formulated_M - Cancelled_M) && (events_list_.isEmpty());
+		return (completed_missions_.getItemCount() == formulated_m_ - cancelled_m_) && (events_list_.isEmpty()) && check_up_rovers_.isEmpty();
 	}
 
 	else
 	{
-		// hint : unfor. it will not work if there is a polar rover with speed 0 
-		//there is a sol in my mind but will damage class responsibility
-		int count = Formulated_M - Cancelled_M - (waiting_polar_missions_.get_itemCount());
-		return(completed_missions_.getItemCount() == count && (events_list_.isEmpty()));  //why ??
+		
+		int count = formulated_m_ - cancelled_m_ - (waiting_polar_missions_.get_itemCount());
+		return(completed_missions_.getItemCount() == count && (events_list_.isEmpty()) && check_up_rovers_.isEmpty() );
 	}
 
 
@@ -347,9 +342,7 @@ bool MarsStation::check_valid_data()
 		return false;
 	}
 
-	//in case all speeds of all rovers _from all types_ are zero and there are missions in the input file
-	//has been formulated and has not been cancelled
-	//so we have to check the event list
+	
 	int zero_speed = 0;
 	Rover* r;
 	LinkedPriorityQueue<Rover*, double> temp;
@@ -421,7 +414,7 @@ bool MarsStation::check_valid_data()
 }
 
 //will be called first before the simulation
-bool MarsStation::check_polar_R_M()
+bool MarsStation::check_polar_r_m()
 {
 	if (available_rovers_polar_.isEmpty() && !waiting_polar_missions_.isEmpty())
 	{
@@ -429,44 +422,19 @@ bool MarsStation::check_polar_R_M()
 	}
 
 
-	//check also if the speed of all polar rovers is 0
-	//else if (!available_rovers_polar_.isEmpty() && !waiting_polar_missions_.isEmpty())
-	//{
-	//	LinkedPriorityQueue<Rover*, double> temp;
-	//	Rover* r;
-	//	int zero_speed = 0;
-	//	int count = available_rovers_polar_.get_itemCount();
-	//	while(available_rovers_polar_.peek(r))
-	//	{
-	//		available_rovers_polar_.dequeue(r);
-	//		if (r->getSpeed() == 0)
-	//			zero_speed++;
-	//		Pair<Rover*, double> pr(r, r->getSpeed());
-	//		temp.enqueue(pr);
-	//	}
-	//	available_rovers_polar_ = temp;
-
-	//	while (temp.dequeue(r))   //clear temp
-	//	{
-
-	//	}
-
-	//	if (zero_speed == count)
-	//		return false;
-	//}
 
 	return true;
 }
 
-void MarsStation::increment_Cancelled_M()
+void MarsStation::increment_cancelled_m()
 {
-	Cancelled_M++;
+	cancelled_m_++;
 }
 
 
-void MarsStation::increment_Formulated_M()
+void MarsStation::increment_formulated_m()
 {
-	Formulated_M++;
+	formulated_m_++;
 }
 
 MarsStation::~MarsStation()
@@ -530,7 +498,7 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 	{
 		//Delete it from waiting
 
-		for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) //3lshan 5ater Rofaida
+		for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) 
 		{
 			Mission* m = waiting_mountainous_missions_.getEntry(i);
 			if (m->getID() == miss->getID())
@@ -616,7 +584,7 @@ void MarsStation::move_to_checkup(Rover* RPtr)
 	check_up_rovers_.insertBeg(RPtr);
 }
 
-void MarsStation::insert_by_ED(int start, Mission* MPtr)
+void MarsStation::insert_by_ed(int start, Mission* MPtr)
 {
 	int i = -1;
 	int count = completed_missions_.getItemCount();
@@ -638,11 +606,11 @@ void MarsStation::check_auto_promotion()
 	{
 
 		Mission* mm = waiting_mountainous_missions_.getEntry(i);
-		if (!mm->get_is_promoted() && mm->getWD() > AutoP)
+		if (!mm->get_is_promoted() && mm->getWD() > auto_p_)
 		{
 			Promotion pr(current_day_, mm->getID(), this);
 			pr.Execute();
-			AutoPCount++;
+			auto_p_count_++;
 			i--;
 		}
 
@@ -668,8 +636,7 @@ void MarsStation::assign_missions()
 
 	//first assign emergency missions
 
-	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ?? -->the increasing of waiting days?
-	//i must loop through all of them //Dequeue Them all
+	LinkedPriorityQueue<Mission*, int> temp;  
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -744,15 +711,15 @@ void MarsStation::assign_missions()
 
 	}
 
-
-	while (temp_p.dequeue(mm)) // to clear it
+	//return to the the Original List
+	while (temp_p.dequeue(mm)) 
 	{
 		waiting_polar_missions_.enqueue(mm);
 	}
 
 	//now The Mountainous
 
-	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) //TODO :: YOU might NEED TO Change The LIMITS
+	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) 
 	{
 		Rover* r;
 		mm = waiting_mountainous_missions_.getEntry(i);
@@ -831,7 +798,7 @@ void MarsStation::check_completed_missions()
 			}
 			else
 			{
-				insert_by_ED(LastDistinctIndex, MPtr);
+				insert_by_ed(LastDistinctIndex, MPtr);
 			}
 		}
 	}
