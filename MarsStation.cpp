@@ -314,7 +314,7 @@ bool MarsStation::check_Last_Day()
 		// hint : unfor. it will not work if there is a polar rover with speed 0 
 		//there is a sol in my mind but will damage class responsibility
 		int count = Formulated_M - Cancelled_M - (waiting_polar_missions_.get_itemCount());
-		return(completed_missions_.getItemCount() == count); //&& (events_list_.isEmpty()));  //why ??
+		return(completed_missions_.getItemCount() == count && (events_list_.isEmpty()));  //why ??
 	}
 
 }
