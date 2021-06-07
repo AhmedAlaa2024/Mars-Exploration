@@ -243,7 +243,8 @@ int MarsStation::collect_statistics_file(int& Missions, string& s)
 	int ED = 0;
 	int CurrWD = 0, CurrED = 0;
 	s = "CD\tID\tFD\tWD\tED\n";
-	int MM = 0, PM = 0, EM = 0, Rovers = 0, AvgW = 0, AvgEx = 0;
+	int MM = 0, PM = 0, EM = 0, Rovers = 0;
+	float AvgW = 0, AvgEx = 0;
 	MISSION_TYPE TYP;
 	for (int i = 1; i <= Missions; i++)
 	{
@@ -271,8 +272,8 @@ int MarsStation::collect_statistics_file(int& Missions, string& s)
 	Rovers = MRCount + PRCount + ERCount;
 	if (Missions)
 	{
-		AvgW = WD / Missions;
-		AvgEx = ED / Missions;
+		AvgW = (float)WD / Missions;
+		AvgEx = (float)ED / Missions;
 	}
 	if (MM)
 		Auto = ((double)AutoPCount / MM) * 100;
@@ -510,7 +511,7 @@ void MarsStation::simulate_day()
 
 void MarsStation::move_to_in_ex_list(Mission* miss)
 {
-	in_execution_missions_.insertBeg(miss);
+	in_execution_missions_.insertEnd(miss);
 
 	//remove from waiting
 

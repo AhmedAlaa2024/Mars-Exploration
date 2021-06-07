@@ -112,8 +112,6 @@ void Rover::incrementCompletedMissions()
 
 void Rover::AssignTo(Mission* m)
 {
-
-	completedMissions++;
 	mission = m;
 	assigned = true; // doaa temporarly---> i will delete it
 	RS = ROVER_STATUS::IN_EXECUTION;  //doaa
