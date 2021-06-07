@@ -43,6 +43,7 @@ const LinkedPriorityQueue<T, F>& LinkedPriorityQueue<T, F>::operator = (LinkedPr
 		ptr = ptr->getNext();
 	}
 
+	
 	return *this;
 }
 

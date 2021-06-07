@@ -8,6 +8,7 @@ class LinkedList :
 private:
 	Node<T>* Head;	//Pointer to the head of the list
 	int itemCount;
+	
 	Node<T>* getNodeAt(int index);
 public:
 
@@ -76,6 +77,10 @@ Node<T>* LinkedList<T>::getNodeAt(int index)
 }
 
 
+
+
+
+
 template <typename T>
 bool LinkedList<T>::isEmpty() const
 {
@@ -84,7 +89,7 @@ bool LinkedList<T>::isEmpty() const
 
 
 template <typename T>
-bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the other 2 functions and replace them by this function only
+bool LinkedList<T>::insertIndex(int index, const T& data)   
 {
 	bool validIndex = index <= itemCount + 1 && index >= 1;
 
@@ -93,7 +98,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 		Node<T>* ptr = Head;
 		Node<T>* insert = new Node<T>(data);
 		if (!insert) return false;
-		// Special case ---> the index is the first index ------> i know in this case the user should use the function insertBeg ---> but i assume a folish user
+		
 		if (index == 1)
 		{
 			insert->setNext(Head);
@@ -185,8 +190,7 @@ T LinkedList<T>::getEntry(const int ind) const
 {
 	Node<T>* ptr = Head;
 
-	if (!ptr)
-		return nullptr;
+	if (!ptr) return nullptr; 
 
 	for (int i = 1; i < ind; ++i)
 		ptr = ptr->getNext();

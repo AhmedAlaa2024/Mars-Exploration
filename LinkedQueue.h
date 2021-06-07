@@ -1,3 +1,4 @@
+
 #ifndef QUEUEADT_H_
 #define QUEUEADT_H_
 #include "QueueADT.h"
@@ -40,7 +41,7 @@ LinkedQueue<T>::LinkedQueue() :itemCount(0) {
 }
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ) {    //why do not you use the enqueue() member function ??????  Doaa
+LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ) {    
     Node<T>* LQptr = LQ.front;
     if (!LQptr)
     {
@@ -123,6 +124,9 @@ LinkedQueue<T>::~LinkedQueue() {
 
     while (dequeue(temp));
 }
+
+
+
 
 
 template <typename T>

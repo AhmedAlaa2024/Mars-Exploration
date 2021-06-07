@@ -43,16 +43,16 @@ private:
 	int collect_statistics_file(int&, string&);
 
 	//misc info
-	int AutoP;
-	int Cancelled_M;
-	int Formulated_M;
+	int auto_p_;
+	int cancelled_m_;
+	int formulated_m_;
 
 	int current_day_;
 
-	int MRCount;
-	int PRCount;
-	int ERCount;
-	int AutoPCount;
+	int mr_count_;
+	int pr_count_;
+	int er_count_;
+	int auto_p_count_;
 
 	// Utility functions
 	void check_auto_promotion();
@@ -61,8 +61,7 @@ private:
 	void move_to_available(Rover*);
 	void move_to_available(int);
 	void move_to_checkup(Rover*);
-	void insert_by_ED(int start, Mission* MPtr);
-
+	void insert_by_ed(int start, Mission* MPtr);
 public:
 	MarsStation();
 
@@ -81,21 +80,23 @@ public:
 	void increment_Cancelled_M();
 	void increment_Formulated_M();
 
-
-	// Getters
-	LinkedBAG<Mission*>& get_mission_DB();
-	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
-	LinkedQueue<Mission*>& get_W_P_M();
-	LinkedList<Mission*>& get_W_M_M();
+	
+	LinkedBAG<Mission*>& get_mission_db();
+	LinkedPriorityQueue<Mission*, int>& get_w_e_m();
+	LinkedQueue<Mission*>& get_w_p_m();
+	LinkedList<Mission*>& get_w_m_m();
 	LinkedList<Mission*>& get_in_execution_missions();
-	LinkedList<Rover*>& get_check_up_rovers_();
+	LinkedList<Rover*>& get_check_up_rovers();
 	LinkedList<Mission*>& get_completed_missions_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_emergency_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_mountainous_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_polar_();
-	bool check_Last_Day();
+
+	bool check_last_day();
 	bool check_valid_data();
-	bool check_polar_R_M();
+	bool check_polar_r_m();
+	void increment_cancelled_m();
+	void increment_formulated_m();
 
 
 	//Destructor

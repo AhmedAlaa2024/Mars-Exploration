@@ -14,4 +14,4 @@ public:
 	virtual bool contains(const T&) const = 0;
 
 };
-#endif // !BAGADT_H_
+#endif 
