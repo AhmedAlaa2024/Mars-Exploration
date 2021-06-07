@@ -411,7 +411,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(10);
+		Sleep(1000);
 	}
 
 	
