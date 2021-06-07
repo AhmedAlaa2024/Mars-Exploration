@@ -109,7 +109,7 @@ void UI::Output_Console()const
 			cout << p_station->get_W_M_M().getEntry(i)->getID() << ",";
 
 	}
-	cout << " } " << endl;
+	cout << "}" << endl;
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
@@ -167,12 +167,12 @@ void UI::Output_Console()const
 
 	//Available Rovers
 
+	LinkedPriorityQueue<Rover*, double> temp_R;
 	int no_R = p_station->get_available_rovers_emergency_().get_itemCount() + p_station->get_available_rovers_mountainous_().get_itemCount() + p_station->get_available_rovers_polar_().get_itemCount();
-	int n_ER = p_station->get_available_rovers_emergency_().get_itemCount();
 	Rover* r = nullptr;
 	cout << no_R << " Available Rovers: " << " [";
 	j = 0;
-	for (int i = 1; i <= n_ER; i++)
+	while(p_station->get_available_rovers_emergency_().peek(r))
 	{
 		p_station->get_available_rovers_emergency_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::EMERGENCY)
@@ -185,14 +185,19 @@ void UI::Output_Console()const
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		p_station->get_available_rovers_emergency_().enqueue(pr);
+		temp_R.enqueue(pr);
+		//p_station->get_available_rovers_emergency_().enqueue(pr);
 	}
 	cout << "] " << "(";
+	p_station->get_available_rovers_emergency_() = temp_R;
+	while (temp_R.dequeue(r))   //clear temp
+	{
 
+	}
 
-	int n_PR = p_station->get_available_rovers_polar_().get_itemCount();
+	
 	j = 0;
-	for (int i = 1; i <= n_PR; i++)
+	while(p_station->get_available_rovers_polar_().peek(r))
 	{
 		p_station->get_available_rovers_polar_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::POLAR)
@@ -205,14 +210,20 @@ void UI::Output_Console()const
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		p_station->get_available_rovers_polar_().enqueue(pr);
+		temp_R.enqueue(pr);
+		//p_station->get_available_rovers_polar_().enqueue(pr);
 	}
 	cout << ") " << "{";
+	p_station->get_available_rovers_polar_() = temp_R;
+	while (temp_R.dequeue(r))   //clear temp
+	{
+
+	}
 
 
-	int n_MR = p_station->get_available_rovers_mountainous_().get_itemCount();
+
 	j = 0;
-	for (int i = 1; i <= n_MR; i++)
+	while(p_station->get_available_rovers_mountainous_().peek(r))
 	{
 		p_station->get_available_rovers_mountainous_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::MOUNTAINOUS)
@@ -225,10 +236,15 @@ void UI::Output_Console()const
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		p_station->get_available_rovers_mountainous_().enqueue(pr);
+		temp_R.enqueue(pr);
+		//p_station->get_available_rovers_mountainous_().enqueue(pr);
 	}
 	cout << "} " << endl;
+	p_station->get_available_rovers_mountainous_() = temp_R;
+	while (temp_R.dequeue(r))   //clear temp
+	{
 
+	}
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
@@ -387,7 +403,7 @@ void UI::StepByStepPrinting() const
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1);
+		Sleep(1000);
 	}
 
 	//p_station->write_output_file();  // i think it should be removed
