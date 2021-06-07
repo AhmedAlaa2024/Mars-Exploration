@@ -49,18 +49,18 @@ void UI::Output_Console()const
 	//Waiting Missions
 
 	//calculate # of waiting missions
-	int no_W_M = p_station->get_W_E_M().get_itemCount() + p_station->get_W_P_M().get_itemCount() + p_station->get_W_M_M().getItemCount();
+	int no_W_M = p_station->get_w_e_m().get_itemCount() + p_station->get_w_p_m().get_itemCount() + p_station->get_w_m_m().getItemCount();
 
 	cout << no_W_M << " Waiting Missions : ";
 	//first --> print the ID of the E missions
 	cout << " [";
 	Mission* m = nullptr;
 	int j = 0;
-	int count = p_station->get_W_E_M().get_itemCount();
+	int count = p_station->get_w_e_m().get_itemCount();
 	LinkedPriorityQueue<Mission*, int> temp;
-	while (p_station->get_W_E_M().peek(m))
+	while (p_station->get_w_e_m().peek(m))
 	{
-		p_station->get_W_E_M().dequeue(m);
+		p_station->get_w_e_m().dequeue(m);
 
 		if (j == 0)
 			cout << m->getID();
@@ -72,7 +72,7 @@ void UI::Output_Console()const
 		temp.enqueue(pm);
 	}
 	cout << "]";
-	p_station->get_W_E_M() = temp;
+	p_station->get_w_e_m() = temp;
 
 	while (temp.dequeue(m))   //clear temp
 	{
@@ -82,10 +82,10 @@ void UI::Output_Console()const
 	//second --> print the ID of the polar Mission
 	cout << " (";
 	j = 0;
-	count = p_station->get_W_P_M().get_itemCount();
+	count = p_station->get_w_p_m().get_itemCount();
 	for (int i = 1; i <= count; i++)
 	{
-		p_station->get_W_P_M().dequeue(m);
+		p_station->get_w_p_m().dequeue(m);
 
 		if (j == 0)
 			cout << m->getID();
@@ -93,7 +93,7 @@ void UI::Output_Console()const
 			cout << "," << m->getID();
 		j++;
 		//then enqueue it again
-		p_station->get_W_P_M().enqueue(m);
+		p_station->get_w_p_m().enqueue(m);
 	}
 	cout << ")";
 
@@ -101,15 +101,15 @@ void UI::Output_Console()const
 
 	//third --> print the ID of the mountainous missions
 	cout << " {";
-	for (int i = 1; i <= p_station->get_W_M_M().getItemCount(); i++)   //itemCount does not change during this loop
+	for (int i = 1; i <= p_station->get_w_m_m().getItemCount(); i++)   //itemCount does not change during this loop
 	{
-		if (i == p_station->get_W_M_M().getItemCount())   //so print wihtout the ","
-			cout << p_station->get_W_M_M().getEntry(i)->getID();
+		if (i == p_station->get_w_m_m().getItemCount())   //so print wihtout the ","
+			cout << p_station->get_w_m_m().getEntry(i)->getID();
 		else
-			cout << p_station->get_W_M_M().getEntry(i)->getID() << ",";
+			cout << p_station->get_w_m_m().getEntry(i)->getID() << ",";
 
 	}
-	cout << " } " << endl;
+	cout << "}" << endl;
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
@@ -167,12 +167,12 @@ void UI::Output_Console()const
 
 	//Available Rovers
 
+	LinkedPriorityQueue<Rover*, double> temp_R;
 	int no_R = p_station->get_available_rovers_emergency_().get_itemCount() + p_station->get_available_rovers_mountainous_().get_itemCount() + p_station->get_available_rovers_polar_().get_itemCount();
-	int n_ER = p_station->get_available_rovers_emergency_().get_itemCount();
 	Rover* r = nullptr;
 	cout << no_R << " Available Rovers: " << " [";
 	j = 0;
-	for (int i = 1; i <= n_ER; i++)
+	while(p_station->get_available_rovers_emergency_().peek(r))
 	{
 		p_station->get_available_rovers_emergency_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::EMERGENCY)
@@ -185,14 +185,19 @@ void UI::Output_Console()const
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		p_station->get_available_rovers_emergency_().enqueue(pr);
+		temp_R.enqueue(pr);
+		//p_station->get_available_rovers_emergency_().enqueue(pr);
 	}
 	cout << "] " << "(";
+	p_station->get_available_rovers_emergency_() = temp_R;
+	while (temp_R.dequeue(r))   //clear temp
+	{
 
+	}
 
-	int n_PR = p_station->get_available_rovers_polar_().get_itemCount();
+	
 	j = 0;
-	for (int i = 1; i <= n_PR; i++)
+	while(p_station->get_available_rovers_polar_().peek(r))
 	{
 		p_station->get_available_rovers_polar_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::POLAR)
@@ -205,14 +210,20 @@ void UI::Output_Console()const
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		p_station->get_available_rovers_polar_().enqueue(pr);
+		temp_R.enqueue(pr);
+		//p_station->get_available_rovers_polar_().enqueue(pr);
 	}
 	cout << ") " << "{";
+	p_station->get_available_rovers_polar_() = temp_R;
+	while (temp_R.dequeue(r))   //clear temp
+	{
+
+	}
 
 
-	int n_MR = p_station->get_available_rovers_mountainous_().get_itemCount();
+
 	j = 0;
-	for (int i = 1; i <= n_MR; i++)
+	while(p_station->get_available_rovers_mountainous_().peek(r))
 	{
 		p_station->get_available_rovers_mountainous_().dequeue(r);
 		if (r->getRT() == ROVER_TYPE::MOUNTAINOUS)
@@ -225,26 +236,31 @@ void UI::Output_Console()const
 		j++;
 		//enqueue it again
 		Pair<Rover*, double> pr(r, r->getSpeed());
-		p_station->get_available_rovers_mountainous_().enqueue(pr);
+		temp_R.enqueue(pr);
+		//p_station->get_available_rovers_mountainous_().enqueue(pr);
 	}
 	cout << "} " << endl;
+	p_station->get_available_rovers_mountainous_() = temp_R;
+	while (temp_R.dequeue(r))   //clear temp
+	{
 
+	}
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
 	//In-Checkup Rovers
 
-	cout << p_station->get_check_up_rovers_().getItemCount() << " In-Checkup Rovers: ";
+	cout << p_station->get_check_up_rovers().getItemCount() << " In-Checkup Rovers: ";
 	cout << " [";
 	j = 0;
-	for (int i = 1; i <= p_station->get_check_up_rovers_().getItemCount(); i++)
+	for (int i = 1; i <= p_station->get_check_up_rovers().getItemCount(); i++)
 	{
-		if (p_station->get_check_up_rovers_().getEntry(i)->getRT() == ROVER_TYPE::EMERGENCY)
+		if (p_station->get_check_up_rovers().getEntry(i)->getRT() == ROVER_TYPE::EMERGENCY)
 		{
 			if (j == 0)
-				cout << p_station->get_check_up_rovers_().getEntry(i)->getID();
+				cout << p_station->get_check_up_rovers().getEntry(i)->getID();
 			else
-				cout << "," << p_station->get_check_up_rovers_().getEntry(i)->getID();
+				cout << "," << p_station->get_check_up_rovers().getEntry(i)->getID();
 			j++;
 		}
 	}
@@ -252,14 +268,14 @@ void UI::Output_Console()const
 
 
 	j = 0;
-	for (int i = 1; i <= p_station->get_check_up_rovers_().getItemCount(); i++)
+	for (int i = 1; i <= p_station->get_check_up_rovers().getItemCount(); i++)
 	{
-		if (p_station->get_check_up_rovers_().getEntry(i)->getRT() == ROVER_TYPE::POLAR)
+		if (p_station->get_check_up_rovers().getEntry(i)->getRT() == ROVER_TYPE::POLAR)
 		{
 			if (j == 0)
-				cout << p_station->get_check_up_rovers_().getEntry(i)->getID();
+				cout << p_station->get_check_up_rovers().getEntry(i)->getID();
 			else
-				cout << "," << p_station->get_check_up_rovers_().getEntry(i)->getID();
+				cout << "," << p_station->get_check_up_rovers().getEntry(i)->getID();
 			j++;
 		}
 	}
@@ -267,14 +283,14 @@ void UI::Output_Console()const
 
 
 	j = 0;
-	for (int i = 1; i <= p_station->get_check_up_rovers_().getItemCount(); i++)
+	for (int i = 1; i <= p_station->get_check_up_rovers().getItemCount(); i++)
 	{
-		if (p_station->get_check_up_rovers_().getEntry(i)->getRT() == ROVER_TYPE::MOUNTAINOUS)
+		if (p_station->get_check_up_rovers().getEntry(i)->getRT() == ROVER_TYPE::MOUNTAINOUS)
 		{
 			if (j == 0)
-				cout << p_station->get_check_up_rovers_().getEntry(i)->getID();
+				cout << p_station->get_check_up_rovers().getEntry(i)->getID();
 			else
-				cout << "," << p_station->get_check_up_rovers_().getEntry(i)->getID();
+				cout << "," << p_station->get_check_up_rovers().getEntry(i)->getID();
 			j++;
 		}
 	}
@@ -344,29 +360,30 @@ void UI::InteractivePrinting() const
 {
 	cout << "Interactive Mode\n";
 
-	//TODO:: cout statistics and wait for cin
+	if (!p_station->check_valid_data())
+	{
+		bool isWritten = p_station->write_output_file();
+		cout << "Output file created\n";
+		return;
+	}
 
+	
 	char key;
-	//cin >> key;
+	
 	//check if end of days
-	while (!p_station->check_Last_Day())
+	while (!p_station->check_last_day())
 	{
 		cin >> key;
-		//if (key != 10)   //TODO:: Change this
-			//continue;
-
+		
 		p_station->simulate_day();
 
 		Output_Console();
 
 
-		//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
+		
 	}
 
-	//finally create the file
-	//p_station->writeOutputFile();
-
-	bool isWritten = p_station->writeOutputFile();
+	bool isWritten = p_station->write_output_file();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
 	else
@@ -380,19 +397,26 @@ void UI::InteractivePrinting() const
 // TO BE CHANGED....
 void UI::StepByStepPrinting() const
 {
+	
 	cout << "Step by step Mode\n";
+	if (!p_station->check_valid_data())
+	{
+		bool isWritten = p_station->write_output_file();
+		cout << "Output file created\n";
+		return;
+	}
 
-	// TODO:: cout statistics and wait for some time then cout
-	while (!p_station->check_Last_Day())
+	
+	while (!p_station->check_last_day())
 	{
 		p_station->simulate_day();
 		Output_Console();
-		Sleep(1);
+		Sleep(1000);
 	}
 
-	//p_station->writeOutputFile();  // i think it should be removed
+	
 
-	bool isWritten = p_station->writeOutputFile();
+	bool isWritten = p_station->write_output_file();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
 	else
@@ -402,14 +426,20 @@ void UI::StepByStepPrinting() const
 void UI::SilentPrinting() const
 {
 	cout << "Silent Mode\n";
+	if (!p_station->check_valid_data())
+	{
+		bool isWritten = p_station->write_output_file();
+		cout << "Output file created\n";
+		return;
+	}
 	cout << "Simulation Starts...\n";
 
-	while (!p_station->check_Last_Day())
+	while (!p_station->check_last_day())
 	{
 		p_station->simulate_day();
 	}
 
-	bool isWritten = p_station->writeOutputFile();
+	bool isWritten = p_station->write_output_file();
 	if (isWritten)
 		cout << "Simulation ends, Output file created\n";
 	else
