@@ -287,22 +287,22 @@ int MarsStation::collect_statistics_file(int& Missions, string& str)
 
 	if (!waiting_polar_missions_.isEmpty())
 	{
-		s << "Completed missions: " << to_string(Missions) << " [M: " << to_string(MM);
-		s << ",P: " << to_string(PM);
-		s << ",E: " << to_string(EM) << "]\n";
-		s << "Uncompleted missions:  [P: " << to_string(waiting_polar_missions_.get_itemCount()) << "]\n";
+		s << "Completed missions: " << Missions << " [M: " << MM;
+		s << ",P: " << PM;
+		s << ",E: " << EM << "]\n";
+		s << "Uncompleted missions:  [P: " << waiting_polar_missions_.get_itemCount() << "]\n";
 	}
 	else
 	{
-		s << "Missions: " << to_string(Missions) << " [M: " << to_string(MM);
-		s << ",P: " << to_string(PM);
-		s << ",E: " << to_string(EM) << "]\n";
+		s << "Missions: " << Missions << " [M: " << MM;
+		s << ",P: " << PM;
+		s << ",E: " << EM << "]\n";
 	}
-	s << "Rovers: " << to_string(Rovers) << " [M: " << to_string(mr_count_) << ",P: " << to_string(pr_count_) << ",E: " << to_string(er_count_) << "]\n";
+	s << "Rovers: " << Rovers << " [M: " << mr_count_ << ",P: " << pr_count_ << ",E: " << er_count_ << "]\n";
 	s << fixed << setprecision(2);
 	s << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n';
 	if (MM + TotalPrCount)
-		s << "Auto-promoted: " << to_string(Auto) << "%\n";
+		s << "Auto-promoted: " << Auto << "%\n";
 	else
 		s << "There are no Mountainious missions.\n";
 	str = s.str();
