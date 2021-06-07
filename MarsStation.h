@@ -100,6 +100,8 @@ public:
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_polar_();
 
 	bool check_Last_Day();
+	bool check_valid_data();
+	bool check_polar_R_M();
 	void increment_Cancelled_M();
 	void increment_Formulated_M();
 
