@@ -109,7 +109,7 @@ void UI::Output_Console()const
 			cout << p_station->get_W_M_M().getEntry(i)->getID() << ",";
 
 	}
-	cout << " } " << endl;
+	cout << "}" << endl;
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
