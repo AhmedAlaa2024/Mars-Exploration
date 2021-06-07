@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
 #include "Defs.h"
 
@@ -18,9 +17,9 @@ private:
 	int CD; // Complete Date
 	int ED; // Execution days
 
-	Rover* assignedRover;
+	Rover* assignedRover; // The rover assigned to the current mission
 	int priority_;
-	bool is_promoted;
+	bool is_promoted; // Like a flag to incicate if the mission is pure emergency (false) or promoted Mountainous (true)
 
 	int ID;
 
@@ -30,8 +29,8 @@ public:
 
 
 	// Getters
-	int getFD() const;
-	MISSION_TYPE getMT() const;
+	int getFD() const; // To get Formulation Day
+	MISSION_TYPE getMT() const; // To get the mission type
 	MISSION_STATUS getMS() const;
 	int getTL() const;
 	int getMD() const;
