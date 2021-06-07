@@ -10,12 +10,6 @@ F M 2 4 100 2 4
 F M 2 5 100 1 4 
 F M 3 6 100 0 10
 
-
-
-
-
-
-
 //F type ED ID TLOC MDUR SIG
 //X ED ID
 //P ED ID
