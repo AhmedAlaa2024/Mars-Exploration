@@ -2,27 +2,27 @@
 ----------------------
 1. Classess Mission, Rover -> Need to be completed!                            [*]
 2. Private Members of MarsStation -> Need To be written!                       [*]
-3. Input Methods -> Need to be completed!                                      [ ]
-4. Output Methods -> Need to be completed!                                     [ ]
+3. Input Methods -> Need to be completed!                                      [*]
+4. Output Methods -> Need to be completed!                                     [*]
 5. Classess Cancellation, Formulation, Pronotion -> Need to be completed!      [*]
 6. Class List ADT, LinkedList -> Need to be completed!                         [*]
 
 x - Simulation
-	7- Events Implementations (P,X, F)
-	8- Missions Assignment
-	9- The Completion process
-	10- Modes Implementations
+	7- Events Implementations (P,X, F)										   [*]
+	8- Missions Assignment													   [*]
+	9- The Completion process												   [*]
+	10- Modes Implementations												   [*]
 		10.1. interactive                                                      [*]
-		10.2. step by step
-		10.3. silent
+		10.2. step by step													   [*]
+		10.3. silent														   [*]
 
 x- BONUS:
-	11- Diff Speed in Rovers        -> **
-	12- Promotion and auto promotion
-	13- Cancelation
-	14- Mountainous
-	15- The output lines must be sorted by CD ONLY.
-	16- No sorting by ED is required.
+	11- Diff Speed in Rovers												   [*]
+	12- Promotion and auto promotion										   [*]
+	13- Cancelation															   [*]
+	14- Mountainous															   [*]
+	15- The output lines must be sorted by CD ONLY.							   [*]
+	16- No sorting by ED is required.										   [*]
 
 
 
@@ -30,21 +30,20 @@ x- BONUS:
 [1] - Ahmed Alaa:															   [*]
 ------------------
 No of tasks: 1, 2															   [*]
-,10																			   [ ]
 ----------------------------------------------------------
-[2] - Ahmed Ata:															   [ ]
+[2] - Ahmed Ata:															   [*]
 -----------------
 No of tasks: 3																   [*]
-8																			   [ ]
-11
+8																			   [*]
+11																			   [*]
 ----------------------------------------------------------
-[3] - Rufaida Mohamed:														   [ ]
+[3] - Rufaida Mohamed:														   [*]
 -----------------------
-No of tasks: 4																   [ ]
- 9 																			   [ ]
- 12
+No of tasks: 4																   [*]
+ 9 																			   [*]
+ 12																			   [*]
 ----------------------------------------------------------
-[4] - Doaa Magdy:															   [ ]
+[4] - Doaa Magdy:															   [*]
 ------------------
 No of tasks: 5, 6															   [*]
  7 																			   [*]

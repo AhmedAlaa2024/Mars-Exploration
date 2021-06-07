@@ -118,6 +118,8 @@
     <Text Include="Test Cases\test#11.txt" />
     <Text Include="Test Cases\Tests Targets.txt" />
     <Text Include="input_history.txt" />
+    <Text Include="Team Contributions.txt" />
+    <Text Include="output.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="phase 1 Report.docx" />

@@ -1,0 +1,34 @@
+[1] Ahmed Alaa:									  
+----------------								  
+1. Data Structures Templates (Self-Implemented).
+2. All Missions, Rovers, Event class and their implementations.
+3. Execution Function Implementations in Formulation on events classes.
+4. Bonus:
+		-Events: Promotion event.
+__________________________________________________________________________________
+[2] Ahmed Atta:									  
+----------------								  
+1. Input Process --> Reading The input data from The file.							  
+2. Simulation:
+		- Assignment Operation.
+		- Check Auto Promotion.
+3- Bonus:
+		- Different Speed of Rovers.
+__________________________________________________________________________________
+[3] Rufaida Kassem:									  
+-------------									  
+1. Output -> Writing The Statistics into the output File.
+2. Simulation: 
+		- Completion Operation.
+		- Check UP Operation.
+3- Bonus:
+		- Printing Sorted Statistics (According to CD and ED)
+__________________________________________________________________________________
+[4] Doaa Magdy:								  
+----------									  
+1. Data Structures Templates (Self-Implemented)	[Priority Queue - Linked List]					  
+2. UI Class :
+		- The Modes Of Operation (Interactive, Step by Step, Silent)
+3. Bonus:
+		- Events: Cancelation event.
+_________________________________________________________________________

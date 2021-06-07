@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Mission.h"
 
 
@@ -14,7 +13,6 @@ TL(tl), MD(md), asigned(false), WD(0), CD(0), ED(0)
 	else
 		priority_ = 0;
 	assignedRover = nullptr;
-
 }
 
 
@@ -23,45 +21,54 @@ int Mission::getFD() const
 	return FD;
 }
 
+
 MISSION_TYPE Mission::getMT() const
 {
 	return MT;
 }
+
 
 MISSION_STATUS Mission::getMS() const
 {
 	return MS;
 }
 
+
 int Mission::getTL() const
 {
 	return TL;
 }
+
 
 int Mission::getMD() const
 {
 	return MD;
 }
 
+
 int Mission::getWD() const
 {
 	return WD;
 }
+
 
 int Mission::getCD() const
 {
 	return CD;
 }
 
+
 int Mission::getED() const
 {
 	return ED;
 }
 
+
 int Mission::getID() const
 {
 	return ID;
 }
+
 
 bool Mission::isCompleted(int currentDay) const
 {
@@ -70,10 +77,12 @@ bool Mission::isCompleted(int currentDay) const
 	return false;
 }
 
+
 Rover* Mission::getRover() const
 {
 	return assignedRover;
 }
+
 
 void Mission::Assign(Rover* r, double r_speed, int currentDay)
 {
@@ -86,15 +95,18 @@ void Mission::Assign(Rover* r, double r_speed, int currentDay)
 	asigned = true;
 }
 
+
 int Mission::get_priority() const
 {
 	return priority_;
 }
 
+
 bool Mission::get_is_promoted() const
 {
 	return is_promoted;
 }
+
 
 bool Mission::setFD(int fd)
 {
@@ -105,6 +117,7 @@ bool Mission::setFD(int fd)
 	return true;
 }
 
+
 bool Mission::setMT(MISSION_TYPE mt)
 {
 	if (MT != MISSION_TYPE::UNDETERMINED) // Means that it has already its own value
@@ -113,6 +126,7 @@ bool Mission::setMT(MISSION_TYPE mt)
 	MT = mt;
 	return true;
 }
+
 
 bool Mission::setTL(int tl)
 {
@@ -123,6 +137,7 @@ bool Mission::setTL(int tl)
 	return true;
 }
 
+
 bool Mission::setMD(int md)
 {
 	if (MD != 0) // Means that it already has its own value
@@ -132,10 +147,12 @@ bool Mission::setMD(int md)
 	return true;
 }
 
+
 bool Mission::IsAssigned() const
 {
 	return asigned;
 }
+
 
 bool Mission::setWD(int wd)
 {
@@ -146,16 +163,17 @@ bool Mission::setWD(int wd)
 	return true;
 }
 
+
 void Mission::setED(int ed)
 {
 	ED = ed;
 }
 
+
 void Mission::set_priority(int prio)
 {
 	priority_ = prio;
 }
-
 
 
 bool Mission::setMS(MISSION_STATUS ms)
@@ -172,32 +190,22 @@ void Mission::WaitAnotherDay()
 
 }
 
-bool Mission::Complete(int speed) //TODO:: TO Rufaidah ->>  Change or Delete THIS
-{
-	if (CD != 0) // Means that the mission is already completed, So no need to be completed!
-		return false;
-
-	MS = MISSION_STATUS::COMPLETED;
-
-	CD = FD + (TL / speed) * 2 + MD + WD;
-
-	return true;
-}
 
 bool Mission::Promote()
 {
+	// This check is created to make sure no one use it with another mission types by wrong
 	if (MT != MISSION_TYPE::MOUNTAINOUS) // The Mountainous missions only are allowed to be promoted!
 		return false;
 
-	is_promoted = true;
-	MT = MISSION_TYPE::EMERGENCY;
+	is_promoted = true; // Raise the indication of the mission to easily detect late that it is pure emergency of promoted mountainous
+	MT = MISSION_TYPE::EMERGENCY; // Change the type to Emergency
 
-	//set its priority
+	// Set its priority value
 	set_priority(Weight());
 
 	return true;
-
 }
+
 
 int Mission::Weight()
 {

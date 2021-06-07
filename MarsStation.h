@@ -40,29 +40,29 @@ private:
 
 	// User Interface
 	UI* my_ui;
-	int CollectStatistics_File(const int&, int&, int&, int&, int&, int&, int&, int&, int&, int&);
+	int collect_statistics_file(int&, string&);
 
 	//misc info
-	int AutoP;
-	int Cancelled_M;
-	int Formulated_M;
+	int auto_p_;
+	int cancelled_m_;
+	int formulated_m_;
 
 	int current_day_;
 
-	int MRCount;
-	int PRCount;
-	int ERCount;
-	int AutoPCount;
+	int mr_count_;
+	int pr_count_;
+	int er_count_;
+	int auto_p_count_;
 
 	void check_auto_promotion();
 	void check_checkup_list();
 	//utility functions
 	void move_to_in_ex_list(Mission* miss);
 
-	void MoveToAvailable(Rover*);
-	void MoveToAvailable(int);
-	void MoveToCheckUp(Rover*);
-	void InsertAccorToED(int start, Mission* MPtr);
+	void move_to_available(Rover*);
+	void move_to_available(int);
+	void move_to_checkup(Rover*);
+	void insert_by_ed(int start, Mission* MPtr);
 public:
 	MarsStation();
 
@@ -75,7 +75,7 @@ public:
 	int get_current_day();
 
 
-	bool writeOutputFile();
+	bool write_output_file();
 
 
 
@@ -85,22 +85,23 @@ public:
 	void check_completed_missions();
 
 
-	//getters --> Don't create new functions without making sure it's not here
-
-	LinkedBAG<Mission*>& get_mission_DB();
-	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
-	LinkedQueue<Mission*>& get_W_P_M();
-	LinkedList<Mission*>& get_W_M_M();
+	
+	LinkedBAG<Mission*>& get_mission_db();
+	LinkedPriorityQueue<Mission*, int>& get_w_e_m();
+	LinkedQueue<Mission*>& get_w_p_m();
+	LinkedList<Mission*>& get_w_m_m();
 	LinkedList<Mission*>& get_in_execution_missions();
-	LinkedList<Rover*>& get_check_up_rovers_();
+	LinkedList<Rover*>& get_check_up_rovers();
 	LinkedList<Mission*>& get_completed_missions_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_emergency_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_mountainous_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_polar_();
 
-	bool check_Last_Day();
-	void increment_Cancelled_M();
-	void increment_Formulated_M();
+	bool check_last_day();
+	bool check_valid_data();
+	bool check_polar_r_m();
+	void increment_cancelled_m();
+	void increment_formulated_m();
 
 
 	//Destructor
