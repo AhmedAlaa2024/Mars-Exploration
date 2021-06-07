@@ -530,7 +530,7 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 	{
 		//Delete it from waiting
 
-		for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) //3lshan 5ater Rofaida
+		for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) 
 		{
 			Mission* m = waiting_mountainous_missions_.getEntry(i);
 			if (m->getID() == miss->getID())
@@ -668,8 +668,7 @@ void MarsStation::assign_missions()
 
 	//first assign emergency missions
 
-	LinkedPriorityQueue<Mission*, int> temp;   //from doaa --> what about using peek then if we find a rover, then dequeue the mission ?? -->the increasing of waiting days?
-	//i must loop through all of them //Dequeue Them all
+	LinkedPriorityQueue<Mission*, int> temp;  
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
@@ -744,15 +743,15 @@ void MarsStation::assign_missions()
 
 	}
 
-
-	while (temp_p.dequeue(mm)) // to clear it
+	//return to the the Original List
+	while (temp_p.dequeue(mm)) 
 	{
 		waiting_polar_missions_.enqueue(mm);
 	}
 
 	//now The Mountainous
 
-	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) //TODO :: YOU might NEED TO Change The LIMITS
+	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) 
 	{
 		Rover* r;
 		mm = waiting_mountainous_missions_.getEntry(i);

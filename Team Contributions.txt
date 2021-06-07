@@ -1,24 +1,27 @@
-[1] Ahmed Alaa:									  |
-----------------								  |
-1. Data Structures Templates (Self-Implemented)					  |
-2. All Messions, Rovers, Events class and their implementations			  |
-3. Execution Function Implementations in Formulation and Promotion events classess|
-__________________________________________________________________________________|
-[2] Ahmed Atta:									  |
-----------------								  |
-1. Input									  |
-2. Assignment									  |
-3. Simulation									  |
-__________________________________________________________________________________|
-[3] Rofaida:									  |
--------------									  |
-1. Completion									  |
-2. Output									  |
-3. Simulation									  |
-__________________________________________________________________________________|
-[4] Doaa:									  |
-----------									  |
-1. Priority Queue Template (Self-Implemented)					  |
-2. 3 execute functions of events						  |
-3. UI Class									  |
-__________________________________________________________________________________|
+[1] Ahmed Alaa:									  
+----------------								  
+1. Data Structures Templates (Self-Implemented)					  
+2. All Messions, Rovers, Events class and their implementations			  
+3. Execution Function Implementations in Formulation and Promotion events classess
+__________________________________________________________________________________
+[2] Ahmed Atta:									  
+----------------								  
+1. Input Process --> Reading The input data from The file       							  
+2. Simulation: 
+		- Assignment Operation 
+		- Check Auto Promotion
+3- Bonus:
+		- Different Speed of Rovers
+__________________________________________________________________________________
+[3] Rofaida:									  
+-------------									  
+1. Completion									  
+2. Output									  
+3. Simulation									  
+__________________________________________________________________________________
+[4] Doaa:									  
+----------									  
+1. Priority Queue Template (Self-Implemented)					  
+2. 3 execute functions of events						  
+3. UI Class									  
+__________________________________________________________________________________
