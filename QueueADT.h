@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
 
 
@@ -12,4 +11,3 @@ public:
 	virtual bool peek(T&) = 0;
 	virtual ~QueueADT() {};
 };
-

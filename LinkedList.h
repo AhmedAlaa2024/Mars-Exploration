@@ -8,9 +8,6 @@ class LinkedList :
 private:
 	Node<T>* Head;	//Pointer to the head of the list
 	int itemCount;
-	//utility functions
-/*	Node<T>* getPointerTo(const T&) ;
-	Node<T>* getPrevOf(const T&);*/
 	Node<T>* getNodeAt(int index);
 public:
 
@@ -79,33 +76,6 @@ Node<T>* LinkedList<T>::getNodeAt(int index)
 }
 
 
-//template <typename T>
-//Node<T>* getPointerTo(const T& target)
-//{
-//	Node<T>* ptr = head;
-//	while (ptr) {
-//		if (ptr->getItem() == target)
-//			return ptr;
-//		ptr = ptr->getNext();
-//	}
-//	return nullptr;
-//}
-//
-//
-//template <typename T>
-//Node<T>* getPrevOf(const T& target)
-//{
-//	Node<T>* ptr = head;
-//	while (ptr->getNext()) {
-//		if (ptr->getNext()->getItem() == target)
-//			return ptr;
-//		ptr = ptr->getNext();
-//	}
-//	return nullptr;
-//}
-
-
-
 template <typename T>
 bool LinkedList<T>::isEmpty() const
 {
@@ -123,7 +93,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 		Node<T>* ptr = Head;
 		Node<T>* insert = new Node<T>(data);
 		if (!insert) return false;
-		//special case ---> the index is the first index ------> i know in this case the user should use the function insertBeg ---> but i assume a folish user
+		// Special case ---> the index is the first index ------> i know in this case the user should use the function insertBeg ---> but i assume a folish user
 		if (index == 1)
 		{
 			insert->setNext(Head);
@@ -136,7 +106,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 		{
 			ptr = ptr->getNext();
 		}
-		//now ptr is pointing at the item after which we want to insert the data
+		// Now ptr is pointing at the item after which we want to insert the data
 
 		insert->setNext(ptr->getNext());
 		ptr->setNext(insert);
@@ -145,7 +115,6 @@ bool LinkedList<T>::insertIndex(int index, const T& data)   // we can delete the
 	}
 	return false;
 }
-
 
 
 template <typename T>
@@ -167,7 +136,7 @@ template <typename T>
 bool LinkedList<T>::insertEnd(const T& data)
 {
 	Node<T>* R = new Node<T>(data);
-	if (!R) return false;   //no space in the memory
+	if (!R) return false;   // No space in the memory
 	if (!Head)
 	{
 		Head = R;
@@ -182,7 +151,6 @@ bool LinkedList<T>::insertEnd(const T& data)
 	itemCount++;
 	return true;
 }
-
 
 
 template <typename T>
@@ -212,32 +180,28 @@ bool LinkedList<T>::remove(int index)
 }
 
 
-
-
-
 template <typename T>
 T LinkedList<T>::getEntry(const int ind) const
 {
 	Node<T>* ptr = Head;
 
-	if (!ptr) return nullptr; //doaa
+	if (!ptr)
+		return nullptr;
 
 	for (int i = 1; i < ind; ++i)
-	{
 		ptr = ptr->getNext();
-	}
 
 	if (ptr)
 		return ptr->getItem();
+
 	return nullptr;
 }
-
 
 
 template <typename T>
 bool LinkedList<T>::contains(T& item) const
 {
-	//empty list
+	// Empty list
 	if (!Head) return false;
 
 	Node<T>* ptr = Head;

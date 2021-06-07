@@ -54,39 +54,35 @@ private:
 	int ERCount;
 	int AutoPCount;
 
+	// Utility functions
 	void check_auto_promotion();
 	void check_checkup_list();
-	//utility functions
 	void move_to_in_ex_list(Mission* miss);
-
 	void move_to_available(Rover*);
 	void move_to_available(int);
 	void move_to_checkup(Rover*);
 	void insert_by_ED(int start, Mission* MPtr);
+
 public:
 	MarsStation();
 
-	//for getting data
+	// Reading data function
 	SIM_MODE get_input_mode() const;
 	void execute_mode(SIM_MODE);
-
 	bool read_input_file();
-
 	int get_current_day();
-
-
 	bool write_output_file();
 
 
-
-	//Simulation
+	// Simulation Functions
 	void simulate_day();
 	void assign_missions();
 	void check_completed_missions();
+	void increment_Cancelled_M();
+	void increment_Formulated_M();
 
 
-	//getters --> Don't create new functions without making sure it's not here
-
+	// Getters
 	LinkedBAG<Mission*>& get_mission_DB();
 	LinkedPriorityQueue<Mission*, int>& get_W_E_M();
 	LinkedQueue<Mission*>& get_W_P_M();
@@ -97,19 +93,11 @@ public:
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_emergency_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_mountainous_();
 	LinkedPriorityQueue<Rover*, double>& get_available_rovers_polar_();
-
 	bool check_Last_Day();
 	bool check_valid_data();
 	bool check_polar_R_M();
-	void increment_Cancelled_M();
-	void increment_Formulated_M();
 
 
 	//Destructor
 	~MarsStation();
-
 };
-
-
-
-

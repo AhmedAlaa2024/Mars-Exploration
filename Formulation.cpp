@@ -1,5 +1,6 @@
 #include "Formulation.h"
 
+
 Formulation::Formulation(char typ, int ed, int id, double tloc, int mdur, int sig, MarsStation* m_s)
 	:Event(ed, id, m_s) {
 	TYP = typ;
@@ -8,13 +9,14 @@ Formulation::Formulation(char typ, int ed, int id, double tloc, int mdur, int si
 	SIG = sig;
 }
 
+
 void Formulation::Execute()   // Create the mission and put it in the appropriate list
 {
 	M_S->increment_Formulated_M(); // Increasing the number of formulated messions in the mars station objects
 
 	Mission* m = new Mission(get_ED(), MISSION_TYPE::UNDETERMINED, TLOC, MDUR, SIG, get_ID()); // Create an object of mission type and constructe it using the provided data
 
-	//fill the data base list first
+	// Fill the data base list first
 	M_S->get_mission_DB().add(m);
 
 	if (TYP == 'E') // E -> Emergency

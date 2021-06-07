@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
 
 #include "BagADT.h"
@@ -133,4 +132,3 @@ template <typename T>
 LinkedBAG<T>::~LinkedBAG() {
 	clear();
 }
-
