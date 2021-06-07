@@ -98,7 +98,30 @@ F P 39 26 190 3 1
 
 
 
-#5 CORNER CASE --> NO POLAR ROVERS but there are polar Missions
+
+#5 To check Rovers' checkup process
+
+1 2 1
+1 3 5 2 
+10
+2 4
+2
+15
+7
+F P 1 5 200 3 3
+F M 1 1 100 10 5
+F M 1 2 15 5 4
+F P 2 6 420 2 5
+F M 3 3 150 5 10
+F E 3 4 150 5 10
+P 6 3
+
+
+
+
+
+
+#6 CORNER CASE --> NO POLAR ROVERS but there are polar Missions
 1 0 1
 1 3 3 2 
 10
@@ -113,15 +136,29 @@ P 6 3
 
 
 
+#7 Corner Case --> No Rovers
+0 0 0
+1 3 3 2 
+5
+5
+F M 1 1 100 10 5 
+F P 1 2 15 5 4 
+F M 3 3 150 5 10
+F E 3 4 150 5 10
+P 6 3
 
 
-
-
-
-
-
-
-
+# with one Polar Rover
+0 1 0
+1 3 3 2 
+10
+5
+5
+F M 1 1 100 10 5 
+F P 1 2 15 5 4 
+F M 3 3 150 5 10
+F E 3 4 150 5 10
+P 6 3
 
 
 

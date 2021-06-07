@@ -1,5 +1,5 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #include "Rover.h"
+
 
 Rover::Rover(ROVER_TYPE rt, int checkupDur, double sp, int max, int id) : RS(ROVER_STATUS::WAITING), RT(rt),
 checkUPDuration(checkupDur), speed(sp), assigned(false), MaxMissions(max),
@@ -8,25 +8,30 @@ completedMissions(0), mission(nullptr), ID(id)
 	checkupENDDay = 0;
 }
 
+
 ROVER_STATUS Rover::getRS() const
 {
 	return RS;
 }
+
 
 ROVER_TYPE Rover::getRT() const
 {
 	return RT;
 }
 
+
 int Rover::getCheckUPDuration() const
 {
 	return checkUPDuration;
 }
 
+
 double Rover::getSpeed() const
 {
 	return speed;
 }
+
 
 bool Rover::Assigned() const
 {
@@ -38,25 +43,30 @@ int Rover::getMaxMissions() const
 	return MaxMissions;
 }
 
+
 int Rover::getNumCompletedMissions() const
 {
 	return completedMissions;
 }
+
 
 Mission* Rover::getAssignedMission() const
 {
 	return mission;
 }
 
+
 int Rover::getID() const
 {
 	return ID;
 }
 
+
 int Rover::getCheckupEND() const
 {
 	return checkupENDDay;
 }
+
 
 bool Rover::setRT(ROVER_TYPE rt)
 {
@@ -67,10 +77,12 @@ bool Rover::setRT(ROVER_TYPE rt)
 	return true;
 }
 
+
 void Rover::SetRS(ROVER_STATUS rs)
 {
 	RS = rs;
 }
+
 
 bool Rover::setCheckUPDuration(int checkupDur)
 {
@@ -81,11 +93,13 @@ bool Rover::setCheckUPDuration(int checkupDur)
 	return true;
 }
 
+
 void Rover::setSpeed(double sp)
 {
 	speed = sp;
 
 }
+
 
 bool Rover::setMaxMissions(int max)
 {
@@ -96,6 +110,7 @@ bool Rover::setMaxMissions(int max)
 	return true;
 }
 
+
 bool Rover::setID(int id)
 {
 	if (ID != -1 && id == -1)
@@ -105,10 +120,12 @@ bool Rover::setID(int id)
 	return true;
 }
 
+
 void Rover::incrementCompletedMissions()
 {
 	completedMissions++;
 }
+
 
 void Rover::AssignTo(Mission* m)
 {
@@ -127,6 +144,6 @@ bool Rover::CheckUP(int currentDay)
 	completedMissions = 0;
 	mission = nullptr;
 	RS = ROVER_STATUS::CHECKUP;
-	assigned = false; // doaa temporarly---> i will delete it
+	assigned = false;
 	return true;
 }

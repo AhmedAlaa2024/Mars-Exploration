@@ -1,4 +1,3 @@
-/////////////////////////////// Written By: Ahmed Alaa ///////////////////////////////
 #pragma once
 #include "Mission.h"
 #include "Defs.h"
@@ -31,8 +30,8 @@ public:
 	int getNumCompletedMissions() const;
 	Mission* getAssignedMission() const;
 	int getID() const;
-
 	int getCheckupEND() const;
+
 
 	// Setters
 	bool setRT(ROVER_TYPE rt);
@@ -43,12 +42,9 @@ public:
 	bool setID(int id);
 
 
-	void incrementCompletedMissions();
 
 	// Specific Member Functions
 	void AssignTo(Mission* m);
-
+	void incrementCompletedMissions();
 	bool CheckUP(int currentDay);
-
-
 };
