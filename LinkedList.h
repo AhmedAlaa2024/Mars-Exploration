@@ -111,7 +111,7 @@ bool LinkedList<T>::insertIndex(int index, const T& data)
 		{
 			ptr = ptr->getNext();
 		}
-		//now ptr is pointing at the item after which we want to insert the data
+		// Now ptr is pointing at the item after which we want to insert the data
 
 		insert->setNext(ptr->getNext());
 		ptr->setNext(insert);
@@ -120,7 +120,6 @@ bool LinkedList<T>::insertIndex(int index, const T& data)
 	}
 	return false;
 }
-
 
 
 template <typename T>
@@ -142,7 +141,7 @@ template <typename T>
 bool LinkedList<T>::insertEnd(const T& data)
 {
 	Node<T>* R = new Node<T>(data);
-	if (!R) return false;   //no space in the memory
+	if (!R) return false;   // No space in the memory
 	if (!Head)
 	{
 		Head = R;
@@ -157,7 +156,6 @@ bool LinkedList<T>::insertEnd(const T& data)
 	itemCount++;
 	return true;
 }
-
 
 
 template <typename T>
@@ -187,9 +185,6 @@ bool LinkedList<T>::remove(int index)
 }
 
 
-
-
-
 template <typename T>
 T LinkedList<T>::getEntry(const int ind) const
 {
@@ -198,21 +193,19 @@ T LinkedList<T>::getEntry(const int ind) const
 	if (!ptr) return nullptr; 
 
 	for (int i = 1; i < ind; ++i)
-	{
 		ptr = ptr->getNext();
-	}
 
 	if (ptr)
 		return ptr->getItem();
+
 	return nullptr;
 }
-
 
 
 template <typename T>
 bool LinkedList<T>::contains(T& item) const
 {
-	//empty list
+	// Empty list
 	if (!Head) return false;
 
 	Node<T>* ptr = Head;

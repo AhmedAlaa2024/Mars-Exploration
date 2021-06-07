@@ -1,11 +1,10 @@
 #include "Cancellation.h"
 
 Cancellation::Cancellation(int ed, int id, MarsStation* m_s) :Event(ed, id, m_s)
-{
+{ }
 
-}
 
-void Cancellation::Execute()   //cancel a requested mountainous mission (if found and is waiting)
+void Cancellation::Execute()   // Cancel a requested mountainous mission (if found and is waiting)
 {
 
 	
@@ -21,7 +20,6 @@ void Cancellation::Execute()   //cancel a requested mountainous mission (if foun
 			M_S->increment_cancelled_m();
 			return;
 		}
-
 	}
 	
 }

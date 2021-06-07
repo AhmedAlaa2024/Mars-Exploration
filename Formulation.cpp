@@ -1,5 +1,6 @@
 #include "Formulation.h"
 
+
 Formulation::Formulation(char typ, int ed, int id, double tloc, int mdur, int sig, MarsStation* m_s)
 	:Event(ed, id, m_s) {
 	TYP = typ;
@@ -7,6 +8,7 @@ Formulation::Formulation(char typ, int ed, int id, double tloc, int mdur, int si
 	MDUR = mdur;
 	SIG = sig;
 }
+
 
 void Formulation::Execute()   // Create the mission and put it in the appropriate list
 {

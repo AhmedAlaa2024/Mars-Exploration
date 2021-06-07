@@ -1,9 +1,8 @@
 #pragma once
-
-
 #include "MarsStation.h"
-class MarsStation;    //forward class decleration
 
+
+class MarsStation;    // Forward class decleration
 
 class Event
 {

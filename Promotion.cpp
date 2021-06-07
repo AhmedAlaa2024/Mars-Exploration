@@ -1,8 +1,9 @@
 #include "Promotion.h"
 
+
 Promotion::Promotion(int ed, int id, MarsStation* m_s) :Event(ed, id, m_s)
-{
-}
+{ }
+
 
 void Promotion::Execute()
 {
@@ -21,5 +22,4 @@ void Promotion::Execute()
 			break;
 		}
 	}
-
 }

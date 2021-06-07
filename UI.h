@@ -6,10 +6,7 @@ using namespace std;
 class MarsStation;
 class UI
 {
-
 	MarsStation* p_station;
-
-
 
 public:
 	UI(MarsStation* p_s);
@@ -19,6 +16,4 @@ public:
 	void StepByStepPrinting() const;
 	void SilentPrinting() const;
 	void Output_Console()const;
-
 };
-
