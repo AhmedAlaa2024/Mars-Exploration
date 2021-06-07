@@ -1,5 +1,8 @@
 #include "MarsStation.h"
 #include <iostream>
+using namespace std;
+#include <sstream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include "Defs.h"
@@ -235,14 +238,16 @@ bool MarsStation::write_output_file()
 }
 
 
-int MarsStation::collect_statistics_file(int& Missions, string& s)
+int MarsStation::collect_statistics_file(int& Missions, string& str)
 {
 	Mission* Ptr = nullptr;
+	stringstream s;
+	int TotalPrCount = 0;
 	int Auto = 0;
 	int WD = 0;
 	int ED = 0;
 	int CurrWD = 0, CurrED = 0;
-	s = "CD\tID\tFD\tWD\tED\n";
+	s << "CD\tID\tFD\tWD\tED\n";
 	int MM = 0, PM = 0, EM = 0, Rovers = 0;
 	float AvgW = 0, AvgEx = 0;
 	MISSION_TYPE TYP;
@@ -251,7 +256,7 @@ int MarsStation::collect_statistics_file(int& Missions, string& s)
 		Ptr = completed_missions_.getEntry(i);
 		CurrWD = Ptr->getWD();
 		CurrED = Ptr->getED();
-		s += to_string(Ptr->getCD()) + '\t' + to_string(Ptr->getID()) + '\t' + to_string(Ptr->getFD()) + '\t' + to_string(CurrWD) + '\t' + to_string(CurrED) + '\n';
+		s << Ptr->getCD() << '\t' << Ptr->getID() << '\t' << Ptr->getFD() << '\t' << CurrWD << '\t' << CurrED << '\n';
 		TYP = Ptr->getMT();
 		WD += CurrWD;
 		ED += CurrED;
@@ -264,6 +269,8 @@ int MarsStation::collect_statistics_file(int& Missions, string& s)
 			PM++;
 			break;
 		case MISSION_TYPE::EMERGENCY:
+			if (Ptr->get_is_promoted())
+				TotalPrCount++;
 			EM++;
 			break;
 		}
@@ -276,27 +283,29 @@ int MarsStation::collect_statistics_file(int& Missions, string& s)
 		AvgEx = (float)ED / Missions;
 	}
 	if (MM)
-		Auto = ((double)AutoPCount / MM) * 100;
+		Auto = ((double)AutoPCount / (MM + TotalPrCount)) * 100;
 
 	if (!waiting_polar_missions_.isEmpty())
 	{
-		s += "Completed missions: " + to_string(Missions) + " [M: " + to_string(MM);
-		s += ",P: " + to_string(PM);
-		s += ",E: " + to_string(EM) + "]\n";
-		s += "Uncompleted missions:  [P: " + to_string(waiting_polar_missions_.get_itemCount()) + "]\n";
+		s << "Completed missions: " << to_string(Missions) << " [M: " << to_string(MM);
+		s << ",P: " << to_string(PM);
+		s << ",E: " << to_string(EM) << "]\n";
+		s << "Uncompleted missions:  [P: " << to_string(waiting_polar_missions_.get_itemCount()) << "]\n";
 	}
 	else
 	{
-		s += "Missions: " + to_string(Missions) + " [M: " + to_string(MM);
-		s += ",P: " + to_string(PM);
-		s += ",E: " + to_string(EM) + "]\n";
+		s << "Missions: " << to_string(Missions) << " [M: " << to_string(MM);
+		s << ",P: " << to_string(PM);
+		s << ",E: " << to_string(EM) << "]\n";
 	}
-	s += "Rovers: " + to_string(Rovers) + " [M: " + to_string(MRCount) + ",P: " + to_string(PRCount) + ",E: " + to_string(ERCount) + "]\n";
-	s += "Avg Wait = " + to_string(AvgW) + ", " + "Avg Exec = " + to_string(AvgEx) + '\n';
+	s << "Rovers: " << to_string(Rovers) << " [M: " << to_string(MRCount) << ",P: " << to_string(PRCount) << ",E: " << to_string(ERCount) << "]\n";
+	s << fixed << setprecision(2);
+	s << "Avg Wait = " << AvgW << ", " << "Avg Exec = " << AvgEx << '\n';
 	if (MM)
-		s += "Auto-promoted: " + to_string(Auto) + "%\n";
+		s << "Auto-promoted: " << to_string(Auto) << "%\n";
 	else
-		s += "There are no Mountainious missions.\n";
+		s << "There are no Mountainious missions.\n";
+	str = s.str();
 	return 0;
 }
 
@@ -308,7 +317,7 @@ bool MarsStation::check_Last_Day()
 	// && the event list is empty 
 
 	//then no simulate_day() any more 
-	
+
 
 	//now, we have to check if after all missions are completed and there sill exists polar missions with no rovers
 	//so we have to force days to stop
@@ -337,7 +346,7 @@ bool MarsStation::check_valid_data()
 	{
 		return false;
 	}
-	
+
 	//in case all speeds of all rovers _from all types_ are zero and there are missions in the input file
 	//has been formulated and has not been cancelled
 	//so we have to check the event list
@@ -405,7 +414,7 @@ bool MarsStation::check_valid_data()
 	}
 	if (zero_speed == count_M + count_P + count_E)
 		return false;
-	
+
 	return true;
 
 
@@ -729,7 +738,7 @@ void MarsStation::assign_missions()
 		else //no rover is available
 		{
 			mm->WaitAnotherDay();
-			temp_p.enqueue(mm);  
+			temp_p.enqueue(mm);
 
 		}
 
