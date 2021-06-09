@@ -17,7 +17,6 @@ public:
 };
 
 
-
 template <typename T, typename F>
 Pair<T, F>::Pair(const T& i, const F& p)
 {
@@ -25,11 +24,13 @@ Pair<T, F>::Pair(const T& i, const F& p)
 	setPriority(p);
 }
 
+
 template <typename T, typename F>
 T Pair<T, F>::getItem()
 {
 	return item;
 }
+
 
 template <typename T, typename F>
 F Pair<T, F>::getPriority()
@@ -43,6 +44,7 @@ void Pair<T, F>::setItem(const T& i)
 {
 	item = i;
 }
+
 
 template <typename T, typename F>
 void Pair<T, F>::setPriority(const F& p)

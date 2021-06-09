@@ -7,10 +7,12 @@ Event::Event(int ed, int id, MarsStation* m_s)
 	ID = id;
 }
 
+
 int Event::get_ED() const
 {
 	return ED;
 }
+
 
 int Event::get_ID() const
 {

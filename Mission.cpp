@@ -210,6 +210,5 @@ bool Mission::Promote()
 int Mission::Weight()
 {
 	//return the value of the weighted equation
-
 	return (70 * SIG + 15 * TL + 10 * MD + 5 * FD);
 }

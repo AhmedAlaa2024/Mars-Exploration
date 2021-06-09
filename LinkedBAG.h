@@ -133,4 +133,3 @@ template <typename T>
 LinkedBAG<T>::~LinkedBAG() {
 	clear();
 }
-

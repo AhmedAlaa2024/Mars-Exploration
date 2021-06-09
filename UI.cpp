@@ -5,10 +5,10 @@
 #include<Windows.h>  //for the delay
 using namespace std;
 
-UI::UI(MarsStation* p_s) : p_station(p_s)
-{
 
-}
+UI::UI(MarsStation* p_s) : p_station(p_s)
+{ }
+
 
 SIM_MODE UI::get_input_mode()
 {
@@ -22,7 +22,6 @@ SIM_MODE UI::get_input_mode()
 	{
 		cout << "Please enter a valid number: ";
 		cin >> n;
-
 	}
 
 	SIM_MODE a;
@@ -33,18 +32,12 @@ SIM_MODE UI::get_input_mode()
 		return SIM_MODE::STEP_BY_STEP;
 
 	return SIM_MODE::SILENT;
-
 }
-
-
 
 
 void UI::Output_Console()const
 {
-
-
 	cout << "Current Day : " << p_station->get_current_day() << endl;
-
 
 	//Waiting Missions
 
@@ -52,7 +45,7 @@ void UI::Output_Console()const
 	int no_W_M = p_station->get_w_e_m().get_itemCount() + p_station->get_w_p_m().get_itemCount() + p_station->get_w_m_m().getItemCount();
 
 	cout << no_W_M << " Waiting Missions : ";
-	//first --> print the ID of the E missions
+	// First --> print the ID of the E missions
 	cout << " [";
 	Mission* m = nullptr;
 	int j = 0;
@@ -67,19 +60,16 @@ void UI::Output_Console()const
 		else
 			cout << "," << m->getID();
 		j++;
-		//then enqueue it again
+		// Then enqueue it again
 		Pair<Mission*, int> pm(m, m->get_priority());
 		temp.enqueue(pm);
 	}
 	cout << "]";
 	p_station->get_w_e_m() = temp;
 
-	while (temp.dequeue(m))   //clear temp
-	{
+	while (temp.dequeue(m));   //clear temp
 
-	}
-
-	//second --> print the ID of the polar Mission
+	// Second --> print the ID of the polar Mission
 	cout << " (";
 	j = 0;
 	count = p_station->get_w_p_m().get_itemCount();
@@ -98,8 +88,7 @@ void UI::Output_Console()const
 	cout << ")";
 
 
-
-	//third --> print the ID of the mountainous missions
+	// Third --> print the ID of the mountainous missions
 	cout << " {";
 	for (int i = 1; i <= p_station->get_w_m_m().getItemCount(); i++)   //itemCount does not change during this loop
 	{
@@ -160,10 +149,7 @@ void UI::Output_Console()const
 		}
 	}
 	cout << "}" << endl;
-
-
 	cout << "--------------------------------------------------------------------------------------------" << endl;
-
 
 	//Available Rovers
 
@@ -190,10 +176,7 @@ void UI::Output_Console()const
 	}
 	cout << "] " << "(";
 	p_station->get_available_rovers_emergency_() = temp_R;
-	while (temp_R.dequeue(r))   //clear temp
-	{
-
-	}
+	while (temp_R.dequeue(r));   //clear temp
 
 	
 	j = 0;
@@ -215,11 +198,7 @@ void UI::Output_Console()const
 	}
 	cout << ") " << "{";
 	p_station->get_available_rovers_polar_() = temp_R;
-	while (temp_R.dequeue(r))   //clear temp
-	{
-
-	}
-
+	while (temp_R.dequeue(r));   //clear temp
 
 
 	j = 0;
@@ -241,10 +220,7 @@ void UI::Output_Console()const
 	}
 	cout << "} " << endl;
 	p_station->get_available_rovers_mountainous_() = temp_R;
-	while (temp_R.dequeue(r))   //clear temp
-	{
-
-	}
+	while (temp_R.dequeue(r));   //clear temp
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
 
@@ -348,10 +324,6 @@ void UI::Output_Console()const
 	cout << "}" << endl;
 
 	cout << "--------------------------------------------------------------------------------------------" << endl;
-
-
-
-	//cin >> key;   //what if the user press another key ---> i will handle it later because i do not remember how right now
 }
 
 
@@ -391,9 +363,6 @@ void UI::InteractivePrinting() const
 }
 
 
-
-
-
 // TO BE CHANGED....
 void UI::StepByStepPrinting() const
 {
@@ -422,6 +391,7 @@ void UI::StepByStepPrinting() const
 	else
 		cout << "Error! writing into file\n";
 }
+
 
 void UI::SilentPrinting() const
 {

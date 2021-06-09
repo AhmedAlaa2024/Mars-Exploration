@@ -23,14 +23,15 @@ MarsStation::MarsStation() :auto_p_(0), current_day_(0), pr_count_(0), er_count_
 
 }
 
+
 SIM_MODE MarsStation::get_input_mode() const
 {
 	return my_ui->get_input_mode();
 }
 
+
 void MarsStation::execute_mode(SIM_MODE mode)
 {
-
 	if (mode == SIM_MODE::INTERACTIVE)
 	{
 		my_ui->InteractivePrinting();
@@ -83,25 +84,30 @@ LinkedList<Rover*>& MarsStation::get_check_up_rovers()
 	return check_up_rovers_;
 }
 
+
 LinkedList<Mission*>& MarsStation::get_completed_missions_()
 {
 	return completed_missions_;
 }
+
 
 LinkedPriorityQueue<Rover*, double>& MarsStation::get_available_rovers_emergency_()
 {
 	return available_rovers_emergency_;
 }
 
+
 LinkedPriorityQueue<Rover*, double>& MarsStation::get_available_rovers_mountainous_()
 {
 	return available_rovers_mountainous_;
 }
 
+
 LinkedPriorityQueue<Rover*, double>& MarsStation::get_available_rovers_polar_()
 {
 	return available_rovers_polar_;
 }
+
 
 int MarsStation::get_current_day()
 {
@@ -121,14 +127,10 @@ bool MarsStation::read_input_file()
 
 	my_file >> mr_count_ >> pr_count_ >> er_count_;
 
-
-
 	int N, CM, CP, CE; // no. of missions before checkup and the checkup durations
 	my_file >> N >> CM >> CP >> CE;
 
-
 	double SM, SP, SE; //speed of each type
-
 
 	int ids = 0;
 
@@ -147,11 +149,11 @@ bool MarsStation::read_input_file()
 	for (int i = 0; i < pr_count_; ++i)
 	{
 		my_file >> SP;
+
 		Rover* r = new Rover(ROVER_TYPE::POLAR, CP, SP, N, ++ids);
 		Pair<Rover*, double> p(r, r->getSpeed());
 		available_rovers_polar_.enqueue(p);
 		ROVERS_DB.add(r);
-
 	}
 
 	// Create Emergency Rovers
@@ -166,20 +168,16 @@ bool MarsStation::read_input_file()
 
 	}
 
-
-
-
 	int AutoP;
 	my_file >> AutoP;
 	this->auto_p_ = AutoP;
 
-
 	int Events_no;
 	my_file >> Events_no;
+
 	for (int i = 0; i < Events_no; ++i)
 	{
 		char c;
-
 		my_file >> c;
 		if (c == 'F') //formulation event
 		{
@@ -197,7 +195,6 @@ bool MarsStation::read_input_file()
 		}
 		else if (c == 'X') //cancellation Event
 		{
-
 			int ED;
 			int ID;
 			my_file >> ED >> ID;
@@ -220,6 +217,7 @@ bool MarsStation::read_input_file()
 	my_file.close();
 	return true;
 }
+
 
 bool MarsStation::write_output_file()
 {
@@ -328,15 +326,13 @@ bool MarsStation::check_last_day()
 		int count = formulated_m_ - cancelled_m_ - (waiting_polar_missions_.get_itemCount());
 		return(completed_missions_.getItemCount() == count && (events_list_.isEmpty()) && check_up_rovers_.isEmpty() );
 	}
-
-
 }
 
-//will be checked before simulation begins
-bool MarsStation::check_valid_data()
-{
 
-	//in case no of rovers is 0 and there are missions     // with no cancelation for them in the event list
+bool MarsStation::check_valid_data() // It Will be checked before simulation begins
+{
+	// In case no of rovers is 0 and there are missions     
+	// with no cancelation for them in the event list
 	if (ROVERS_DB.isEmpty() && !MISSIONS_DB.isEmpty())
 	{
 		return false;
@@ -362,10 +358,7 @@ bool MarsStation::check_valid_data()
 		}
 		available_rovers_polar_ = temp;
 
-		while (temp.dequeue(r))   //clear temp
-		{
-
-		}
+		while (temp.dequeue(r));   //clear temp
 	}
 
 	if (!available_rovers_emergency_.isEmpty())
@@ -381,10 +374,7 @@ bool MarsStation::check_valid_data()
 		}
 		available_rovers_emergency_ = temp;
 
-		while (temp.dequeue(r))   //clear temp
-		{
-
-		}
+		while (temp.dequeue(r));   //clear temp
 	}
 
 	if (!available_rovers_mountainous_.isEmpty())
@@ -400,26 +390,19 @@ bool MarsStation::check_valid_data()
 		}
 		available_rovers_mountainous_ = temp;
 
-		while (temp.dequeue(r))   //clear temp
-		{
-
-		}
+		while (temp.dequeue(r));   //clear temp
 	}
 	if (zero_speed == count_M + count_P + count_E)
 		return false;
 
 	return true;
-
-
 }
 
 //will be called first before the simulation
 bool MarsStation::check_polar_r_m()
 {
 	if (available_rovers_polar_.isEmpty() && !waiting_polar_missions_.isEmpty())
-	{
 		return false;
-	}
 
 
 
@@ -437,6 +420,7 @@ void MarsStation::increment_formulated_m()
 	formulated_m_++;
 }
 
+
 MarsStation::~MarsStation()
 {
 	MISSIONS_DB.clear();
@@ -447,18 +431,16 @@ MarsStation::~MarsStation()
 
 void MarsStation::simulate_day()
 {
-	current_day_++; //advance the day
+	current_day_++; // Advance the day
 
-	//at the beginning of The day, See if any Mount Mission was auto_promoted
-	check_auto_promotion();
+	check_auto_promotion(); // At the beginning of The day, See if any Mount Mission was auto_promoted
 
-	//check for rovers finished checkup
-	check_checkup_list();
+	check_checkup_list(); // Check for rovers finished checkup
 
 	Event* eve = nullptr;
 
-	//execute events
-	while (true)      //why loop ?? because there may be more than one event in the same day
+	// Execute events
+	while (true)      // The reason of using loop is that  may be more than one event in the same day
 	{
 		events_list_.peek(eve);
 		if (eve && eve->get_ED() == current_day_)
@@ -471,19 +453,11 @@ void MarsStation::simulate_day()
 		}
 		else
 			break;
-
 	}
+	
+	check_completed_missions(); // Check completion
 
-
-	//check completion
-	check_completed_missions();
-
-	//assign missions
-	assign_missions();
-
-
-
-
+	assign_missions();// Assign missions
 }
 
 void MarsStation::move_to_in_ex_list(Mission* miss)
@@ -504,19 +478,13 @@ void MarsStation::move_to_in_ex_list(Mission* miss)
 			if (m->getID() == miss->getID())
 			{
 				waiting_mountainous_missions_.remove(i);
-
 				return;
-
 			}
-
-
 		}
-
-
 	}
-
-
 }
+
+
 void MarsStation::move_to_available(Rover* RPtr)
 {
 	int count = in_execution_rovers_.getItemCount();
@@ -531,7 +499,9 @@ void MarsStation::move_to_available(Rover* RPtr)
 			}
 		}
 	}
+
 	Pair<Rover*, double> pair(RPtr, RPtr->getSpeed());
+
 	switch (RPtr->getRT())
 	{
 	case ROVER_TYPE::MOUNTAINOUS:
@@ -553,6 +523,7 @@ void MarsStation::move_to_available(int i)
 	Rover* RPtr = check_up_rovers_.getEntry(i);
 	check_up_rovers_.remove(i);
 	Pair<Rover*, double> pair(RPtr, RPtr->getSpeed());
+
 	switch (RPtr->getRT())
 	{
 	case ROVER_TYPE::MOUNTAINOUS:
@@ -588,6 +559,7 @@ void MarsStation::insert_by_ed(int start, Mission* MPtr)
 {
 	int i = -1;
 	int count = completed_missions_.getItemCount();
+
 	for (i = count; i >= start; i--)
 	{
 		if (completed_missions_.getEntry(i)->getED() > MPtr->getED());
@@ -596,15 +568,13 @@ void MarsStation::insert_by_ed(int start, Mission* MPtr)
 	}
 	if (i != -1)
 		completed_missions_.insertIndex(i + 1, MPtr);
-
 }
+
 
 void MarsStation::check_auto_promotion()
 {
-
 	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i)
 	{
-
 		Mission* mm = waiting_mountainous_missions_.getEntry(i);
 		if (!mm->get_is_promoted() && mm->getWD() > auto_p_)
 		{
@@ -613,9 +583,7 @@ void MarsStation::check_auto_promotion()
 			auto_p_count_++;
 			i--;
 		}
-
 	}
-
 }
 
 void MarsStation::check_checkup_list()
@@ -629,55 +597,44 @@ void MarsStation::check_checkup_list()
 	}
 }
 
+
 void MarsStation::assign_missions()
 {
-
 	Mission* mm;
 
-	//first assign emergency missions
+	// First assign emergency missions
+	LinkedPriorityQueue<Mission*, int> temp;   
 
-	LinkedPriorityQueue<Mission*, int> temp;  
+	
 	while (waiting_emergency_missions_.dequeue(mm))
 	{
 		Rover* r;
 		if (available_rovers_emergency_.dequeue(r))
 		{
-
 			mm->Assign(r, r->getSpeed(), current_day_);
-
 			r->AssignTo(mm);
-			//add to in_ex list
-			move_to_in_ex_list(mm);
-
+			
+			move_to_in_ex_list(mm); // Add to in_ex list
 		}
 		else if (available_rovers_mountainous_.dequeue(r))
 		{
 			mm->Assign(r, r->getSpeed(), current_day_);
 			r->AssignTo(mm);
 
-			//add to in_ex list
-			move_to_in_ex_list(mm);
-
-
+			move_to_in_ex_list(mm); // Add to in_ex list
 		}
 		else if (available_rovers_polar_.dequeue(r)) {
 			mm->Assign(r, r->getSpeed(), current_day_);
-
 			r->AssignTo(mm);
 
-			//add to in_ex list
-			move_to_in_ex_list(mm);
-
+			move_to_in_ex_list(mm); // Add to in_ex list
 		}
-		else //no rover is available
+		else // If No rover is available
 		{
 			mm->WaitAnotherDay();
 			Pair<Mission*, int> p(mm, mm->get_priority());
 			temp.enqueue(p);
-
 		}
-
-
 	}
 
 	while (temp.dequeue(mm)) // to clear it
@@ -686,7 +643,7 @@ void MarsStation::assign_missions()
 		waiting_emergency_missions_.enqueue(p);
 	}
 
-	//second: assign polar missions
+	// Second: assign polar missions
 
 	LinkedQueue<Mission*> temp_p;
 
@@ -695,20 +652,15 @@ void MarsStation::assign_missions()
 		Rover* r;
 		if (available_rovers_polar_.dequeue(r)) {
 			mm->Assign(r, r->getSpeed(), current_day_);
-
 			r->AssignTo(mm);
 
-			//add to in_ex list
-			move_to_in_ex_list(mm);
-
+			move_to_in_ex_list(mm); // Add to in_ex list
 		}
-		else //no rover is available
+		else // No rover is available
 		{
 			mm->WaitAnotherDay();
 			temp_p.enqueue(mm);
-
 		}
-
 	}
 
 	//return to the the Original List
@@ -717,51 +669,40 @@ void MarsStation::assign_missions()
 		waiting_polar_missions_.enqueue(mm);
 	}
 
-	//now The Mountainous
+	// Now The Mountainous
 
 	for (int i = 1; i <= waiting_mountainous_missions_.getItemCount(); ++i) 
 	{
 		Rover* r;
 		mm = waiting_mountainous_missions_.getEntry(i);
 
-
 		if (available_rovers_mountainous_.dequeue(r))
 		{
 			mm->Assign(r, r->getSpeed(), current_day_);
-
 			r->AssignTo(mm);
-			//add to in_ex list
+			
 			Pair<Mission*, int> p(mm, mm->get_priority());
-			temp.enqueue(p);
-
+			temp.enqueue(p); // Add to in_ex list
 		}
 		else if (available_rovers_emergency_.dequeue(r))
 		{
 			mm->Assign(r, r->getSpeed(), current_day_);
-
 			r->AssignTo(mm);
 
-			//add to in_ex list
 			Pair<Mission*, int> p(mm, mm->get_priority());
-			temp.enqueue(p);
-
+			temp.enqueue(p); // Add to in_ex list
 		}
-		else //no rover is available
+		else // If No rover is available
 		{
 			mm->WaitAnotherDay();
 		}
-
-
 	}
 	while (temp.dequeue(mm)) // to clear it
 	{
 		move_to_in_ex_list(mm);
-
-	} //to move all the Assigned Mountainous missions to in_ex List
-
-
-
+	} // To move all the Assigned Mountainous missions to in_ex List
 }
+
 
 void MarsStation::check_completed_missions()
 {
@@ -769,10 +710,12 @@ void MarsStation::check_completed_missions()
 	Mission* MPtr = nullptr;
 	Rover* RPtr = nullptr;
 	bool isComp = false;
+
 	for (int i = 1; i <= in_execution_missions_.getItemCount(); i++)
 	{
 		isComp = false;
 		MPtr = in_execution_missions_.getEntry(i);
+
 		if (MPtr)
 		{
 			isComp = MPtr->isCompleted(current_day_);
@@ -803,15 +746,3 @@ void MarsStation::check_completed_missions()
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -54,11 +54,10 @@ private:
 	int er_count_;
 	int auto_p_count_;
 
+	// Utility functions
 	void check_auto_promotion();
 	void check_checkup_list();
-	//utility functions
 	void move_to_in_ex_list(Mission* miss);
-
 	void move_to_available(Rover*);
 	void move_to_available(int);
 	void move_to_checkup(Rover*);
@@ -66,24 +65,20 @@ private:
 public:
 	MarsStation();
 
-	//for getting data
+	// Reading data function
 	SIM_MODE get_input_mode() const;
 	void execute_mode(SIM_MODE);
-
 	bool read_input_file();
-
 	int get_current_day();
-
-
 	bool write_output_file();
 
 
-
-	//Simulation
+	// Simulation Functions
 	void simulate_day();
 	void assign_missions();
 	void check_completed_missions();
-
+	void increment_Cancelled_M();
+	void increment_Formulated_M();
 
 	
 	LinkedBAG<Mission*>& get_mission_db();
@@ -106,9 +101,4 @@ public:
 
 	//Destructor
 	~MarsStation();
-
 };
-
-
-
-
