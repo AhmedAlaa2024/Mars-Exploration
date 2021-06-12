@@ -7,7 +7,7 @@ Team Name: The Phoenix<br>
 This is an educational project for Data Structures and Algorithms, written in C++ using Visual Studio IDE. It is a simulation of a space station in Mars to explore the whole of Mars. So the station release its rovers and assign the messions to them everyday.
 
 ## Features
-* There are 3 features:
+* There are 3 Modes:
   * Iteractive Mode: Writing the simulation's stages day by day on the console and create the output file at the end fo simulation.
   * Step By Step Mode: With every arbitary key press, the simulation move to the next stage (day) and create the output file when the simulation's stages are finished.
   * Silent Mode: Create Output file of the simulation without showing the simulation stages on the console.
