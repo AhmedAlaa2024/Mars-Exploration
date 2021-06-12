@@ -1,7 +1,7 @@
 [1] Ahmed Alaa:									  
 ----------------								  
 1. Data Structures Templates (Self-Implemented).
-2. All Missions, Rovers, Event class and their implementations.
+2. All Missions, Rovers, Event class and their members implementations.
 3. Execution Function Implementations in Formulation on events classes.
 4. Bonus:
 		-Events: Promotion event.
@@ -31,4 +31,4 @@ ________________________________________________________________________________
 		- The Modes Of Operation (Interactive, Step by Step, Silent)
 3. Bonus:
 		- Events: Cancelation event.
-_________________________________________________________________________
+__________________________________________________________________________________

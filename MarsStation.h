@@ -77,8 +77,8 @@ public:
 	void simulate_day();
 	void assign_missions();
 	void check_completed_missions();
-	void increment_Cancelled_M();
-	void increment_Formulated_M();
+	void increment_cancelled_m();
+	void increment_formulated_m();
 
 	
 	LinkedBAG<Mission*>& get_mission_db();

@@ -1,0 +1,27 @@
+[1] Member #1	
+Name: Ahmed Alaa El-Sayed Arabi Zidan
+E-mail:ahmed.zedan01@eng-st.cu.edu.eg
+ID: 9202141
+Section: 1
+Bench Number: 6
+
+[2] Member #2
+Name: Ahmed Atta Abdallah Abdelhay
+E-mail: Ahmed.abdallhay01@eng-st.cu.edu.eg
+ID: 9202139
+Section: 1 
+Bench Number: 5
+
+[3] Member #3
+Name: Doaa Magdy Ibrahim Mohamed
+Email: doaa.mohamed01@eng-st.cu.edu.eg
+ID: 9202521
+Section: 1
+Bench Number: 23
+
+[4] Member #4
+Name: Rufaida Muhammad Sayed Ahmed
+Email: rufaidah.ahmed01@eng-st.cu.edu.eg
+ID: 9202550
+Section: 1
+Bench Number: 25
