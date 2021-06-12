@@ -12,9 +12,8 @@ This is an educational project for Data Structures and Algorithms, written in C+
   * Step By Step Mode: With every arbitary key press, the simulation move to the next stage (day) and create the output file when the simulation's stages are finished.
   * Silent Mode: Create Output file of the simulation without showing the simulation stages on the console.
 * There is an input and output files:
-  * The simulator read all the information and proccess them as it needs to start simulation.
-  * The output file contains the final statistics generated after the simulation.
-  *
+  * The simulator read all the information and proccess them as it needs to start simulation. [input.txt]
+  * The output file contains the final statistics generated after the simulation. [output.txt]
 * The simulation consists of:
   * Status of the Mars Station at every day.
   * Showing the numbers and IDs of the rovers in different states: (In Execution, In Checkup, In Avaliable) state
