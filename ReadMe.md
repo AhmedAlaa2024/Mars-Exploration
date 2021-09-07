@@ -3,7 +3,7 @@
 ## Course Code: CMP1040
 ## Team Name: The Phoenix
 
-### This is an educational project for Data Structures and Algorithms, written in C++ using Visual Studio IDE. It is a simulation of a space station in Mars to explore the whole of Mars. So the station release its rovers and assign the messions to them everyday.
+### This is an educational project for Data Structures and Algorithms, written in C++ using Visual Studio IDE. It is a simulation of a space station on Mars to explore the whole of Mars. So the station releases its rovers and assigns missions to them every day.
 
 # Features
 * There are 3 Modes:
